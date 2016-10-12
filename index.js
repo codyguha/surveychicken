@@ -241,7 +241,7 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
  bot.onTextMessage(/no, I ate|YES!$/i, (incoming, next) => {
     bot.getUserProfile(incoming.from)
       .then((user) => {
-        const message = Bot.Message.text(`Thanks for your time. Say "hi" to take another survey.`)
+        const message = Bot.Message.text(`Thanks for your time. Say "hi" to take the chicken survey agian.`)
         const hifive = Bot.Message.video(`http://media.giphy.com/media/uXNYDeQ20XWSs/giphy.gif`)
           .setAttributionName(' ')
           .setLoop(true)
