@@ -55,10 +55,10 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
   bot.onTextMessage(/Hi$/i, (incoming, next) => {
     bot.getUserProfile(incoming.from)
       .then((user) => {
-        const message = Bot.Message.text(`Hello again ${user.firstName}! Please choose a survey to complete.`)
-          .addTextResponse(`Chicken`)
-          .addTextResponse(`Canadian Values Index`)
+        const message = Bot.Message.text(`Hey ${user.firstName}! I am the surveychicken ! Would you like to do a quick survey about chicken ?`)
+          .addTextResponse(`Chicken Survey`)
           .addTextResponse(`No thanks`)
+        results.insert({user: user.username})
         incoming.reply(message)
       });
   });
@@ -66,9 +66,8 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
   bot.onStartChattingMessage((incoming) => {
     bot.getUserProfile(incoming.from)
       .then((user) => {
-        const message = Bot.Message.text(`Hey ${user.firstName}! I am the VC Labs survey bot.  You can complete surveys with me. Please choose a survey to begin.`)
-          .addTextResponse(`Chicken`)
-          .addTextResponse(`Canadian Values Index`)
+        const message = Bot.Message.text(`Hey ${user.firstName}! I am the surveychicken ! Would you like to do a quick survey about chicken ?`)
+          .addTextResponse(`Chicken Survey`)
           .addTextResponse(`No thanks`)
         incoming.reply(message)
         results.insert({user: user.username})
@@ -84,6 +83,16 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
           .addTextResponse(`No thanks`)
         incoming.reply(message)
         results.insert({user: user.username})
+      });
+  });
+
+  bot.onTextMessage(/about chicken$/i, (incoming, next) => {
+    bot.getUserProfile(incoming.from)
+      .then((user) => {
+        const message = Bot.Message.text(`Hey ${user.firstName}! I am the surveychicken ! Would you like to do a quick survey about chicken ?`)
+          .addTextResponse(`Chicken Survey`)
+          .addTextResponse(`No thanks`)
+        incoming.reply(message)
       });
   });
 
@@ -248,7 +257,6 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
       return incoming.reply([hifive, message])
     });
   });
-
 
   let server = http
     .createServer(bot.incoming())
