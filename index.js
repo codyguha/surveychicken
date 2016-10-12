@@ -67,7 +67,7 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
     bot.getUserProfile(incoming.from)
       .then((user) => {
         const message = Bot.Message.text(`Hey ${user.firstName}! I am the surveychicken ! Would you like to do a quick survey about chicken ?`)
-          .addTextResponse(`Chicken Survey`)
+          .addTextResponse(`Yes please`)
           .addTextResponse(`No thanks`)
         incoming.reply(message)
         results.insert({user: user.username})
@@ -79,24 +79,24 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
     bot.getUserProfile(incoming.from)
       .then((user) => {
         const message = Bot.Message.text(`Hey ${user.firstName}! I am the surveychicken ! Would you like to do a quick survey about chicken ?`)
-          .addTextResponse(`Chicken Survey`)
+          .addTextResponse(`Yes please`)
           .addTextResponse(`No thanks`)
         incoming.reply(message)
         results.insert({user: user.username})
       });
   });
 
-  bot.onTextMessage(/about chicken$/i, (incoming, next) => {
+  bot.onTextMessage(/chicken survey$/i, (incoming, next) => {
     bot.getUserProfile(incoming.from)
       .then((user) => {
         const message = Bot.Message.text(`Hey ${user.firstName}! I am the surveychicken ! Would you like to do a quick survey about chicken ?`)
-          .addTextResponse(`Chicken Survey`)
+          .addTextResponse(`Yes please`)
           .addTextResponse(`No thanks`)
         incoming.reply(message)
       });
   });
 
-  bot.onTextMessage(/Chicken Survey$/i, (incoming, next) => {
+  bot.onTextMessage(/Yes please$/i, (incoming, next) => {
     bot.getUserProfile(incoming.from)
       .then((user) => {
         const message = Bot.Message.text(`Awesome lets get started. What would you say your relationship is with fried chicken?`)
