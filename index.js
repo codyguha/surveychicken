@@ -52,28 +52,28 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
 
   bot.updateBotConfiguration();
 
-  bot.onTextMessage(/Hi$/i, (incoming, next) => {
-    bot.getUserProfile(incoming.from)
-      .then((user) => {
-        const message = Bot.Message.text(`Hey ${user.firstName}! I am the surveychicken ! Would you like to do a quick survey about chicken ?`)
-          .addTextResponse(`Chicken Survey`)
-          .addTextResponse(`No thanks`)
-        results.insert({user: user.username})
-        incoming.reply(message)
-      });
-  });
+  // bot.onTextMessage(/Hi$/i, (incoming, next) => {
+  //   bot.getUserProfile(incoming.from)
+  //     .then((user) => {
+  //       const message = Bot.Message.text(`Hey ${user.firstName}! I am the surveychicken ! Would you like to do a quick survey about chicken ?`)
+  //         .addTextResponse(`Chicken Survey`)
+  //         .addTextResponse(`No thanks`)
+  //       results.insert({user: user.username})
+  //       incoming.reply(message)
+  //     });
+  // });
   
-  bot.onStartChattingMessage((incoming) => {
-    bot.getUserProfile(incoming.from)
-      .then((user) => {
-        const message = Bot.Message.text(`Hey ${user.firstName}! I am the surveychicken ! Would you like to do a quick survey about chicken ?`)
-          .addTextResponse(`Yes please`)
-          .addTextResponse(`No thanks`)
-        incoming.reply(message)
-        results.insert({user: user.username})
-      });
+  // bot.onStartChattingMessage((incoming) => {
+  //   bot.getUserProfile(incoming.from)
+  //     .then((user) => {
+  //       const message = Bot.Message.text(`Hey ${user.firstName}! I am the surveychicken ! Would you like to do a quick survey about chicken ?`)
+  //         .addTextResponse(`Yes please`)
+  //         .addTextResponse(`No thanks`)
+  //       incoming.reply(message)
+  //       results.insert({user: user.username})
+  //     });
     
-  });
+  // });
 
   bot.onScanDataMessage((incoming) => {
     bot.getUserProfile(incoming.from)
@@ -86,13 +86,14 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
       });
   });
 
-  bot.onTextMessage(/chicken survey$/i, (incoming, next) => {
+  bot.onTextMessage(/hi|Hi|chicken survey$/i, (incoming, next) => {
     bot.getUserProfile(incoming.from)
       .then((user) => {
         const message = Bot.Message.text(`Hey ${user.firstName}! I am the surveychicken ! Would you like to do a quick survey about chicken ?`)
           .addTextResponse(`Yes please`)
           .addTextResponse(`No thanks`)
         incoming.reply(message)
+        results.insert({user: user.username})
       });
   });
 
