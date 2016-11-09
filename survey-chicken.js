@@ -290,7 +290,7 @@ bot.onTextMessage(/not at all|YES!$/i, (incoming, next) => {
 		saveToMongoDb(user.username, incoming.body, "hunger")
 		bot.onTextMessage((incoming, next) => {
             incoming.reply(incoming.body);
-            saveToMongoDb(user.username, messege.body, "emoji")
+            saveToMongoDb(user.username, incoming.body, "emoji")
 		});
     });
 });
