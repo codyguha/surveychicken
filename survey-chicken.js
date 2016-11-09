@@ -60,7 +60,7 @@ bot.onTextMessage(/Yes please$/i, (incoming, next) => {
           .addTextResponse(`It's a guilty pleasure`)
           .addTextResponse(`Not really my thing`)
           .addTextResponse(`I’ll die before I eat fried chicken`)
-        return incoming.reply(message)
+        incoming.reply(message)
         saveToMongoDb(user.username, "text", "relationship")
      });
  });
