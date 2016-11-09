@@ -17,7 +17,7 @@ let server = http
     .createServer(bot.incoming())
     .listen(process.env.PORT || 8080);
 
-saveToMongoDb = function (username, value, key) {
+function saveToMongoDb(username, value, key) {
     mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
         if (err) throw err;
         var results = db.collection('results');
@@ -28,7 +28,7 @@ saveToMongoDb = function (username, value, key) {
     });
 }
 
-saveUserToMongoDb = function (username, first_name, last_name) {
+function saveUserToMongoDb(username, first_name, last_name) {
     mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
         if (err) throw err;
         var results = db.collection('results');
@@ -48,6 +48,6 @@ bot.onTextMessage(/hi|Hi$/i, (incoming, next) => {
 	      .addTextResponse(`Yes please`)
 	      .addTextResponse(`No thanks`)
     	incoming.reply(message)
-    	results.insert({user: user.username})
+    	saveUserToMongoDb(user.username, user.firstName, user.lastName)
   	});
 });
