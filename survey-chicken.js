@@ -24,7 +24,7 @@ function saveToMongoDb(u, value, key) {
         var target_key = "chicken_survey." + key
         var target = {};
         target[target_key] = value
-        results.update({username: `${u}`}, {   $set:  target }); 
+        results.update({"userInfo.username": `${u}`}, {   $set:  target }); 
     });
 }
 
@@ -33,8 +33,8 @@ function saveUserToMongoDb(username, first_name, last_name) {
         if (err) throw err;
         var results = db.collection('results');
         results.insert({
-        	username: username,
             userInfo:{
+            	username: username,
                 first_name: first_name,
                 last_name: last_name,
             },
