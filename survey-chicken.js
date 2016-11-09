@@ -24,7 +24,7 @@ function saveToMongoDb(username, value, key) {
         var target_key = "chicken_survey." + key
         var target = {};
         target[target_key] = value
-        results.update({username: `${username}`}, {   $set:  target }); 
+        results.update({"user.username": `${username}`}, {   $set:  target }); 
     });
 }
 
@@ -33,8 +33,8 @@ function saveUserToMongoDb(username, first_name, last_name) {
         if (err) throw err;
         var results = db.collection('results');
         results.insert({
-            username: username,
             user:{
+            	username: username,
                 first_name: first_name,
                 last_name: last_name,
             },
@@ -51,3 +51,16 @@ bot.onTextMessage(/hi|Hi$/i, (incoming, next) => {
     	saveUserToMongoDb(user.username, user.firstName, user.lastName)
   	});
 });
+
+bot.onTextMessage(/Yes please$/i, (incoming, next) => {
+    bot.getUserProfile(incoming.from)
+      .then((user) => {
+        const message = Bot.Message.text(`Awesome lets get started. What would you say your relationship is with fried chicken?`)
+          .addTextResponse(`I love it`)
+          .addTextResponse(`It's a guilty pleasure`)
+          .addTextResponse(`Not really my thing`)
+          .addTextResponse(`I’ll die before I eat fried chicken`)
+        return incoming.reply(message)
+        saveToMongoDb(user.username, incoming.body, "relationship")
+     });
+ });
