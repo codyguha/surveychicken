@@ -5,33 +5,6 @@ let util = require('util');
 let http = require('http');
 let Bot = require('@kikinteractive/kik');
 
-// var seedData = [{
-//  "user": "codyguha",
-//     "canadian_values": {
-//         "question01": "Greater acceptance of people who are LGBTQ",
-//         "question02": "Give priority to people in crisis abroad",
-//         "question03": "Publicly celebrate the role of faith in our collective lives",
-//         "question04": "Be required to recruit and hire women so they're equally represented in senior management",
-//         "question05": "Prohibit private medical clinics to preserve the principle of equal access",
-//         "question06": "Expand policies aimed at improving the situation for Indigenous Canadians",
-//         "question07": "More emphasis on a system that rewards hard work and initiative",
-//         "question08": "Emphasize economic growth over environmental protection",
-//         "question09": "Have more government involvement and regulation of the economy",
-//         "question10": "Leave it as the responsibility of parents to work out their own best child care options",
-//         "question11": "It should be easier for individual Canadians to make their own end-of-life decisions",
-//         "question12": "An overall asset because of its contribution to the Canadian economy",
-//         "question13": "Curiosity",
-//         "question14": "People who are rich mostly got there through hard work",
-//         "question15": "News media do a good job presenting the facts"
-//     },
-//     "chicken_survey": {
-//         "relationship": "It's a guilty pleasure",
-//         "detail": "After a night of hard partying",
-//         "mood": "😊",
-//         "preference": "Double Down",
-//         "hungry": "YES!"
-//     }
-// }]
 
 mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
 
@@ -86,7 +59,7 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
       });
   });
 
-  bot.onTextMessage(/hi|Hi|chicken survey$/i, (incoming, next) => {
+  bot.onTextMessage(/hi|Hi$/i, (incoming, next) => {
     bot.getUserProfile(incoming.from)
       .then((user) => {
         const message = Bot.Message.text(`Hey ${user.firstName}! I am the surveychicken ! Would you like to do a quick survey about chicken ?`)
