@@ -292,10 +292,9 @@ bot.onTextMessage(/not at all|YES!$/i, (incoming, next) => {
 			const message = Bot.Message.text(`Thanks thats it. Say "hi" again sometime.`)
 			incoming.reply(message)
             saveToMongoDb(user.username, incoming.body, "emoji")
+            next()
 		});
-		next()
     });
-    
 });
 
 bot.onTextMessage((incoming, next) => {
