@@ -24,7 +24,7 @@ function saveToMongoDb(username, value, key) {
         var target_key = "chicken_survey." + key
         var target = {};
         target[target_key] = value
-        results.update({"user.username": `${username}`}, {   $set:  target }); 
+        results.update({username: `${username}`}, {   $set:  target }); 
     });
 }
 
@@ -33,8 +33,8 @@ function saveUserToMongoDb(username, first_name, last_name) {
         if (err) throw err;
         var results = db.collection('results');
         results.insert({
-            user:{
-            	username: username,
+        	username: username,
+            userInfo:{
                 first_name: first_name,
                 last_name: last_name,
             },
@@ -61,6 +61,6 @@ bot.onTextMessage(/Yes please$/i, (incoming, next) => {
           .addTextResponse(`Not really my thing`)
           .addTextResponse(`I’ll die before I eat fried chicken`)
         return incoming.reply(message)
-        saveToMongoDb(user.username, incoming.body, "relationship")
+        saveToMongoDb(user.username, "text", "relationship")
      });
  });
