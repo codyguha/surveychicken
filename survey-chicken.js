@@ -42,7 +42,7 @@ function saveToMongoDb(u, value, key) {
     });
 }
 
-bot.onTextMessage(/hi|Hi$/i, (incoming, next) => {
+bot.onTextMessage(/^hi|Hi$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
 	    const message = Bot.Message.text(`Hey ${user.firstName}! I am the surveychicken ! Would you like to do a quick survey about chicken ?`)
 	      .addTextResponse(`Yes please`)
