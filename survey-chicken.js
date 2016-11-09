@@ -43,6 +43,14 @@ function saveToMongoDb(u, value, key) {
 }
 
 bot.onTextMessage(/hi|Hi$/i, (incoming, next) => {
+	if ("geolocation" in navigator) {
+  	navigator.geolocation.getCurrentPosition(function(position) {
+  		console.log(position.coords.latitude, position.coords.longitude);
+	});
+/* geolocation is available */
+	} else {
+  	console.log("nope!")/* geolocation IS NOT available */
+	}
 	bot.getUserProfile(incoming.from).then((user) => {
 	    const message = Bot.Message.text(`Hey ${user.firstName}! I am the surveychicken ! Would you like to do a quick survey about chicken ?`)
 	      .addTextResponse(`Yes please`)
@@ -66,6 +74,7 @@ bot.onTextMessage(/Yes please$/i, (incoming, next) => {
 
 bot.onTextMessage(/Never$/i, (incoming, next) => {
     incoming.reply(Bot.Message.text(`Ok I’m glad we got that out the way.  I suppose there is no point in bugging you with more questions about your chicken preferences.`))
+    saveToMongoDb(user.username, incoming.body, "frequency")
 });
 
 bot.onTextMessage(/On a regular basis|Once and a while|Rarely$/i, (incoming, next) => {
@@ -284,10 +293,16 @@ bot.onTextMessage(/Chicken Parmesan|Double Down|Fried Drumsticks|Chicken Nuggets
 bot.onTextMessage(/not at all$/i, (incoming, next) => {
     bot.getUserProfile(incoming.from)
       .then((user) => {
-        const message = Bot.Message.text(`“Thanks for taking some time to chat with us.  We enjoyed learning more about your chicken preferences.  Please let us know what you thought of this survey by selecting an emoji that best represents your experience chatting with Survey Chicken`)
-          .addTextResponse(`YES!`)
-          .addTextResponse(`sort of`)
-          .addTextResponse(`not at all`)
+        const message = Bot.Message.text(`Thanks for taking some time to chat with us.  We enjoyed learning more about your chicken preferences.  Please let us know what you thought of this survey by selecting an emoji that best represents your experience chatting with Survey Chicken`)
+		incoming.reply(message)
+		saveToMongoDb(user.username, incoming.body, "hunger")
+    });
+});
+
+bot.onTextMessage(/YES!$/i, (incoming, next) => {
+    bot.getUserProfile(incoming.from)
+      .then((user) => {
+        const message = Bot.Message.text(`Thanks for taking some time to chat with us.  We enjoyed learning more about your chicken preferences.  Please let us know what you thought of this survey by selecting an emoji that best represents your experience chatting with Survey Chicken`)
 		incoming.reply(message)
 		saveToMongoDb(user.username, incoming.body, "hunger")
     });
