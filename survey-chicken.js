@@ -164,7 +164,7 @@ bot.onTextMessage(/Vegetables$/i, (incoming, next) => {
     });
 });
 
-bot.onTextMessage(/Mashed|Roasted|Fries|Baked|Greek|Ceaser|Green|Coleslaw|Brown|Basmati|White|Flavoured - Coconut, etc|Broccoli|Carrots|Spinach|Green Beans|Asparagus$/i, (incoming, next) => {
+bot.onTextMessage(/Mashed|Roasted|Fries|Baked|Greek|Ceaser|Green|Coleslaw|Brown|Basmati|Flavoured - Coconut, etc|Broccoli|Carrots|Spinach|Green Beans|Asparagus$/i, (incoming, next) => {
     bot.getUserProfile(incoming.from)
       .then((user) => {
         const message = Bot.Message.text(`Where do you most typically consume Chicken outside of your home?`)
@@ -220,7 +220,7 @@ bot.onTextMessage(/It's a guilty pleasure$/i, (incoming, next) => {
       .then((user) => {
         const message = Bot.Message.text(`Guilty pleasure you say, tell me more.`)
           .addTextResponse(`After a night of hard partying`)
-          .addTextResponse(`A treat if I’ve been eating good for while`)
+          .addTextResponse(`A treat if I’ve been eating good for a while`)
           .addTextResponse(`It’s a personal matter`)
 		incoming.reply(message)
 		saveToMongoDb(user.username, incoming.body, "relationship")
@@ -288,11 +288,11 @@ bot.onTextMessage(/not at all|YES!$/i, (incoming, next) => {
         const message = Bot.Message.text(`Thanks for taking some time to chat with us.  We enjoyed learning more about your chicken preferences.  Please let us know what you thought of this survey by selecting an emoji that best represents your experience chatting with Survey Chicken`)
 		incoming.reply(message)
 		saveToMongoDb(user.username, incoming.body, "hunger")
-    });
-    bot.onTextMessage((incoming, next) => {
+		bot.onTextMessage((incoming, next) => {
             incoming.reply(incoming.body);
             saveToMongoDb(user.username, messege.body, "emoji")
-	});
+		});
+    });
 });
 
 // bot.onTextMessage(/YES!$/i, (incoming, next) => {
