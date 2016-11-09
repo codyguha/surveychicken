@@ -17,14 +17,14 @@ let server = http
     .createServer(bot.incoming())
     .listen(process.env.PORT || 8080);
 
-function saveToMongoDb(username, value, key) {
+function saveToMongoDb(u, value, key) {
     mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
         if (err) throw err;
         var results = db.collection('results');
         var target_key = "chicken_survey." + key
         var target = {};
         target[target_key] = value
-        results.update({username: `${username}`}, {   $set:  target }); 
+        results.update({username: `${u}`}, {   $set:  target }); 
     });
 }
 
