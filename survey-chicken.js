@@ -253,7 +253,7 @@ bot.onTextMessage(/Not really my thing|I’ll die before I eat fried chicken$/i,
 	 });
 });
 
-bot.onTextMessage(/I love it|I’m not going to get into it|After a night of hard partyng|A treat if I’ve been eating good for a while|Its a personal matter.|I’m trying to eat healthy these days|Its not convienient to make at home|Its not convienient to purchase|I just dont like the taste$/i, (incoming, next) => {
+bot.onTextMessage(/I love it|I’m not going to get into it|After a night of hard partying|A treat if I’ve been eating good for a while|It’s a personal matter|I’m trying to eat healthy these days|Its not convienient to make at home|Its not convienient to purchase|I just dont like the taste$/i, (incoming, next) => {
     bot.getUserProfile(incoming.from)
       .then((user) => {
       	if (incoming.body === "I love it") {
@@ -330,16 +330,3 @@ bot.onTextMessage((incoming, next) => {
 	   });
 });
 
-// bot.onTextMessage((incoming, next) => {
-// 			const message = Bot.Message.text(`Thanks thats it. Say "hi" again sometime.`)
-// 			incoming.reply(message)
-//             saveToMongoDb(user.username, incoming.body, "emoji")
-// 		});
-
-
-bot.onTextMessage(/test$/i, (incoming, next) => {
-    bot.getUserProfile(incoming.from)
-      .then((user) => {
-        findUserValue(user.username)
-    });
-});
