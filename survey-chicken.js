@@ -351,7 +351,7 @@ bot.onTextMessage(/^1|2|3|4|5|6|7|8|9|10$/i, (incoming, next) => {
 						          .addTextResponse('8')
 						          .addTextResponse('9')
 						          .addTextResponse('10')
-								incoming.reply([pic1, message]);
+								incoming.reply([message, pic1]);
 								cakeValidation(user.username)
 			    				saveToMongoDb(user.username, incoming.body, "chk_burger")
 							} else if (foundResult.chicken_survey.chk_cake === undefined){
@@ -369,7 +369,7 @@ bot.onTextMessage(/^1|2|3|4|5|6|7|8|9|10$/i, (incoming, next) => {
 						          .addTextResponse('8')
 						          .addTextResponse('9')
 						          .addTextResponse('10')
-								incoming.reply([pic1, message]);
+								incoming.reply([message, pic1]);
 								coneValidation(user.username)
 			    				saveToMongoDb(user.username, incoming.body, "chk_cake")
 							} else if (foundResult.chicken_survey.chk_cone === undefined){
@@ -387,7 +387,7 @@ bot.onTextMessage(/^1|2|3|4|5|6|7|8|9|10$/i, (incoming, next) => {
 						          .addTextResponse('8')
 						          .addTextResponse('9')
 						          .addTextResponse('10')
-								incoming.reply([pic1, message]);
+								incoming.reply([message, pic1]);
 								dogValidation(user.username)
 			    				saveToMongoDb(user.username, incoming.body, "chk_cone")
 							} else if (foundResult.chicken_survey.chk_dog === undefined){
