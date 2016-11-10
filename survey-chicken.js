@@ -288,7 +288,7 @@ bot.onTextMessage(/not at all|YES!$/i, (incoming, next) => {
         const message = Bot.Message.text(`Thanks for taking some time to chat with us.  We enjoyed learning more about your chicken preferences.  Please let us know what you thought of this survey by selecting an emoji that best represents your experience chatting with Survey Chicken`)
 		incoming.reply(message)
 		saveToMongoDb(user.username, incoming.body, "hunger")
-		bot.onTextMessage((incoming) => {
+		bot.onTextMessage((incoming, next) => {
 			const message = Bot.Message.text(`Thanks thats it. Say "hi" again sometime.`)
 			incoming.reply(message)
             saveToMongoDb(user.username, incoming.body, "emoji")
