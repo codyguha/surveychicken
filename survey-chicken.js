@@ -23,7 +23,7 @@ function findUserValue(username){
 		results.find({
           "user.username": username
         }).toArray(function(err, found) {
-          var userresults = found[0].canadian_values_survey;
+          var userresults = found[0].chicken_survey;
           console.log(userresults)
       });
 	});
