@@ -23,8 +23,8 @@ function findUserValue(username){
 		results.find({
           "user.username": username
         }).toArray(function(err, found) {
-          var userresults = found[0].chicken_survey;
-          console.log(userresults)
+          var foundResult = found[0].chicken_survey.emoji;
+          console.log(foundResult)
       });
 	});
 }
