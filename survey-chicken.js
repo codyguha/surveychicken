@@ -316,17 +316,17 @@ bot.onTextMessage((incoming, next) => {
 		          		const message = Bot.Message.text(`I'm sorry, I don't understand.`)
 						incoming.reply(message)
 					} else {
-						if (foundResult.chicken_survey.emoji === undefined){
+						if (foundResult.chicken_survey.emoji === undefined || foundResult.chicken_survey.emoji){
 		          			const message = Bot.Message.text(`Thanks thats it. Say "hi" again sometime.`)
 							incoming.reply(message)
 		    				saveToMongoDb(user.username, incoming.body, "emoji")
-						} else {
+						} else  {
 							const message = Bot.Message.text(`I'm sorry, I don't understand.`)
 							incoming.reply(message)
 						}
 					}
-		      });
-			});
-	   });
+		    });
+		});
+	});
 });
 
