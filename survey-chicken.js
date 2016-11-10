@@ -309,7 +309,7 @@ bot.onTextMessage((incoming, next) => {
 			mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {	
 				var results = db.collection('results');
 				results.find({
-		          "user.username": username
+		          "user.username": user.username
 		        }).toArray(function(err, found) {
 		          var foundResult = found[0].chicken_survey.emoji;
 		          if (foundResult !== undefined){
