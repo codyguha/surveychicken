@@ -27,6 +27,12 @@ function saveUserToMongoDb(username, first_name, last_name) {
                 first_name: first_name,
                 last_name: last_name,
             },
+            chicken_survey:{
+            	chk_burger: "1",
+            	chk_cake: "1",
+            	chk_cone: "1",
+            	chk_dog: "1"
+            }
         })
     })
 }
@@ -47,6 +53,15 @@ function removeEmoji(u) {
         if (err) throw err;
         var results = db.collection('results');
         results.update({"user.username": `${u}`}, {   $unset:  {"chicken_survey.emoji": ""} }); 
+    });
+}
+
+function removeEntry(u, key) {
+    mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
+        if (err) throw err;
+        var results = db.collection('results');
+        var target_key = "chicken_survey." + key
+        results.update({"user.username": `${u}`}, {   $unset:  {target_key: ""} }); 
     });
 }
 
@@ -282,19 +297,92 @@ bot.onTextMessage(/I love it|I’m not going to get into it|After a night of har
           .addTextResponse('9')
           .addTextResponse('10')
 		incoming.reply([pic1, message]);
+		removeEntry(user.username, "chk_burger")
     });
 });
 
 
 bot.onTextMessage(/^1|2|3|4|5|6|7|8|9|10$/i, (incoming, next) => {
-    bot.getUserProfile(incoming.from)
-      .then((user) => {
-        const message = Bot.Message.text(`Has this survey made you hungry?`)
-          .addTextResponse(`YES!`)
-          .addTextResponse(`not at all`)
-		incoming.reply(message)
-		saveToMongoDb(user.username, incoming.body, "chk_burger")
-    });
+	  	bot.getUserProfile(incoming.from)
+	      	.then((user) => {
+				mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {	
+					var results = db.collection('results');
+					results.find({
+			          "user.username": user.username
+			        }).toArray(function(err, found) {
+			          var foundResult = found[0]
+			          	if (foundResult === undefined) {
+			          		const message = Bot.Message.text(`I'm sorry, I don't understand.`)
+							incoming.reply(message)
+						} else {
+							if (foundResult.chicken_survey.chk_burger === undefined){
+			          			const pic1 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_cake.jpg`)
+						          .setAttributionName('Fried Chicken Cake')
+						          .setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png')
+						        const message = Bot.Message.text(`On a scale of 1 - 10 (1 being very low and 10 being very high) rate how appetizing this fried chicken dish looks.`)
+						          .addTextResponse('1')
+						          .addTextResponse('2')
+						          .addTextResponse('3')
+						          .addTextResponse('4')
+						          .addTextResponse('5')
+						          .addTextResponse('6')
+						          .addTextResponse('7')
+						          .addTextResponse('8')
+						          .addTextResponse('9')
+						          .addTextResponse('10')
+								incoming.reply([pic1, message]);
+								removeEntry(user.username, "chk_cake")
+			    				saveToMongoDb(user.username, incoming.body, "chk_burger")
+							} else if (foundResult.chicken_survey.chk_cake === undefined){
+			          			const pic1 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_cone.jpg`)
+						          .setAttributionName('Fried Chicken Cone')
+						          .setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png')
+						        const message = Bot.Message.text(`On a scale of 1 - 10 (1 being very low and 10 being very high) rate how appetizing this fried chicken dish looks.`)
+						          .addTextResponse('1')
+						          .addTextResponse('2')
+						          .addTextResponse('3')
+						          .addTextResponse('4')
+						          .addTextResponse('5')
+						          .addTextResponse('6')
+						          .addTextResponse('7')
+						          .addTextResponse('8')
+						          .addTextResponse('9')
+						          .addTextResponse('10')
+								incoming.reply([pic1, message]);
+								removeEntry(user.username, "chk_cone")
+			    				saveToMongoDb(user.username, incoming.body, "chk_cake")
+							} else if (foundResult.chicken_survey.chk_cone === undefined){
+			          			const pic1 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_dog.jpg`)
+						          .setAttributionName('Fried Chicken Dog')
+						          .setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png')
+						        const message = Bot.Message.text(`On a scale of 1 - 10 (1 being very low and 10 being very high) rate how appetizing this fried chicken dish looks.`)
+						          .addTextResponse('1')
+						          .addTextResponse('2')
+						          .addTextResponse('3')
+						          .addTextResponse('4')
+						          .addTextResponse('5')
+						          .addTextResponse('6')
+						          .addTextResponse('7')
+						          .addTextResponse('8')
+						          .addTextResponse('9')
+						          .addTextResponse('10')
+								incoming.reply([pic1, message]);
+								removeEntry(user.username, "chk_dog")
+			    				saveToMongoDb(user.username, incoming.body, "chk_cake")
+							} else if (foundResult.chicken_survey.chk_dog === undefined){
+			          			const message = Bot.Message.text(`Has this survey made you hungry?`)
+						          .addTextResponse(`YES!`)
+						          .addTextResponse(`not at all`)
+								incoming.reply(message)
+			    				saveToMongoDb(user.username, incoming.body, "chk_dog")
+							}else {
+								const message = Bot.Message.text(`I'm sorry, I don't understand.`)
+								incoming.reply(message)
+							}
+						}
+			    });
+			});
+		});
 });
 
 bot.onTextMessage(/not at all|YES!$/i, (incoming, next) => {
