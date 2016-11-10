@@ -17,18 +17,6 @@ let server = http
     .createServer(bot.incoming())
     .listen(process.env.PORT || 8080);
 
-function findUserValue(username){
-	mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {	
-		var results = db.collection('results');
-		results.find({
-          "user.username": username
-        }).toArray(function(err, found) {
-          var foundResult = found[0].chicken_survey.emoji;
-          console.log(foundResult)
-      });
-	});
-}
-
 function saveUserToMongoDb(username, first_name, last_name) {
     mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
         if (err) throw err;
@@ -54,13 +42,34 @@ function saveToMongoDb(u, value, key) {
     });
 }
 
+function removeEmoji(u) {
+    mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
+        if (err) throw err;
+        var results = db.collection('results');
+        var target_key = "chicken_survey.emoji"
+        var target = {};
+        target[target_key] = value
+        results.update({"user.username": `${u}`}, {   $unset:  target }); 
+    });
+}
+
 bot.onTextMessage(/^hi|Hi$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
+		mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {	
+			var results = db.collection('results');
+			results.find({
+		        "user.username": user.username
+		    }).toArray(function(err, found) {
+		        var foundResult = found[0]
+		        if (foundResult === undefined) {
+		        	saveUserToMongoDb(user.username, user.firstName, user.lastName)
+		        } 
+		    });
+		});
 	    const message = Bot.Message.text(`Hey ${user.firstName}! I am the surveychicken ! Would you like to do a quick survey about chicken ?`)
 	      .addTextResponse(`Yes please`)
 	      .addTextResponse(`No thanks`)
-    	incoming.reply(message)
-    	saveUserToMongoDb(user.username, user.firstName, user.lastName)
+    	incoming.reply(message)	
   	});
 });
 
@@ -155,7 +164,7 @@ bot.onTextMessage(/Rice$/i, (incoming, next) => {
         const message = Bot.Message.text(`Rice is nice. What type of rice goes best with chicken?`)
           .addTextResponse(`Brown`)
           .addTextResponse(`Basmati`)
-          .addTextResponse(`Brown`)
+          .addTextResponse(`White`)
           .addTextResponse(`Flavoured - Coconut, etc`)
         incoming.reply(message)
         saveToMongoDb(user.username, incoming.body, "side_dish")
@@ -176,7 +185,7 @@ bot.onTextMessage(/Vegetables$/i, (incoming, next) => {
     });
 });
 
-bot.onTextMessage(/Mashed|Roasted|Fries|Baked|Greek|Ceaser|Green|Coleslaw|Brown|Basmati|Flavoured - Coconut, etc|Broccoli|Carrots|Spinach|Green Beans|Asparagus$/i, (incoming, next) => {
+bot.onTextMessage(/Mashed|Roasted|Fries|Baked|Greek|Ceaser|Green|Coleslaw|Brown|Basmati|White|Flavoured - Coconut, etc|Broccoli|Carrots|Spinach|Green Beans|Asparagus$/i, (incoming, next) => {
     bot.getUserProfile(incoming.from)
       .then((user) => {
         const message = Bot.Message.text(`Where do you most typically consume Chicken outside of your home?`)
@@ -196,14 +205,13 @@ bot.onTextMessage(/At a family style restaurant|At Fast Food establishment|At a 
           .addTextResponse(`Beef`)
           .addTextResponse(`Seafood`)
           .addTextResponse(`Pork`)
-          .addTextResponse(`A Salad`)
-          .addTextResponse(`An ethnic dish`)
+          .addTextResponse(`Vegetarian option`)
         incoming.reply(message)
         saveToMongoDb(user.username, incoming.body, "location_preference")
     });
 });
 
-bot.onTextMessage(/Beef|Seafood|Pork|A Salad|An ethnic dish$/i, (incoming, next) => {
+bot.onTextMessage(/Beef|Seafood|Pork|Vegetarian option$/i, (incoming, next) => {
     bot.getUserProfile(incoming.from)
       .then((user) => {
         const message = Bot.Message.text(`Thanks for your input so far.  Are you ok to continue and answer a couple more questions?`)
@@ -300,6 +308,7 @@ bot.onTextMessage(/not at all|YES!$/i, (incoming, next) => {
         const message = Bot.Message.text(`Thanks for taking some time to chat with us.  We enjoyed learning more about your chicken preferences.  Please let us know what you thought of this survey by selecting an emoji that best represents your experience chatting with Survey Chicken`)
 		incoming.reply(message)
 		saveToMongoDb(user.username, incoming.body, "hunger")
+		removeEmoji(user.username)
     });
 });
 
@@ -316,11 +325,11 @@ bot.onTextMessage((incoming, next) => {
 		          		const message = Bot.Message.text(`I'm sorry, I don't understand.`)
 						incoming.reply(message)
 					} else {
-						if (foundResult.chicken_survey.emoji === undefined || foundResult.chicken_survey.emoji){
+						if (foundResult.chicken_survey.emoji === undefined){
 		          			const message = Bot.Message.text(`Thanks thats it. Say "hi" again sometime.`)
 							incoming.reply(message)
 		    				saveToMongoDb(user.username, incoming.body, "emoji")
-						} else  {
+						} else {
 							const message = Bot.Message.text(`I'm sorry, I don't understand.`)
 							incoming.reply(message)
 						}
