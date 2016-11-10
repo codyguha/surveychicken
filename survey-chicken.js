@@ -46,7 +46,7 @@ function removeEmoji(u) {
     mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
         if (err) throw err;
         var results = db.collection('results');
-        results.update({"user.username": `${u}`}, {   $set:  {"chicken_survey.emoji": undefined} }); 
+        results.update({"user.username": `${u}`}, {   $unset:  {"chicken_survey.emoji": ""} }); 
     });
 }
 
