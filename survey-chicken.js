@@ -263,39 +263,37 @@ bot.onTextMessage(/I love it|I’m not going to get into it|After a night of har
       .then((user) => {
       	if (incoming.body === "I love it") {
       		saveToMongoDb(user.username, incoming.body, "relationship")
+      		saveToMongoDb(user.username, incoming.body, "relationship_detail")
       	} else {
       		saveToMongoDb(user.username, incoming.body, "relationship_detail")
       	}
-        const pic1 = Bot.Message.picture(`http://assets.bwbx.io/images/ieMg5BCeWkWU/v1/-1x-1.jpg`)
-          .setAttributionName('Chicken Parmesan')
+        const pic1 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_burger.jpg`)
+          .setAttributionName('Fried Chicken Burger')
           .setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png')
-        const pic2 = Bot.Message.picture(`http://assets.bwbx.io/images/ieMg5BCeWkWU/v1/-1x-1.jpg`)
-          .setAttributionName('Double Down')
-          .setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png')
-        const pic3 = Bot.Message.picture(`http://assets.bwbx.io/images/ieMg5BCeWkWU/v1/-1x-1.jpg`)
-          .setAttributionName('Fried Drumsticks')
-          .setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png')
-        const pic4 = Bot.Message.picture(`http://assets.bwbx.io/images/ieMg5BCeWkWU/v1/-1x-1.jpg`)
-          .setAttributionName('Chicken Nuggets')
-          .setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png')
-        const message = Bot.Message.text(`Which of the following fried chicken dishes would you choose?`)
-          .addTextResponse('Chicken Parmesan')
-          .addTextResponse('Double Down')
-          .addTextResponse('Fried Drumsticks')
-          .addTextResponse('Chicken Nuggets')
-		incoming.reply([pic1, pic2, pic3, pic4, message]);
+        const message = Bot.Message.text(`On a scale of 1 - 10 (1 being very low and 10 being very high) rate how appetizing this fried chicken dish looks.`)
+          .addTextResponse('1')
+          .addTextResponse('2')
+          .addTextResponse('3')
+          .addTextResponse('4')
+          .addTextResponse('5')
+          .addTextResponse('6')
+          .addTextResponse('7')
+          .addTextResponse('8')
+          .addTextResponse('9')
+          .addTextResponse('10')
+		incoming.reply([pic1, message]);
     });
 });
 
 
-bot.onTextMessage(/Chicken Parmesan|Double Down|Fried Drumsticks|Chicken Nuggets$/i, (incoming, next) => {
+bot.onTextMessage(/1|2|3|4|5|6|7|8|9|10$/i, (incoming, next) => {
     bot.getUserProfile(incoming.from)
       .then((user) => {
         const message = Bot.Message.text(`Has this survey made you hungry?`)
           .addTextResponse(`YES!`)
           .addTextResponse(`not at all`)
 		incoming.reply(message)
-		saveToMongoDb(user.username, incoming.body, "visual_preference")
+		saveToMongoDb(user.username, incoming.body, "chk_burger")
     });
 });
 
