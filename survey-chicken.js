@@ -17,6 +17,14 @@ let server = http
     .createServer(bot.incoming())
     .listen(process.env.PORT || 8080);
 
+function findUserValue(username){
+	mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {	
+		var results = db.collection('results');
+		var foundObject = db.results.find({ username: username })
+			console.log(foundObject.chicken_survey.emoji)
+	});
+}
+
 function saveUserToMongoDb(username, first_name, last_name) {
     mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
         if (err) throw err;
@@ -292,10 +300,25 @@ bot.onTextMessage(/not at all|YES!$/i, (incoming, next) => {
 			const message = Bot.Message.text(`Thanks thats it. Say "hi" again sometime.`)
 			incoming.reply(message)
             saveToMongoDb(user.username, incoming.body, "emoji")
+            findUserValue(user.username)
 		});
     });
 });
 
+// bot.onTextMessage((incoming, next) => {
+// 			const message = Bot.Message.text(`Thanks thats it. Say "hi" again sometime.`)
+// 			incoming.reply(message)
+//             saveToMongoDb(user.username, incoming.body, "emoji")
+// 		});
+
+bot.onTextMessage((incoming, next) => {
+    bot.getUserProfile(incoming.from)
+      .then((user) => {
+		findUserValue(user.username)
+    });
+});
+
+findUserValue(username)
 // bot.onTextMessage(/YES!$/i, (incoming, next) => {
 //     bot.getUserProfile(incoming.from)
 //       .then((user) => {
