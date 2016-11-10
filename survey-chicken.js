@@ -318,7 +318,6 @@ bot.onTextMessage((incoming, next) => {
     });
 });
 
-findUserValue(username)
 // bot.onTextMessage(/YES!$/i, (incoming, next) => {
 //     bot.getUserProfile(incoming.from)
 //       .then((user) => {
