@@ -20,7 +20,7 @@ let server = http
 function findUserValue(username){
 	mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {	
 		var results = db.collection('results');
-		var foundObject = db.results.find({ username: username })
+		var foundObject = results.find({ username: username })
 			console.log(foundObject.chicken_survey.emoji)
 	});
 }
