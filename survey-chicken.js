@@ -388,7 +388,7 @@ bot.onTextMessage(/^1|2|3|4|5|6|7|8|9|10$/i, (incoming, next) => {
 						          .addTextResponse('10')
 								incoming.reply([pic1, message]);
 								dogValidation(user.username)
-			    				saveToMongoDb(user.username, incoming.body, "chk_cake")
+			    				saveToMongoDb(user.username, incoming.body, "chk_cone")
 							} else if (foundResult.chicken_survey.chk_dog === undefined){
 			          			const message = Bot.Message.text(`Has this survey made you hungry?`)
 						          .addTextResponse(`YES!`)
