@@ -56,12 +56,11 @@ function removeEmoji(u) {
     });
 }
 
-function removeEntry(u, key) {
+function removeEntry(u) {
     mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
         if (err) throw err;
         var results = db.collection('results');
-        var target_key = "chicken_survey." + key
-        results.update({"user.username": `${u}`}, {   $unset:  {target_key: ""} }); 
+        results.update({"user.username": `${u}`}, {   $unset:  {"chicken_survey.chk_burger": ""} }); 
     });
 }
 
@@ -297,7 +296,7 @@ bot.onTextMessage(/I love it|I’m not going to get into it|After a night of har
           .addTextResponse('9')
           .addTextResponse('10')
 		incoming.reply([pic1, message]);
-		removeEntry(user.username, "chk_burger")
+		removeEntry(user.username)
     });
 });
 
