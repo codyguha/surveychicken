@@ -300,12 +300,28 @@ bot.onTextMessage(/not at all|YES!$/i, (incoming, next) => {
         const message = Bot.Message.text(`Thanks for taking some time to chat with us.  We enjoyed learning more about your chicken preferences.  Please let us know what you thought of this survey by selecting an emoji that best represents your experience chatting with Survey Chicken`)
 		incoming.reply(message)
 		saveToMongoDb(user.username, incoming.body, "hunger")
-		bot.onTextMessage((incoming, next) => {
-			const message = Bot.Message.text(`Thanks thats it. Say "hi" again sometime.`)
-			incoming.reply(message)
-            saveToMongoDb(user.username, incoming.body, "emoji")
-		});
     });
+});
+
+bot.onTextMessage((incoming, next) => {
+	bot.getUserProfile(incoming.from)
+      .then((user) => {
+			mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {	
+				var results = db.collection('results');
+				results.find({
+		          "user.username": username
+		        }).toArray(function(err, found) {
+		          var foundResult = found[0].chicken_survey.emoji;
+		          if (foundResult !== undefined){
+		          	const message = Bot.Message.text(`Thanks thats it. Say "hi" again sometime.`)
+					incoming.reply(message)
+		    		saveToMongoDb(user.username, incoming.body, "emoji")
+		          } else {
+		          	findUserValue(user.username)
+		          }
+		      });
+			});
+	   });
 });
 
 // bot.onTextMessage((incoming, next) => {
