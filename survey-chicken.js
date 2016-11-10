@@ -317,7 +317,7 @@ bot.onTextMessage(/I love it|I’m not going to get into it|After a night of har
           .addTextResponse('8')
           .addTextResponse('9')
           .addTextResponse('10')
-		incoming.reply([pic1, message]);
+		incoming.reply([message, pic1]);
 		burgerValidation(user.username)
     });
 });
