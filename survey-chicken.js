@@ -19,9 +19,11 @@ let server = http
 
 function findUserValue(username){
 	mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {	
-		var results = db.collection('results');
-		var foundObject = results.find({ username: `${username}` })
-			console.log(foundObject)
+		results.find({
+          "user.username": username
+        }).toArray(function(err, found) {
+          var userresults = found[0].canadian_values_survey;
+          console.log(userresults)
 	});
 }
 
