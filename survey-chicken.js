@@ -56,11 +56,32 @@ function removeEmoji(u) {
     });
 }
 
-function removeEntry(u) {
+function burgerValidation(u) {
     mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
         if (err) throw err;
         var results = db.collection('results');
         results.update({"user.username": `${u}`}, {   $unset:  {"chicken_survey.chk_burger": ""} }); 
+    });
+}
+function cakeValidation(u) {
+    mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
+        if (err) throw err;
+        var results = db.collection('results');
+        results.update({"user.username": `${u}`}, {   $unset:  {"chicken_survey.chk_cake": ""} }); 
+    });
+}
+function coneValidation(u) {
+    mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
+        if (err) throw err;
+        var results = db.collection('results');
+        results.update({"user.username": `${u}`}, {   $unset:  {"chicken_survey.chk_cone": ""} }); 
+    });
+}
+function dogValidation(u) {
+    mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
+        if (err) throw err;
+        var results = db.collection('results');
+        results.update({"user.username": `${u}`}, {   $unset:  {"chicken_survey.chk_dog": ""} }); 
     });
 }
 
@@ -296,7 +317,7 @@ bot.onTextMessage(/I love it|I’m not going to get into it|After a night of har
           .addTextResponse('9')
           .addTextResponse('10')
 		incoming.reply([pic1, message]);
-		removeEntry(user.username)
+		burgerValidation(user.username)
     });
 });
 
@@ -330,7 +351,7 @@ bot.onTextMessage(/^1|2|3|4|5|6|7|8|9|10$/i, (incoming, next) => {
 						          .addTextResponse('9')
 						          .addTextResponse('10')
 								incoming.reply([pic1, message]);
-								removeEntry(user.username, "chk_cake")
+								cakeValidation(user.username)
 			    				saveToMongoDb(user.username, incoming.body, "chk_burger")
 							} else if (foundResult.chicken_survey.chk_cake === undefined){
 			          			const pic1 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_cone.jpg`)
@@ -348,7 +369,7 @@ bot.onTextMessage(/^1|2|3|4|5|6|7|8|9|10$/i, (incoming, next) => {
 						          .addTextResponse('9')
 						          .addTextResponse('10')
 								incoming.reply([pic1, message]);
-								removeEntry(user.username, "chk_cone")
+								cakeValidation(user.username)
 			    				saveToMongoDb(user.username, incoming.body, "chk_cake")
 							} else if (foundResult.chicken_survey.chk_cone === undefined){
 			          			const pic1 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_dog.jpg`)
@@ -366,7 +387,7 @@ bot.onTextMessage(/^1|2|3|4|5|6|7|8|9|10$/i, (incoming, next) => {
 						          .addTextResponse('9')
 						          .addTextResponse('10')
 								incoming.reply([pic1, message]);
-								removeEntry(user.username, "chk_dog")
+								dogValidation(user.username)
 			    				saveToMongoDb(user.username, incoming.body, "chk_cake")
 							} else if (foundResult.chicken_survey.chk_dog === undefined){
 			          			const message = Bot.Message.text(`Has this survey made you hungry?`)
