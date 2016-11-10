@@ -369,7 +369,7 @@ bot.onTextMessage(/^1|2|3|4|5|6|7|8|9|10$/i, (incoming, next) => {
 						          .addTextResponse('9')
 						          .addTextResponse('10')
 								incoming.reply([pic1, message]);
-								cakeValidation(user.username)
+								coneValidation(user.username)
 			    				saveToMongoDb(user.username, incoming.body, "chk_cake")
 							} else if (foundResult.chicken_survey.chk_cone === undefined){
 			          			const pic1 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_dog.jpg`)
