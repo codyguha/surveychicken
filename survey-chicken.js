@@ -312,7 +312,7 @@ bot.onTextMessage((incoming, next) => {
 		          "user.username": user.username
 		        }).toArray(function(err, found) {
 		          var foundResult = found[0].chicken_survey.emoji;
-		          if (foundResult !== undefined){
+		          if (foundResult === undefined){
 		          	const message = Bot.Message.text(`Thanks thats it. Say "hi" again sometime.`)
 					incoming.reply(message)
 		    		saveToMongoDb(user.username, incoming.body, "emoji")
