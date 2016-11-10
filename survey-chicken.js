@@ -24,6 +24,7 @@ function findUserValue(username){
         }).toArray(function(err, found) {
           var userresults = found[0].canadian_values_survey;
           console.log(userresults)
+      });
 	});
 }
 
