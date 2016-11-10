@@ -316,8 +316,9 @@ bot.onTextMessage((incoming, next) => {
 		          	const message = Bot.Message.text(`Thanks thats it. Say "hi" again sometime.`)
 					incoming.reply(message)
 		    		saveToMongoDb(user.username, incoming.body, "emoji")
-		          } else {
-		          	findUserValue(user.username)
+		          } else if (err) {
+		          	const message = Bot.Message.text(`I'm sorry, I don't understand. say "hi" to get started.`)
+					incoming.reply(message)
 		          }
 		      });
 			});
