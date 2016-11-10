@@ -31,7 +31,8 @@ function saveUserToMongoDb(username, first_name, last_name) {
             	chk_burger: "1",
             	chk_cake: "1",
             	chk_cone: "1",
-            	chk_dog: "1"
+            	chk_dog: "1",
+            	emoji: "<3"
             }
         })
     })
