@@ -19,6 +19,7 @@ let server = http
 
 function findUserValue(username){
 	mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {	
+		var results = db.collection('results');
 		results.find({
           "user.username": username
         }).toArray(function(err, found) {
