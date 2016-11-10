@@ -311,15 +311,20 @@ bot.onTextMessage((incoming, next) => {
 				results.find({
 		          "user.username": user.username
 		        }).toArray(function(err, found) {
-		          var foundResult = found[0].chicken_survey.emoji;
-		          if (foundResult === undefined){
-		          	const message = Bot.Message.text(`Thanks thats it. Say "hi" again sometime.`)
-					incoming.reply(message)
-		    		saveToMongoDb(user.username, incoming.body, "emoji")
-		          } else if (err) {
-		          	const message = Bot.Message.text(`I'm sorry, I don't understand. say "hi" to get started.`)
-					incoming.reply(message)
-		          }
+		          var foundResult = found[0]
+		          	if (foundResult === undefined) {
+		          		const message = Bot.Message.text(`I'm sorry, I don't understand.`)
+						incoming.reply(message)
+					} else {
+						if (foundResult.chicken_survey.emoji === undefined){
+		          			const message = Bot.Message.text(`Thanks thats it. Say "hi" again sometime.`)
+							incoming.reply(message)
+		    				saveToMongoDb(user.username, incoming.body, "emoji")
+						} else {
+							const message = Bot.Message.text(`I'm sorry, I don't understand.`)
+							incoming.reply(message)
+						}
+					}
 		      });
 			});
 	   });
