@@ -286,7 +286,7 @@ bot.onTextMessage(/I love it|I’m not going to get into it|After a night of har
 });
 
 
-bot.onTextMessage(/1|2|3|4|5|6|7|8|9|10$/i, (incoming, next) => {
+bot.onTextMessage(/^1|2|3|4|5|6|7|8|9|10$/i, (incoming, next) => {
     bot.getUserProfile(incoming.from)
       .then((user) => {
         const message = Bot.Message.text(`Has this survey made you hungry?`)
