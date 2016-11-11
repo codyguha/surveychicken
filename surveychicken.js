@@ -132,6 +132,8 @@ function userValidation(user) {
 var reminder;
 var thanks;
 var hi;
+var robindance;
+var robindancemsg;
 
 function resetRemindUserCounter(incoming) {
 	clearTimeout(reminder);
@@ -170,11 +172,11 @@ function startGratitudeUserCounter(incoming) {
 }
 function startShareUserCounter(incoming) {
 	bot.getUserProfile(incoming.from).then((user) => {
-		robin = setTimeout(function() {
+		robindance = setTimeout(function() {
 			const message2 = Bot.Message.video(`https://github.com/codyguha/survey-images/blob/master/chickendance.mp4`).setAttributionName('CHICKEN DANCE!').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png')
 			incoming.reply([message2, message1])
 		}, 3000);
-		hi = setTimeout(function() {
+		robindancemsg = setTimeout(function() {
 			const message1 = Bot.Message.text(`Hi ${user.firstName}. Do ever just feel like dancing?`)
 			incoming.reply(message1)
 		}, 1000);
