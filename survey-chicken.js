@@ -85,13 +85,11 @@ function dogValidation(u) {
         results.update({"user.username": `${u}`}, {   $unset:  {"chicken_survey.chk_dog": ""} }); 
     });
 }
-function startTimer(incoming){
-	return setTimeout(remindUser(incoming), 2000)
-}
+
 
 function remindUser(incoming){
 	const message = Bot.Message.text(`Hey ${user.firstName}! COME BACK! YOU ARE NOT DONE!`)
-    return incoming.reply(message)
+	incoming.reply(message)
 }
 
 bot.onTextMessage(/^hi|Hi$/i, (incoming, next) => {
@@ -111,8 +109,8 @@ bot.onTextMessage(/^hi|Hi$/i, (incoming, next) => {
 	      .addTextResponse(`Yes please`)
 	      .addTextResponse(`No thanks`)
     	incoming.reply(message)
-    	startTimer(incoming)
   	});
+  	setTimeout(remindUser(incoming), 2000)
 });
 
 bot.onTextMessage(/Yes please$/i, (incoming, next) => {
@@ -124,7 +122,6 @@ bot.onTextMessage(/Yes please$/i, (incoming, next) => {
           .addTextResponse(`Rarely`)
           .addTextResponse(`Never`)
         incoming.reply(message)
-        startTimer(incoming)
     });
 });
 
