@@ -85,6 +85,16 @@ function dogValidation(u) {
         results.update({"user.username": `${u}`}, {   $unset:  {"chicken_survey.chk_dog": ""} }); 
     });
 }
+function startTimer(incoming){
+	var timer = setTimeout(remindUser(incoming), 10000)
+	clearTimeout(timer)
+	timer = setTimeout(remindUser(incoming), 10000)
+}
+
+function remindUser(incoming){
+	const message = Bot.Message.text(`Hey ${user.firstName}! COME BACK! YOU ARE NOT DONE!`)
+    incoming.reply(message)
+}
 
 bot.onTextMessage(/^hi|Hi$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
@@ -102,7 +112,8 @@ bot.onTextMessage(/^hi|Hi$/i, (incoming, next) => {
 	    const message = Bot.Message.text(`Hey ${user.firstName}! I am the surveychicken ! Would you like to do a quick survey about chicken ?`)
 	      .addTextResponse(`Yes please`)
 	      .addTextResponse(`No thanks`)
-    	incoming.reply(message)	
+    	incoming.reply(message)
+    	startTimer(incoming)
   	});
 });
 
@@ -115,6 +126,7 @@ bot.onTextMessage(/Yes please$/i, (incoming, next) => {
           .addTextResponse(`Rarely`)
           .addTextResponse(`Never`)
         incoming.reply(message)
+        startTimer(incoming)
     });
 });
 
