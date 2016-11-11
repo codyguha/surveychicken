@@ -172,14 +172,14 @@ function startGratitudeUserCounter(incoming) {
 }
 function startShareUserCounter(incoming) {
 	bot.getUserProfile(incoming.from).then((user) => {
-		robindance = setTimeout(function() {
-			const message2 = Bot.Message.video().setVideoUrl(`https://github.com/codyguha/survey-images/blob/master/chickendance.mp4`).setAttributionName('CHICKEN DANCE!').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png')
+		// robindance = setTimeout(function() {
+			const message2 = Bot.Message.video(`https://github.com/codyguha/survey-images/blob/master/chickendance.mp4`).setVideoUrl(`https://github.com/codyguha/survey-images/blob/master/chickendance.mp4`).setAttributionName('CHICKEN DANCE!').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png')
 			incoming.reply(message2)
-		}, 3000);
-		robindancemsg = setTimeout(function() {
-			const message1 = Bot.Message.text(`Hi ${user.firstName}. Do ever just feel like dancing?`)
-			incoming.reply(message1)
-		}, 1000);
+		// }, 1000);
+		// robindancemsg = setTimeout(function() {
+		// 	const message1 = Bot.Message.text(`Hi ${user.firstName}. Do ever just feel like dancing?`)
+		// 	incoming.reply(message1)
+		// }, 1000);
 	});
 }
 bot.onStartChattingMessage((incoming, next) => {
@@ -395,8 +395,6 @@ bot.onTextMessage(/YES!|GET CHICKEN!$/i, (incoming, next) => {
 		saveToMongoDb(user.username, incoming.body, "hunger")
 		removeEmoji(user.username)
 	});
-	const message2 = Bot.Message.video().setVideoUrl(`https://github.com/codyguha/survey-images/blob/master/chickendance.mp4`).setAttributionName('CHICKEN DANCE!').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png')
-			incoming.reply(message2)
 	startShareUserCounter(incoming)
 	endRemindUserCounter();
 	endGratitudeCounter()
