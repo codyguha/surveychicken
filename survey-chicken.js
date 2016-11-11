@@ -443,3 +443,12 @@ bot.onTextMessage((incoming, next) => {
 	});
 });
 
+bot.onTextMessage(/YES!$/i, (incoming, next) => {
+    bot.getUserProfile(incoming.from)
+      .then((user) => {
+        const message = Bot.Message.link("https://www.just-eat.ca/delivery/vancouver/chicken/")
+		incoming.reply(message)
+		saveToMongoDb(user.username, incoming.body, "hunger")
+		removeEmoji(user.username)
+    });
+});
