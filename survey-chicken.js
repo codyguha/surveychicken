@@ -86,9 +86,7 @@ function dogValidation(u) {
     });
 }
 function startTimer(incoming){
-	var timer = setTimeout(remindUser(incoming), 10000)
-	clearTimeout(timer)
-	timer = setTimeout(remindUser(incoming), 10000)
+	setTimeout(remindUser(incoming), 2000)
 }
 
 function remindUser(incoming){
