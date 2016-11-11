@@ -1,1 +1,1 @@
-web: node survey-chicken.js
+web: node surveychicken.js

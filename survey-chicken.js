@@ -86,7 +86,18 @@ function dogValidation(u) {
     });
 }
 
+function userValidation(user) {
+    mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {	
+		var results = db.collection('results');
+		results.find({"user.username": user.username}).toArray(function(err, found) {
+		    if (found[0] === undefined) { saveUserToMongoDb(user.username, user.firstName, user.lastName)} 
+		});
+	});
+}
+
 var reminder;
+var thanks;
+var hi;
 
 function resetRemindUserCounter(incoming){
 	clearTimeout(reminder);
@@ -95,6 +106,11 @@ function resetRemindUserCounter(incoming){
 
 function endRemindUserCounter(){
 	clearTimeout(reminder);
+}
+
+function endGratitudeCounter(){
+	clearTimeout(thanks);
+	clearTimeout(hi);
 }
 
 function startRemindUserCounter(incoming){
@@ -106,30 +122,36 @@ function startRemindUserCounter(incoming){
 
 function startGratitudeUserCounter(incoming){
 	bot.getUserProfile(incoming.from).then((user) => {
-	reminder = setTimeout(function(){ const message = Bot.Message.text(`Hi ${user.firstName}. It was really great to meet you earlier. Don't be a turkey. Just say "hi" if you feel like you changed your mind on anything we talked about earlier, and if you're really hungry just yell "GET CHICKEN!"" and I will help you find some :)`)
-	incoming.reply(message) }, 480000);
+		thanks = setTimeout(function(){ 
+			const message2 = Bot.Message.text(`It was really great to meet you earlier. Don't be a turkey. Just say "hi" if you feel like you changed your mind on anything we talked about earlier, and if you're really hungry just yell "GET CHICKEN!" and I will help you find some :)`)
+			incoming.reply(message2) 
+		}, 480000);
+		hi = setTimeout(function(){ 
+			const message1 = Bot.Message.text(`Hi ${user.firstName}.`)
+			incoming.reply(message1) 
+		}, 470000);
 	});
 }
 
+bot.onStartChattingMessage((incoming, next) => {
+	bot.getUserProfile(incoming.from)
+	  .then((user) => {
+	  	userValidation(user);
+	    const message = Bot.Message.text(`Hey ${user.firstName}! I am the surveychicken ! Would you like to do a quick survey about chicken ?`)
+	      .addTextResponse(`Yes please`)
+	      .addTextResponse(`No thanks`)
+    	incoming.reply(message)
+	});
+});
+
 bot.onTextMessage(/^hi|Hi$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
-		mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {	
-			var results = db.collection('results');
-			results.find({
-		        "user.username": user.username
-		    }).toArray(function(err, found) {
-		        var foundResult = found[0]
-		        if (foundResult === undefined) {
-		        	saveUserToMongoDb(user.username, user.firstName, user.lastName)
-		        } 
-		    });
-		});
+		userValidation(user);
 	    const message = Bot.Message.text(`Hey ${user.firstName}! I am the surveychicken ! Would you like to do a quick survey about chicken ?`)
 	      .addTextResponse(`Yes please`)
 	      .addTextResponse(`No thanks`)
     	incoming.reply(message)
   	});
-  	startRemindUserCounter(incoming)
 });
 
 bot.onTextMessage(/Yes please$/i, (incoming, next) => {
@@ -142,13 +164,15 @@ bot.onTextMessage(/Yes please$/i, (incoming, next) => {
           .addTextResponse(`Never`)
         incoming.reply(message)
     });
-    resetRemindUserCounter(incoming)
+    startRemindUserCounter(incoming)
 });
 
 bot.onTextMessage(/Never$/i, (incoming, next) => {
     incoming.reply(Bot.Message.text(`Ok I’m glad we got that out the way.  I suppose there is no point in bugging you with more questions about your chicken preferences.`))
     saveToMongoDb(user.username, incoming.body, "frequency")
     endRemindUserCounter();
+    endGratitudeUserCounter(incoming)
+    startGratitudeUserCounter(incoming)
 });
 
 bot.onTextMessage(/On a regular basis|Once and a while|Rarely$/i, (incoming, next) => {
@@ -478,6 +502,7 @@ bot.onTextMessage(/YES!|GET CHICKEN!$/i, (incoming, next) => {
 		removeEmoji(user.username)
     });
     endRemindUserCounter();
+    endGratitudeCounter()
     startGratitudeUserCounter(incoming)
 });
 
@@ -509,4 +534,3 @@ bot.onTextMessage((incoming, next) => {
 		});
 	});
 });
-
