@@ -172,18 +172,14 @@ function startGratitudeUserCounter(incoming) {
 }
 function startShareUserCounter(incoming) {
 	bot.getUserProfile(incoming.from).then((user) => {
-		// robindance = setTimeout(function() {
+		robindance = setTimeout(function() {
 		const hifive = Bot.Message.video(`https://r3---sn-uxa0n-t8gs.googlevideo.com/videoplayback?pl=44&id=o-AL5-yeGve6kG6NEH5gBBrsLVni2phTN1sLtd3nxRWGyS&sparams=clen,dur,ei,expire,gir,id,initcwndbps,ip,ipbits,itag,lmt,mime,mm,mn,ms,mv,nh,pl,ratebypass,source,upn&ip=2001:569:7668:3700:c854:d201:6f30:bab2&signature=54151F4A748A402F2426F28B6545A29820180D02.5E0EA43A41CBB596CCFF0AC0D4CC5D1D5B4B2F8F&ei=fp4lWPb5DdOt-APqmLygAg&upn=eJ1j8WyO2oQ&source=youtube&itag=18&clen=3384008&fexp=9444224&key=cms1&mime=video/mp4&gir=yes&expire=1478882014&ratebypass=yes&dur=50.828&ipbits=0&lmt=1400107801534427&title=(Natok24.Com)%20Teen_Titans_Go_Robin_Chicken_Dance&cms_redirect=yes&mm=31&mn=sn-uxa0n-t8gs&ms=au&mt=1478860353&mv=m`)
           .setAttributionName(' ')
           .setLoop(true)
           .setAutoplay(true)
           .setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png')
 			incoming.reply(hifive)
-		// }, 1000);
-		// robindancemsg = setTimeout(function() {
-		// 	const message1 = Bot.Message.text(`Hi ${user.firstName}. Do ever just feel like dancing?`)
-		// 	incoming.reply(message1)
-		// }, 1000);
+		}, 360000000);
 	});
 }
 bot.onStartChattingMessage((incoming, next) => {
