@@ -88,7 +88,7 @@ function dogValidation(u) {
 
 
 function remindUser(incoming){
-	const message = Bot.Message.text(`Hey ${user.firstName}! COME BACK! YOU ARE NOT DONE!`)
+	const message = Bot.Message.text(`COME BACK! YOU ARE NOT DONE!`)
 	incoming.reply(message)
 }
 
