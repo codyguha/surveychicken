@@ -122,7 +122,7 @@ bot.onTextMessage(/^hi|Hi$/i, (incoming, next) => {
 	      .addTextResponse(`No thanks`)
     	incoming.reply(message)
   	});
-  	setRemindUser(incoming)
+  	startRemindUserCounter(incoming)
 });
 
 bot.onTextMessage(/Yes please$/i, (incoming, next) => {
@@ -135,7 +135,7 @@ bot.onTextMessage(/Yes please$/i, (incoming, next) => {
           .addTextResponse(`Never`)
         incoming.reply(message)
     });
-    resetRemindUser(incoming)
+    resetRemindUserCounter(incoming)
 });
 
 bot.onTextMessage(/Never$/i, (incoming, next) => {
