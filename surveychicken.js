@@ -173,8 +173,12 @@ function startGratitudeUserCounter(incoming) {
 function startShareUserCounter(incoming) {
 	bot.getUserProfile(incoming.from).then((user) => {
 		// robindance = setTimeout(function() {
-			const message2 = Bot.Message.video(`https://github.com/codyguha/survey-images/blob/master/chickendance.mp4`).setVideoUrl(`https://github.com/codyguha/survey-images/blob/master/chickendance.mp4`).setAttributionName('CHICKEN DANCE!').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png')
-			incoming.reply(message2)
+		const hifive = Bot.Message.video(`https://github.com/codyguha/survey-images/blob/master/chickendance.mp4`)
+          .setAttributionName(' ')
+          .setLoop(true)
+          .setAutoplay(true)
+          .setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png')
+			incoming.reply(hifive)
 		// }, 1000);
 		// robindancemsg = setTimeout(function() {
 		// 	const message1 = Bot.Message.text(`Hi ${user.firstName}. Do ever just feel like dancing?`)
