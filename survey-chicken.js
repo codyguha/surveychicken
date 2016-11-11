@@ -89,7 +89,7 @@ function dogValidation(u) {
 
 function remindUser(incoming, o){
 	if (!o) {
-		ClearTimout(timer)
+		clearTimout(timer)
 	}
 	var timer = setTimeout(function(){ const message = Bot.Message.text(`COME BACK! YOU ARE NOT DONE!`)
 	incoming.reply(message) }, 5000);
