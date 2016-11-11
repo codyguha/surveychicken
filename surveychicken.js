@@ -159,13 +159,25 @@ function startRemindUserCounter(incoming) {
 function startGratitudeUserCounter(incoming) {
 	bot.getUserProfile(incoming.from).then((user) => {
 		thanks = setTimeout(function() {
-			const message2 = Bot.Message.text(`It was really great to meet you earlier. Don't be a turkey. Just say "hi" if you feel like you changed your mind on anything we talked about earlier, and if you're really hungry just yell "GET CHICKEN!" and I will help you find some :)`)
+			const message2 = Bot.Message.text(`It was really great chatting with you earlier. Don't be a turkey. Just say "hi" if you feel like you changed your mind on anything we talked about earlier, and if you're really hungry just yell "GET CHICKEN!" and I will help you find some :)`)
 			incoming.reply(message2)
 		}, 480000);
 		hi = setTimeout(function() {
 			const message1 = Bot.Message.text(`Hi ${user.firstName}.`)
 			incoming.reply(message1)
 		}, 470000);
+	});
+}
+function startShareUserCounter(incoming) {
+	bot.getUserProfile(incoming.from).then((user) => {
+		robin = setTimeout(function() {
+			const message2 = Bot.Message.video(`https://github.com/codyguha/survey-images/blob/master/chickendance.mp4`).setAttributionName('CHICKEN DANCE!').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png')
+			incoming.reply([message2, message1])
+		}, 3000);
+		hi = setTimeout(function() {
+			const message1 = Bot.Message.text(`Hi ${user.firstName}. Do ever just feel like dancing?`)
+			incoming.reply(message1)
+		}, 1000);
 	});
 }
 bot.onStartChattingMessage((incoming, next) => {
@@ -367,7 +379,7 @@ bot.onTextMessage(/^1|2|3|4|5|6|7|8|9|10$/i, (incoming, next) => {
 });
 bot.onTextMessage(/NO WAY!$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
-		const message = Bot.Message.text(`Thanks for taking some time to chat with us.  We enjoyed learning more about your chicken preferences.  Please let us know what you thought of this survey by selecting an emoji that best represents your experience chatting with Survey Chicken`)
+		const message = Bot.Message.text(`Thanks for taking some time to chat with us.  We enjoyed learning more about your chicken preferences. Please let us know what you thought of this survey by selecting an emoji that best represents your experience chatting with Survey Chicken`)
 		incoming.reply(message)
 		saveToMongoDb(user.username, incoming.body, "hunger")
 		removeEmoji(user.username)
@@ -381,6 +393,7 @@ bot.onTextMessage(/YES!|GET CHICKEN!$/i, (incoming, next) => {
 		saveToMongoDb(user.username, incoming.body, "hunger")
 		removeEmoji(user.username)
 	});
+	startShareUserCounter(incoming)
 	endRemindUserCounter();
 	endGratitudeCounter()
 	startGratitudeUserCounter(incoming)
