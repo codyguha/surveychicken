@@ -416,7 +416,15 @@ bot.onTextMessage(/not at all$/i, (incoming, next) => {
     });
 });
 
-bot.onTextMessage(/YES!$/i, (incoming, next) => {
+bot.onTextMessage(/get chicken|Get Chicken|$/i, (incoming, next) => {
+    bot.getUserProfile(incoming.from)
+      .then((user) => {
+        const message = Bot.Message.text(`too quiet... I think you mean GET CHICKEN!? try again.`)
+		incoming.reply(message)
+    });
+});
+
+bot.onTextMessage(/YES!|GET CHICKEN!$/i, (incoming, next) => {
     bot.getUserProfile(incoming.from)
       .then((user) => {
         const message = Bot.Message.link("https://www.just-eat.ca/delivery/vancouver/chicken/")
@@ -445,7 +453,7 @@ bot.onTextMessage((incoming, next) => {
 						incoming.reply(message)
 					} else {
 						if (foundResult.chicken_survey.emoji === undefined){
-		          			const message = Bot.Message.text(`Thanks thats it. Say "hi" again sometime.`)
+		          			const message = Bot.Message.text(`ALL DONE! Say "hi" to do the survey agian or yell "GET CHICKEN!" to GET CHICKEN NOW!`)
 							incoming.reply(message)
 		    				saveToMongoDb(user.username, incoming.body, "emoji")
 						} else {
