@@ -93,13 +93,13 @@ function resetRemindUserCounter(incoming){
 	startRemindUserCounter(incoming)
 }
 
-function endRemindUserCounter(incoming){
+function endRemindUserCounter(){
 	clearTimeout(reminder);
 }
 
 function startRemindUserCounter(incoming){
 	bot.getUserProfile(incoming.from).then((user) => {
-	var reminder = setTimeout(function(){ const message = Bot.Message.text(`Hey ${user.firstName}!!! COME BACK AND FINISH THE SURVEY. ya turkey!`)
+	reminder = setTimeout(function(){ const message = Bot.Message.text(`Hey ${user.firstName}!!! COME BACK AND FINISH THE SURVEY. ya turkey!`)
 	incoming.reply(message) }, 120000);
 	});
 }
@@ -141,7 +141,7 @@ bot.onTextMessage(/Yes please$/i, (incoming, next) => {
 bot.onTextMessage(/Never$/i, (incoming, next) => {
     incoming.reply(Bot.Message.text(`Ok I’m glad we got that out the way.  I suppose there is no point in bugging you with more questions about your chicken preferences.`))
     saveToMongoDb(user.username, incoming.body, "frequency")
-    endRemindUserCounter(incoming)
+    endRemindUserCounter();
 });
 
 bot.onTextMessage(/On a regular basis|Once and a while|Rarely$/i, (incoming, next) => {
@@ -457,13 +457,13 @@ bot.onTextMessage(/not at all$/i, (incoming, next) => {
     resetRemindUserCounter(incoming)
 });
 
-bot.onTextMessage(/get chicken|Get Chicken|$/i, (incoming, next) => {
-    bot.getUserProfile(incoming.from)
-      .then((user) => {
-        const message = Bot.Message.text(`too quiet... I think you mean GET CHICKEN!? try again.`)
-		incoming.reply(message)
-    });
-});
+// bot.onTextMessage(/^get chicken|Get Chicken$/i, (incoming, next) => {
+//     bot.getUserProfile(incoming.from)
+//       .then((user) => {
+//         const message = Bot.Message.text(`too quiet... I think you mean GET CHICKEN!? try again.`)
+// 		incoming.reply(message)
+//     });
+// });
 
 bot.onTextMessage(/YES!|GET CHICKEN!$/i, (incoming, next) => {
     bot.getUserProfile(incoming.from)
@@ -478,6 +478,7 @@ bot.onTextMessage(/YES!|GET CHICKEN!$/i, (incoming, next) => {
 		saveToMongoDb(user.username, incoming.body, "hunger")
 		removeEmoji(user.username)
     });
+    endRemindUserCounter();
 });
 
 bot.onTextMessage((incoming, next) => {
@@ -497,7 +498,7 @@ bot.onTextMessage((incoming, next) => {
 		          			const message = Bot.Message.text(`ALL DONE! Say "hi" to do the survey agian or yell "GET CHICKEN!" to GET CHICKEN NOW!`)
 							incoming.reply(message)
 		    				saveToMongoDb(user.username, incoming.body, "emoji")
-		    				endRemindUserCounter(incoming)
+		    				endRemindUserCounter();
 						} else {
 							const message = Bot.Message.text(`I'm sorry, I don't understand.`)
 							incoming.reply(message)
