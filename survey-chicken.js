@@ -86,12 +86,12 @@ function dogValidation(u) {
     });
 }
 function startTimer(incoming){
-	setTimeout(remindUser(incoming), 2000)
+	return setTimeout(remindUser(incoming), 2000)
 }
 
 function remindUser(incoming){
 	const message = Bot.Message.text(`Hey ${user.firstName}! COME BACK! YOU ARE NOT DONE!`)
-    incoming.reply(message)
+    return incoming.reply(message)
 }
 
 bot.onTextMessage(/^hi|Hi$/i, (incoming, next) => {
