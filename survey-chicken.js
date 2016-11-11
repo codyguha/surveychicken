@@ -86,16 +86,18 @@ function dogValidation(u) {
     });
 }
 
+var reminder;
 
-// function remindUser(incoming, o){
-// 	if (!o) {
-// 		timer.clearTimout(timer)
-// 		return timer;
-// 	}
-// 	var timer = setTimeout(function(){ const message = Bot.Message.text(`COME BACK! YOU ARE NOT DONE!`)
-// 	incoming.reply(message) }, 5000);
-// 	return timer;
-// }
+function setRemindUser(incoming){
+	var reminder = setTimeout(function(){ const message = Bot.Message.text(`COME BACK! YOU ARE NOT DONE!`)
+	incoming.reply(message) }, 10000);
+}
+
+function resetRemindUser(incoming){
+	clearTimeout(reminder);
+	var reminder = setTimeout(function(){ const message = Bot.Message.text(`COME BACK! YOU ARE NOT DONE!`)
+	incoming.reply(message) }, 10000);
+}
 
 bot.onTextMessage(/^hi|Hi$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
@@ -115,7 +117,7 @@ bot.onTextMessage(/^hi|Hi$/i, (incoming, next) => {
 	      .addTextResponse(`No thanks`)
     	incoming.reply(message)
   	});
-  	// remindUser(incoming, o)
+  	setRemindUser(incoming)
 });
 
 bot.onTextMessage(/Yes please$/i, (incoming, next) => {
@@ -128,7 +130,7 @@ bot.onTextMessage(/Yes please$/i, (incoming, next) => {
           .addTextResponse(`Never`)
         incoming.reply(message)
     });
-      // remindUser(incoming)
+    resetRemindUser(incoming)
 });
 
 bot.onTextMessage(/Never$/i, (incoming, next) => {
