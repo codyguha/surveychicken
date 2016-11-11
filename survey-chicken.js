@@ -104,6 +104,13 @@ function startRemindUserCounter(incoming){
 	});
 }
 
+function startGratitudeUserCounter(incoming){
+	bot.getUserProfile(incoming.from).then((user) => {
+	reminder = setTimeout(function(){ const message = Bot.Message.text(`Hi ${user.firstName}. It was really great to meet you earlier. Don't be a turkey. Just say "hi" if you feel like you changed your mind on anything we talked about earlier, and if you're really hungry just yell "GET CHICKEN!"" and I will help you find some :)`)
+	incoming.reply(message) }, 480000);
+	});
+}
+
 bot.onTextMessage(/^hi|Hi$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
 		mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {	
@@ -457,14 +464,6 @@ bot.onTextMessage(/not at all$/i, (incoming, next) => {
     resetRemindUserCounter(incoming)
 });
 
-// bot.onTextMessage(/^get chicken|Get Chicken$/i, (incoming, next) => {
-//     bot.getUserProfile(incoming.from)
-//       .then((user) => {
-//         const message = Bot.Message.text(`too quiet... I think you mean GET CHICKEN!? try again.`)
-// 		incoming.reply(message)
-//     });
-// });
-
 bot.onTextMessage(/YES!|GET CHICKEN!$/i, (incoming, next) => {
     bot.getUserProfile(incoming.from)
       .then((user) => {
@@ -479,6 +478,7 @@ bot.onTextMessage(/YES!|GET CHICKEN!$/i, (incoming, next) => {
 		removeEmoji(user.username)
     });
     endRemindUserCounter();
+    startGratitudeUserCounter(incoming)
 });
 
 bot.onTextMessage((incoming, next) => {
@@ -499,6 +499,7 @@ bot.onTextMessage((incoming, next) => {
 							incoming.reply(message)
 		    				saveToMongoDb(user.username, incoming.body, "emoji")
 		    				endRemindUserCounter();
+		    				startGratitudeUserCounter(incoming)
 						} else {
 							const message = Bot.Message.text(`I'm sorry, I don't understand.`)
 							incoming.reply(message)
