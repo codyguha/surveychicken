@@ -88,8 +88,9 @@ function dogValidation(u) {
 
 
 function remindUser(incoming){
-	const message = Bot.Message.text(`COME BACK! YOU ARE NOT DONE!`)
-	incoming.reply(message)
+	setTimeout(function(){ const message = Bot.Message.text(`COME BACK! YOU ARE NOT DONE!`)
+	incoming.reply(message) }, 3000);
+
 }
 
 bot.onTextMessage(/^hi|Hi$/i, (incoming, next) => {
@@ -110,7 +111,7 @@ bot.onTextMessage(/^hi|Hi$/i, (incoming, next) => {
 	      .addTextResponse(`No thanks`)
     	incoming.reply(message)
   	});
-  	setTimeout(remindUser(incoming), 2000)
+  	remindUser(incoming)
 });
 
 bot.onTextMessage(/Yes please$/i, (incoming, next) => {
