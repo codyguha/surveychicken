@@ -88,15 +88,20 @@ function dogValidation(u) {
 
 var reminder;
 
-function setRemindUser(incoming){
-	var reminder = setTimeout(function(){ const message = Bot.Message.text(`COME BACK! YOU ARE NOT DONE!`)
-	incoming.reply(message) }, 10000);
+function resetRemindUserCounter(incoming){
+	clearTimeout(reminder);
+	startRemindUserCounter(incoming)
 }
 
-function resetRemindUser(incoming){
+function endRemindUserCounter(incoming){
 	clearTimeout(reminder);
-	var reminder = setTimeout(function(){ const message = Bot.Message.text(`COME BACK! YOU ARE NOT DONE!`)
-	incoming.reply(message) }, 10000);
+}
+
+function startRemindUserCounter(incoming){
+	bot.getUserProfile(incoming.from).then((user) => {
+	var reminder = setTimeout(function(){ const message = Bot.Message.text(`Hey ${user.firstName}!!! COME BACK AND FINISH THE SURVEY. ya turkey!`)
+	incoming.reply(message) }, 120000);
+	});
 }
 
 bot.onTextMessage(/^hi|Hi$/i, (incoming, next) => {
@@ -136,6 +141,7 @@ bot.onTextMessage(/Yes please$/i, (incoming, next) => {
 bot.onTextMessage(/Never$/i, (incoming, next) => {
     incoming.reply(Bot.Message.text(`Ok I’m glad we got that out the way.  I suppose there is no point in bugging you with more questions about your chicken preferences.`))
     saveToMongoDb(user.username, incoming.body, "frequency")
+    endRemindUserCounter(incoming)
 });
 
 bot.onTextMessage(/On a regular basis|Once and a while|Rarely$/i, (incoming, next) => {
@@ -149,6 +155,7 @@ bot.onTextMessage(/On a regular basis|Once and a while|Rarely$/i, (incoming, nex
         incoming.reply(message)
         saveToMongoDb(user.username, incoming.body, "frequency")
     });
+    resetRemindUserCounter(incoming)
 });
 
 bot.onTextMessage(/Value|Quality|Fair treatment of Animals|Freshness$/i, (incoming, next) => {
@@ -164,6 +171,7 @@ bot.onTextMessage(/Value|Quality|Fair treatment of Animals|Freshness$/i, (incomi
         incoming.reply(message)
         saveToMongoDb(user.username, incoming.body, "buy_based_on")
     });
+    resetRemindUserCounter(incoming)
 });
 
 
@@ -178,6 +186,7 @@ bot.onTextMessage(/Pan Fry it|Deep Fry it|Bake it|BBQ it|Roast it|Other$/i, (inc
         incoming.reply(message)
         saveToMongoDb(user.username, incoming.body, "favorite_preparation")
     });
+    resetRemindUserCounter(incoming)
 });
 
 bot.onTextMessage(/Potatoes$/i, (incoming, next) => {
@@ -191,6 +200,7 @@ bot.onTextMessage(/Potatoes$/i, (incoming, next) => {
         incoming.reply(message)
         saveToMongoDb(user.username, incoming.body, "side_dish")
     });
+    resetRemindUserCounter(incoming)
 });
 
 bot.onTextMessage(/Salad$/i, (incoming, next) => {
@@ -204,6 +214,7 @@ bot.onTextMessage(/Salad$/i, (incoming, next) => {
         incoming.reply(message)
         saveToMongoDb(user.username, incoming.body, "side_dish")
     });
+    resetRemindUserCounter(incoming)
 });
 
 bot.onTextMessage(/Rice$/i, (incoming, next) => {
@@ -217,6 +228,7 @@ bot.onTextMessage(/Rice$/i, (incoming, next) => {
         incoming.reply(message)
         saveToMongoDb(user.username, incoming.body, "side_dish")
     });
+    resetRemindUserCounter(incoming)
 });
 
 bot.onTextMessage(/Vegetables$/i, (incoming, next) => {
@@ -231,6 +243,7 @@ bot.onTextMessage(/Vegetables$/i, (incoming, next) => {
         incoming.reply(message)
         saveToMongoDb(user.username, incoming.body, "side_dish")
     });
+    resetRemindUserCounter(incoming)
 });
 
 bot.onTextMessage(/Mashed|Roasted|Fries|Baked|Greek|Ceaser|Green|Coleslaw|Brown|Basmati|White|Flavoured - Coconut, etc|Broccoli|Carrots|Spinach|Green Beans|Asparagus$/i, (incoming, next) => {
@@ -244,6 +257,7 @@ bot.onTextMessage(/Mashed|Roasted|Fries|Baked|Greek|Ceaser|Green|Coleslaw|Brown|
         incoming.reply(message)
         saveToMongoDb(user.username, incoming.body, "side_dish_detail")
     });
+    resetRemindUserCounter(incoming)
 });
 
 bot.onTextMessage(/At a family style restaurant|At Fast Food establishment|At a fine dining restaurant|At a Grocery or Convienience Store$/i, (incoming, next) => {
@@ -257,6 +271,7 @@ bot.onTextMessage(/At a family style restaurant|At Fast Food establishment|At a 
         incoming.reply(message)
         saveToMongoDb(user.username, incoming.body, "location_preference")
     });
+    resetRemindUserCounter(incoming)
 });
 
 bot.onTextMessage(/Beef|Seafood|Pork|Vegetarian option$/i, (incoming, next) => {
@@ -269,6 +284,7 @@ bot.onTextMessage(/Beef|Seafood|Pork|Vegetarian option$/i, (incoming, next) => {
         incoming.reply(message)
         saveToMongoDb(user.username, incoming.body, "backup_option")
     });
+    resetRemindUserCounter(incoming)
 });
 
 bot.onTextMessage(/Continue$/i, (incoming, next) => {
@@ -281,6 +297,7 @@ bot.onTextMessage(/Continue$/i, (incoming, next) => {
           .addTextResponse(`I’ll die before I eat fried chicken`)
         incoming.reply(message)
     });
+    resetRemindUserCounter(incoming)
 });
 
 bot.onTextMessage(/It's a guilty pleasure$/i, (incoming, next) => {
@@ -293,6 +310,7 @@ bot.onTextMessage(/It's a guilty pleasure$/i, (incoming, next) => {
 		incoming.reply(message)
 		saveToMongoDb(user.username, incoming.body, "relationship")
     });
+    resetRemindUserCounter(incoming)
 });
 
 bot.onTextMessage(/Not really my thing|I’ll die before I eat fried chicken$/i, (incoming, next) => {
@@ -307,6 +325,7 @@ bot.onTextMessage(/Not really my thing|I’ll die before I eat fried chicken$/i,
 		incoming.reply(message)
 		saveToMongoDb(user.username, incoming.body, "relationship")
 	 });
+	resetRemindUserCounter(incoming)
 });
 
 bot.onTextMessage(/I love it|I’m not going to get into it|After a night of hard partying|A treat if I’ve been eating good for a while|It’s a personal matter|I’m trying to eat healthy these days|Its not convienient to make at home|Its not convienient to purchase|I just dont like the taste$/i, (incoming, next) => {
@@ -335,6 +354,7 @@ bot.onTextMessage(/I love it|I’m not going to get into it|After a night of har
 		incoming.reply([message, pic1]);
 		burgerValidation(user.username)
     });
+    resetRemindUserCounter(incoming)
 });
 
 
@@ -369,6 +389,7 @@ bot.onTextMessage(/^1|2|3|4|5|6|7|8|9|10$/i, (incoming, next) => {
 								incoming.reply([message, pic1]);
 								cakeValidation(user.username)
 			    				saveToMongoDb(user.username, incoming.body, "chk_burger")
+			    				resetRemindUserCounter(incoming)
 							} else if (foundResult.chicken_survey.chk_cake === undefined){
 			          			const pic1 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_cone.jpg`)
 						          .setAttributionName('Fried Chicken Cone')
@@ -387,6 +408,7 @@ bot.onTextMessage(/^1|2|3|4|5|6|7|8|9|10$/i, (incoming, next) => {
 								incoming.reply([message, pic1]);
 								coneValidation(user.username)
 			    				saveToMongoDb(user.username, incoming.body, "chk_cake")
+			    				resetRemindUserCounter(incoming)
 							} else if (foundResult.chicken_survey.chk_cone === undefined){
 			          			const pic1 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_dog.jpg`)
 						          .setAttributionName('Fried Chicken Dog')
@@ -405,15 +427,18 @@ bot.onTextMessage(/^1|2|3|4|5|6|7|8|9|10$/i, (incoming, next) => {
 								incoming.reply([message, pic1]);
 								dogValidation(user.username)
 			    				saveToMongoDb(user.username, incoming.body, "chk_cone")
+			    				resetRemindUserCounter(incoming)
 							} else if (foundResult.chicken_survey.chk_dog === undefined){
 			          			const message = Bot.Message.text(`Has this survey made you hungry?`)
 						          .addTextResponse(`YES!`)
 						          .addTextResponse(`not at all`)
 								incoming.reply(message)
 			    				saveToMongoDb(user.username, incoming.body, "chk_dog")
+			    				resetRemindUserCounter(incoming)
 							}else {
 								const message = Bot.Message.text(`I'm sorry, I don't understand.`)
 								incoming.reply(message)
+								resetRemindUserCounter(incoming)
 							}
 						}
 			    });
@@ -429,6 +454,7 @@ bot.onTextMessage(/not at all$/i, (incoming, next) => {
 		saveToMongoDb(user.username, incoming.body, "hunger")
 		removeEmoji(user.username)
     });
+    resetRemindUserCounter(incoming)
 });
 
 bot.onTextMessage(/get chicken|Get Chicken|$/i, (incoming, next) => {
@@ -471,6 +497,7 @@ bot.onTextMessage((incoming, next) => {
 		          			const message = Bot.Message.text(`ALL DONE! Say "hi" to do the survey agian or yell "GET CHICKEN!" to GET CHICKEN NOW!`)
 							incoming.reply(message)
 		    				saveToMongoDb(user.username, incoming.body, "emoji")
+		    				endRemindUserCounter(incoming)
 						} else {
 							const message = Bot.Message.text(`I'm sorry, I don't understand.`)
 							incoming.reply(message)
