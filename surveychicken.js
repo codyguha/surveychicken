@@ -307,9 +307,9 @@ bot.onTextMessage(/I love it|I’m not going to get into it|After a night of har
 		} else {
 			saveToMongoDb(user.username, incoming.body, "relationship_detail")
 		}
-		const pic1 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_burger.jpg`).setAttributionName('Fried Chicken Burger').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png')
-		const message = Bot.Message.text(`On a scale of 1 - 10 (1 being very low and 10 being very high) rate how appetizing this fried chicken dish looks.`).addTextResponse('1').addTextResponse('2').addTextResponse('3').addTextResponse('4').addTextResponse('5').addTextResponse('6').addTextResponse('7').addTextResponse('8').addTextResponse('9').addTextResponse('10')
-		incoming.reply([message, pic1]);
+		const pic = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_burger.jpg`).setAttributionName('On a scale of 1 - 10 (1 being very low and 10 being very high) rate how appetizing this fried chicken dish looks.').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png').addTextResponse('1').addTextResponse('2').addTextResponse('3').addTextResponse('4').addTextResponse('5').addTextResponse('6').addTextResponse('7').addTextResponse('8').addTextResponse('9').addTextResponse('10')
+		// const message = Bot.Message.text(`On a scale of 1 - 10 (1 being very low and 10 being very high) rate how appetizing this fried chicken dish looks.`)
+		incoming.reply(pic);
 		burgerValidation(user.username)
 	});
 	resetRemindUserCounter(incoming)
