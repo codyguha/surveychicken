@@ -422,7 +422,6 @@ bot.onTextMessage(/YES!$/i, (incoming, next) => {
         const message = Bot.Message.link("https://www.just-eat.ca/delivery/vancouver/chicken/")
         	.setPicUrl("http://www.digitalnativescontent.com/wp-content/uploads/2016/01/GHTF-outdoor.jpg")
         	.setTitle("")
-        	.setText("")  
         	.setAttributionName('GET CHICKEN!')
           	.setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png')
 		incoming.reply(message)
