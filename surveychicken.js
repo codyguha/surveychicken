@@ -212,8 +212,10 @@ bot.onTextMessage(/Never$/i, (incoming, next) => {
 });
 bot.onTextMessage(/On a regular basis|Once and a while|Rarely$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
-		const message = Bot.Message.text(`When you shop for chicken at the grocery story what is most important to you?`).addTextResponse(`Value`).addTextResponse(`Quality`).addTextResponse(`Fair treatment of Animals`).addTextResponse(`Freshness`)
-		incoming.reply(message)
+		const message1 = Bot.Message.text(`Great ! Next question...`)
+		const message2 = Bot.Message.text(`When you shop for chicken at the grocery story what is most important to you?`).addTextResponse(`Value`).addTextResponse(`Quality`).addTextResponse(`Fair treatment of Animals`).addTextResponse(`Freshness`)
+		incoming.reply([message2, message1])
+
 		saveToMongoDb(user.username, incoming.body, "frequency")
 	});
 	resetRemindUserCounter(incoming)
@@ -390,8 +392,9 @@ bot.onTextMessage(/NO WAY!$/i, (incoming, next) => {
 });
 bot.onTextMessage(/YES!|GET CHICKEN!$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
-		const message = Bot.Message.link("https://www.just-eat.ca/delivery/vancouver/chicken/").setPicUrl("http://www.digitalnativescontent.com/wp-content/uploads/2016/01/GHTF-outdoor.jpg").setTitle("").setText("Order Chicken delivery online from vancouver restaurants.").setAttributionName('GET CHICKEN!').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png')
-		incoming.reply(message)
+		const message = Bot.Message.text(`I knew it! Why not order some chicken delivery right now.  Click on the Just Eat app to get started.`)
+		const link = Bot.Message.link("https://www.just-eat.ca/delivery/vancouver/chicken/").setPicUrl("http://www.digitalnativescontent.com/wp-content/uploads/2016/01/GHTF-outdoor.jpg").setTitle("").setText("Order Chicken delivery online from vancouver restaurants.").setAttributionName('GET CHICKEN!').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png')
+		incoming.reply([link, message])
 		saveToMongoDb(user.username, incoming.body, "hunger")
 		removeEmoji(user.username)
 	});
