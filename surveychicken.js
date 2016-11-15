@@ -151,7 +151,7 @@ function startRemindUserCounter(incoming) {
 		reminder = setTimeout(function() {
 			const message = Bot.Message.text(`Hey ${user.firstName}!!! Don't be a chicken! COME BACK AND FINISH THE SURVEY.`)
 			incoming.reply(message)
-		}, 120000);
+		}, 10000);
 	});
 }
 
@@ -170,6 +170,14 @@ bot.onTextMessage(/Who is there$/i, (incoming, next) => {
 		const message = Bot.Message.text(`THE SURVEY CHICKEN!`)
 		incoming.reply(message)
 	});
+});
+bot.onTextMessage(/Not now$/i, (incoming, next) => {
+	bot.getUserProfile(incoming.from).then((user) => {
+		userValidation(user);
+		const message = Bot.Message.text(`sorry to bother you.`)
+		incoming.reply(message)
+	});
+	startGratitudeUserCounter(incoming)
 });
 // function startShareUserCounter(incoming) {
 // 	bot.getUserProfile(incoming.from).then((user) => {
