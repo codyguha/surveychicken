@@ -152,7 +152,7 @@ function endGratitudeCounter() {
 function startRemindUserCounter(incoming) {
 	bot.getUserProfile(incoming.from).then((user) => {
 		reminder = setTimeout(function() {
-			const message = Bot.Message.text(`Hey ${user.firstName}!!! COME BACK AND FINISH THE SURVEY. ya turkey!`)
+			const message = Bot.Message.text(`Hey ${user.firstName}!!! Don't be a chicken! COME BACK AND FINISH THE SURVEY.`)
 			incoming.reply(message)
 		}, 120000);
 	});
@@ -161,7 +161,7 @@ function startRemindUserCounter(incoming) {
 function startGratitudeUserCounter(incoming) {
 	bot.getUserProfile(incoming.from).then((user) => {
 		thanks = setTimeout(function() {
-			const message2 = Bot.Message.text(`It was really great chatting with you earlier. Don't be a turkey. Just say "hi" if you feel like you changed your mind on anything we talked about earlier, and if you're really hungry just yell "GET CHICKEN!" and I will help you find some :)`)
+			const message2 = Bot.Message.text(`It was really great chatting with you earlier. Don't be a chicken! Just say "hi" if you feel like you changed your mind on anything we talked about earlier, and if you're really hungry just yell "GET CHICKEN!" and I will help you find some :)`)
 			incoming.reply(message2)
 		}, 480000);
 		hi = setTimeout(function() {
