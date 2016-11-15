@@ -223,7 +223,7 @@ bot.onTextMessage(/On a regular basis|Once and a while|Rarely$/i, (incoming, nex
 	bot.getUserProfile(incoming.from).then((user) => {
 		const message1 = Bot.Message.text(`Great ! Next question...`)
 		const message2 = Bot.Message.text(`When you shop for chicken at the grocery story what is most important to you?`).addTextResponse(`Value`).addTextResponse(`Quality`).addTextResponse(`Fair treatment of Animals`).addTextResponse(`Freshness`)
-		incoming.reply([message2, message1])
+		incoming.reply([message1, message2])
 
 		saveToMongoDb(user.username, incoming.body, "frequency")
 	});
