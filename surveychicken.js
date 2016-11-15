@@ -158,13 +158,13 @@ function startRemindUserCounter(incoming) {
 function startGratitudeUserCounter(incoming) {
 	bot.getUserProfile(incoming.from).then((user) => {
 		knockknock = setTimeout(function() {
-			const message2 = Bot.Message.text(`Knock Knock`).addTextResponse(`Who's there!?`).addTextResponse(`Not now`)
+			const message2 = Bot.Message.text(`Knock Knock`).addTextResponse(`Whos there!?`).addTextResponse(`Not now`)
 			incoming.reply(message2)
 		}, 11000);
 	});
 }
 
-bot.onTextMessage(/Who's there!?$/i, (incoming, next) => {
+bot.onTextMessage(/^Who's there!?$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
 		userValidation(user);
 		const message = Bot.Message.text(`THE SURVEY CHICKEN!`)
@@ -422,7 +422,7 @@ bot.onTextMessage((incoming, next) => {
 							incoming.reply(message)
 							saveToMongoDb(user.username, incoming.body, "emoji")	
 						} else {
-							const message = Bot.Message.text(`I knew it! Why not order some chicken delivery right now.  Click on the Just Eat app to get started.`)
+							const message = Bot.Message.text(`Why not order some chicken delivery right now.  Click on the Just Eat app to get started.`)
 							const link = Bot.Message.link("https://www.just-eat.ca/delivery/vancouver/chicken/").setPicUrl("http://www.digitalnativescontent.com/wp-content/uploads/2016/01/GHTF-outdoor.jpg").setTitle("").setText("Order Chicken delivery online from Vancouver restaurants.").setAttributionName('GET CHICKEN!').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png')
 							incoming.reply([link, message])
 							saveToMongoDb(user.username, incoming.body, "emoji")
