@@ -221,17 +221,15 @@ bot.onTextMessage(/Never$/i, (incoming, next) => {
 });
 bot.onTextMessage(/On a regular basis|Once and a while|Rarely$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
-		const message1 = Bot.Message.text(`Great ! Next question...`).addTextResponse(`Value`).addTextResponse(`Quality`).addTextResponse(`Fair treatment of Animals`).addTextResponse(`Freshness`)
-		const message2 = Bot.Message.text(`When you shop for chicken at the grocery story what is most important to you?`)
-		incoming.reply([message1, message2])
-
+		const message2 = Bot.Message.text(`Great ! Next question... When you shop for chicken at the grocery story what is most important to you?`).addTextResponse(`Value`).addTextResponse(`Quality`).addTextResponse(`Fair treatment of Animals`).addTextResponse(`Freshness`)
+		incoming.reply(message2)
 		saveToMongoDb(user.username, incoming.body, "frequency")
 	});
 	resetRemindUserCounter(incoming)
 });
 bot.onTextMessage(/Value|Quality|Fair treatment of Animals|Freshness$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
-		const message = Bot.Message.text(`What is your favorite way to prepare Chicken at home?`).addTextResponse(`Pan Fry it`).addTextResponse(`Deep Fry it`).addTextResponse(`Bake it`).addTextResponse(`BBQ it`).addTextResponse(`Roast it`).addTextResponse(`Other`)
+		const message = Bot.Message.text(`What is your favorite way to prepare chicken at home?`).addTextResponse(`Pan Fry it`).addTextResponse(`Deep Fry it`).addTextResponse(`Bake it`).addTextResponse(`BBQ it`).addTextResponse(`Roast it`).addTextResponse(`Other`)
 		incoming.reply(message)
 		saveToMongoDb(user.username, incoming.body, "buy_based_on")
 	});
@@ -271,7 +269,7 @@ bot.onTextMessage(/Rice$/i, (incoming, next) => {
 });
 bot.onTextMessage(/Vegetables$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
-		const message = Bot.Message.text(`Gotta get those Vegetables in. What veggie goes best with chicken?`).addTextResponse(`Broccoli`).addTextResponse(`Carrots`).addTextResponse(`Spinach`).addTextResponse(`Green Beans`).addTextResponse(`Asparagus`)
+		const message = Bot.Message.text(`Gotta get those Vegetables in. What vegetable goes best with chicken?`).addTextResponse(`Broccoli`).addTextResponse(`Carrots`).addTextResponse(`Spinach`).addTextResponse(`Green Beans`).addTextResponse(`Asparagus`)
 		incoming.reply(message)
 		saveToMongoDb(user.username, incoming.body, "side_dish")
 	});
@@ -279,7 +277,7 @@ bot.onTextMessage(/Vegetables$/i, (incoming, next) => {
 });
 bot.onTextMessage(/Mashed|Roasted|Fries|Baked|Greek|Ceaser|Green|Coleslaw|Brown|Basmati|White|Flavoured - Coconut, etc|Broccoli|Carrots|Spinach|Green Beans|Asparagus$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
-		const message = Bot.Message.text(`Where do you most typically consume Chicken outside of your home?`).addTextResponse(`At a family style restaurant`).addTextResponse(`At Fast Food establishment`).addTextResponse(`At a fine dining restaurant`).addTextResponse(`At a Grocery or Convienience Store`)
+		const message = Bot.Message.text(`Where do you most typically consume Chicken outside of your home?`).addTextResponse(`At a family style restaurant`).addTextResponse(`At fast food establishment`).addTextResponse(`At a fine dining restaurant`).addTextResponse(`At a grocery or convienience store`)
 		incoming.reply(message)
 		saveToMongoDb(user.username, incoming.body, "side_dish_detail")
 	});
@@ -436,7 +434,6 @@ bot.onTextMessage((incoming, next) => {
 							saveToMongoDb(user.username, incoming.body, "emoji")
 						}
 						endRemindUserCounter();
-						endGratitudeCounter()
 						startGratitudeUserCounter(incoming)
 					} else {
 						const message = Bot.Message.text(`I'm sorry, I don't understand.`)
