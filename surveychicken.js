@@ -151,7 +151,7 @@ function startRemindUserCounter(incoming) {
 		reminder = setTimeout(function() {
 			const message = Bot.Message.text(`Hey ${user.firstName}!!! Don't be a chicken! COME BACK AND FINISH THE SURVEY.`)
 			incoming.reply(message)
-		}, 10000);
+		}, 20000);
 	});
 }
 
@@ -160,7 +160,7 @@ function startGratitudeUserCounter(incoming) {
 		knockknock = setTimeout(function() {
 			const message2 = Bot.Message.text(`Knock Knock`).addTextResponse(`Who is there`).addTextResponse(`Not now`)
 			incoming.reply(message2)
-		}, 11000);
+		}, 30000);
 	});
 }
 
@@ -332,7 +332,7 @@ bot.onTextMessage(/I love it|I’m not going to get into it|After a night of har
 		} else {
 			saveToMongoDb(user.username, incoming.body, "relationship_detail")
 		}
-		const message = Bot.Message.text(`I'm going to show some graphic pictures of some of my deep fried friends. Rate how appetizing these fried chicken dishes look(1 being very low and 10 being very high). You can tap the image to get closer look.`).addTextResponse(`Show me`).addTextResponse(`NO WAY!`)
+		const message = Bot.Message.text(`I'm going to show you 4 fried chicken entrés. Rate how appetizing these fried chicken dishes look(1 being very low and 10 being very high). Tap the image to get closer look.`).addTextResponse(`Show me`).addTextResponse(`NO WAY!`)
 		incoming.reply(message)
 	});
 	resetRemindUserCounter(incoming)
