@@ -10,10 +10,7 @@ let bot = new Bot({
 });
 
 bot.updateBotConfiguration();
-
 let server = http.createServer(bot.incoming()).listen(process.env.PORT || 8080);
-
-var user;
 
 function saveUserToMongoDb(username, first_name, last_name) {
 	mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
@@ -162,23 +159,22 @@ function startRemindUserCounter(incoming) {
 function startGratitudeUserCounter(incoming) {
 	bot.getUserProfile(incoming.from).then((user) => {
 		knockknock = setTimeout(function() {
-			const message2 = Bot.Message.text(`Knock Knock`).addTextResponse(`Who’s there?`).addTextResponse(`Not now`)
+			const message2 = Bot.Message.text(`Why did the chicken cross the road?`).addTextResponse(`To get to the other side.`).addTextResponse(`Not now`)
 			incoming.reply(message2)
 		}, 30000);
 	});
 }
-
-bot.onTextMessage(/Who’s there\?$/i, (incoming, next) => {
+bot.onTextMessage(/To get to the other side\.$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
-		userValidation(user);
-		const message = Bot.Message.text(`Bach`).addTextResponse(`Bach who?`).addTextResponse(`Not now`)
-		incoming.reply(message)
+		const message1 = Bot.Message.text(`Nope! It was to get to your house.`)
+		incoming.reply(message1)
+		const message2 = Bot.Message.text(`Knock Knock`).addTextResponse(`Who’s there?`).addTextResponse(`Not now`)
+		incoming.reply(message2)
 	});
 });
-bot.onTextMessage(/Bach who\?$/i, (incoming, next) => {
+bot.onTextMessage(/Who’s there\?$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
-		userValidation(user);
-		const message = Bot.Message.text(`Bach, bach I'm a chicken!;)`)
+		const message = Bot.Message.text(`THE SURVEY CHICKEN!`)
 		incoming.reply(message)
 	});
 });
@@ -208,11 +204,9 @@ bot.onTextMessage(/Yes please$/i, (incoming, next) => {
 });
 bot.onTextMessage(/Never$/i, (incoming, next) => {
 	endSurveyBeforeItStarts(incoming)
-	saveToMongoDb(user.username, incoming.body, "frequency")
 });
 bot.onTextMessage(/On a regular basis|Once and a while|Rarely$/i, (incoming, next) => {
 	question002(incoming)
-	saveToMongoDb(user.username, incoming.body, "frequency")
 });
 bot.onTextMessage(/Value|Quality|Fair treatment of animals|Freshness$/i, (incoming, next) => {
 	question003(incoming)
@@ -297,8 +291,7 @@ function welcomeUser(incoming) {
 	bot.getUserProfile(incoming.from).then((user) => {
 		userValidation(user);
 		const message = Bot.Message.text(`Hey ${user.firstName}! I am the Survey Chicken! Would you like to do a quick survey about chicken?`).addTextResponse(`Yes please`).addTextResponse(`No thanks`)
-		incoming.reply(message);
-		user = user
+		incoming.reply(message)
 	});
 	endGratitudeCounter()
 	progress = 0
@@ -310,6 +303,7 @@ function endSurveyBeforeItStarts(incoming){
 		saveToMongoDb(user.username, incoming.body, "frequency")
 	});
 	endRemindUserCounter();
+	endGratitudeUserCounter(incoming)
 	startGratitudeUserCounter(incoming)
 	progress = 0
 }
@@ -324,7 +318,7 @@ function question002(incoming){
 	bot.getUserProfile(incoming.from).then((user) => {
 		const message2 = Bot.Message.text(`Great! Next question... When you shop for chicken at the grocery store what is most important to you?`).addTextResponse(`Value`).addTextResponse(`Quality`).addTextResponse(`Fair treatment of animals`).addTextResponse(`Freshness`)
 		incoming.reply(message2)
-		// saveToMongoDb(user.username, incoming.body, "frequency")
+		saveToMongoDb(user.username, incoming.body, "frequency")
 	});
 	resetRemindUserCounter(incoming)
 }
