@@ -136,7 +136,6 @@ var progress = 0
 function resetRemindUserCounter(incoming) {
 	clearTimeout(reminder);
 	startRemindUserCounter(incoming)
-	endGratitudeCounter()
 }
 
 function endRemindUserCounter() {
@@ -148,14 +147,12 @@ function endGratitudeCounter() {
 }
 
 function startRemindUserCounter(incoming) {
-	console.log("before!!!:  "+ progress)
 	bot.getUserProfile(incoming.from).then((user) => {
 		reminder = setTimeout(function() {
 			const message = Bot.Message.text(`Hey ${user.firstName}!!! Don't be a chicken! COME BACK AND FINISH THE SURVEY.`).addTextResponse(`Finish the survey`).addTextResponse(`Not now`)
 			incoming.reply(message)
 		}, 20000);
 	});
-	console.log("after!!!:  "+ progress)
 }
 
 function startGratitudeUserCounter(incoming) {
@@ -166,7 +163,6 @@ function startGratitudeUserCounter(incoming) {
 		}, 30000);
 	});
 	progress = 0
-	console.log("PRoGRESS!!!:  "+ progress)
 }
 
 bot.onTextMessage(/Who’s there\?$/i, (incoming, next) => {
@@ -179,13 +175,13 @@ bot.onTextMessage(/Who’s there\?$/i, (incoming, next) => {
 bot.onTextMessage(/Bach who\?$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
 		userValidation(user);
-		const message = Bot.Message.text(`Bach, bach I'm a chicken!`)
+		const message = Bot.Message.text(`Bach, bach I'm a chicken!;)`)
 		incoming.reply(message)
 	});
 });
 bot.onTextMessage(/Not now|No thanks|Maybe later$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
-		const message = Bot.Message.text(`sorry to bother you.`)
+		const message = Bot.Message.text(`Ok. Say "hi" or yell "GET CHICKEN!" if you have a minute later`)
 		incoming.reply(message)
 	});
 	startGratitudeUserCounter(incoming)
@@ -198,18 +194,6 @@ bot.onTextMessage(/GET CHICKEN!|get chicken!|Get Chicken!$/i, (incoming, next) =
 	startGratitudeUserCounter(incoming)
 	endRemindUserCounter();
 });
-// function startShareUserCounter(incoming) {
-// 	bot.getUserProfile(incoming.from).then((user) => {
-// 		robindance = setTimeout(function() {
-// 		const hifive = Bot.Message.video(`https://r3---sn-uxa0n-t8gs.googlevideo.com/videoplayback?pl=44&id=o-AL5-yeGve6kG6NEH5gBBrsLVni2phTN1sLtd3nxRWGyS&sparams=clen,dur,ei,expire,gir,id,initcwndbps,ip,ipbits,itag,lmt,mime,mm,mn,ms,mv,nh,pl,ratebypass,source,upn&ip=2001:569:7668:3700:c854:d201:6f30:bab2&signature=54151F4A748A402F2426F28B6545A29820180D02.5E0EA43A41CBB596CCFF0AC0D4CC5D1D5B4B2F8F&ei=fp4lWPb5DdOt-APqmLygAg&upn=eJ1j8WyO2oQ&source=youtube&itag=18&clen=3384008&fexp=9444224&key=cms1&mime=video/mp4&gir=yes&expire=1478882014&ratebypass=yes&dur=50.828&ipbits=0&lmt=1400107801534427&title=(Natok24.Com)%20Teen_Titans_Go_Robin_Chicken_Dance&cms_redirect=yes&mm=31&mn=sn-uxa0n-t8gs&ms=au&mt=1478860353&mv=m`)
-//           .setAttributionName(' ')
-//           .setLoop(true)
-//           .setAutoplay(true)
-//           .setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png')
-// 			incoming.reply(hifive)
-// 		}, 360000000);
-// 	});
-// }
 bot.onStartChattingMessage((incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
 		userValidation(user);
@@ -223,6 +207,7 @@ bot.onTextMessage(/^hi|Hi$/i, (incoming, next) => {
 		const message = Bot.Message.text(`Hey ${user.firstName}! I am the Survey Chicken! Would you like to do a quick survey about chicken?`).addTextResponse(`Yes please`).addTextResponse(`No thanks`)
 		incoming.reply(message)
 	});
+	endGratitudeCounter()
 });
 bot.onTextMessage(/Yes please$/i, (incoming, next) => {
 	question001(incoming)
@@ -488,6 +473,7 @@ function question011(incoming){
 	resetRemindUserCounter(incoming)
 }
 function question012(incoming){
+	resetRemindUserCounter(incoming)
 	bot.getUserProfile(incoming.from).then((user) => {
 		progress = 8
 		mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
@@ -505,32 +491,24 @@ function question012(incoming){
 						incoming.reply(pic2);
 						cakeValidation(user.username)
 						saveToMongoDb(user.username, incoming.body, "chk_burger")
-						resetRemindUserCounter(incoming)
-						console.log("PRoGRESS!!!:  "+ progress)
 					} else if (foundResult.chicken_survey.chk_cake === undefined) {
 						const pic3 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_cone.jpg`).setAttributionName('Fried Chicken Cone').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png').addTextResponse('1').addTextResponse('2').addTextResponse('3').addTextResponse('4').addTextResponse('5').addTextResponse('6').addTextResponse('7').addTextResponse('8').addTextResponse('9').addTextResponse('10')
 						incoming.reply(pic3);
 						coneValidation(user.username)
 						saveToMongoDb(user.username, incoming.body, "chk_cake")
-						resetRemindUserCounter(incoming)
-						console.log("PRoGRESS!!!:  "+ progress)
 					} else if (foundResult.chicken_survey.chk_cone === undefined) {
 						const pic4 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_dog.jpg`).setAttributionName('Fried Chicken Dog').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png').addTextResponse('1').addTextResponse('2').addTextResponse('3').addTextResponse('4').addTextResponse('5').addTextResponse('6').addTextResponse('7').addTextResponse('8').addTextResponse('9').addTextResponse('10')
 						incoming.reply(pic4);
 						dogValidation(user.username)
 						saveToMongoDb(user.username, incoming.body, "chk_cone")
-						resetRemindUserCounter(incoming)
-						console.log("PRoGRESS!!!:  "+ progress)
+
 					} else if (foundResult.chicken_survey.chk_dog === undefined) {
 						const message = Bot.Message.text(`Has this survey made you hungry?`).addTextResponse(`YES!`).addTextResponse(`NO WAY!`)
 						incoming.reply(message)
 						saveToMongoDb(user.username, incoming.body, "chk_dog")
-						console.log("PRoGRESS!!!:  "+ progress)
-						resetRemindUserCounter(incoming)
 					} else {
 						const message = Bot.Message.text(`I'm sorry, I don't understand.`)
 						incoming.reply(message)
-						resetRemindUserCounter(incoming)
 					}
 				}
 			});
