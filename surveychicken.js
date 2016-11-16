@@ -156,14 +156,14 @@ function startRemindUserCounter(incoming) {
 	});
 }
 
-//function startGratitudeUserCounter(incoming) {
-//	bot.getUserProfile(incoming.from).then((user) => {
-//		knockknock = setTimeout(function() {
-//			const message2 = Bot.Message.text(`Knock Knock`).addTextResponse(`Who’s there?`).addTextResponse(`Not now`)
-//			incoming.reply(message2)
-//		}, 120000);
-//	});
-//}
+function startGratitudeUserCounter(incoming) {
+	bot.getUserProfile(incoming.from).then((user) => {
+		knockknock = setTimeout(function() {
+			const message2 = Bot.Message.text(`Knock Knock`).addTextResponse(`Who’s there?`).addTextResponse(`Not now`)
+			incoming.reply(message2)
+		}, 3600000);
+	});
+}
 
 function startJoke(incoming) {
   bot.getUserProfile(incoming.from).then((user) => {
