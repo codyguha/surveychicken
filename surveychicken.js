@@ -454,7 +454,7 @@ function question010c(incoming){
 		} else {
 			saveToMongoDb(user.username, incoming.body, "relationship_detail")
 		}
-		const message = Bot.Message.text(`I'm going to show you 4 fried chicken entrés. Rate how appetizing these fried chicken dishes look(1 being very low and 10 being very high). Tap the image to get closer look.`).addTextResponse(`Show me`).addTextResponse(`NO WAY!`)
+		const message = Bot.Message.text(`I’m going to show you some pictures of fried chicken entrees.  Use the answers provided to tell me what you think.`).addTextResponse(`Show me`).addTextResponse(`NO WAY!`)
 		incoming.reply(message)
 	});
 	resetRemindUserCounter(incoming)
