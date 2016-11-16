@@ -229,13 +229,13 @@ bot.onTextMessage(/On a regular basis|Once and a while|Rarely$/i, (incoming, nex
 });
 bot.onTextMessage(/Value|Quality|Fair treatment of Animals|Freshness$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
-		const message = Bot.Message.text(`What is your favorite way to prepare chicken at home?`).addTextResponse(`Pan Fry it`).addTextResponse(`Deep Fry it`).addTextResponse(`Bake it`).addTextResponse(`BBQ it`).addTextResponse(`Roast it`).addTextResponse(`Other`)
+		const message = Bot.Message.text(`What is your favorite way to prepare chicken at home?`).addTextResponse(`Pan fry it`).addTextResponse(`Deep fry it`).addTextResponse(`Bake it`).addTextResponse(`BBQ it`).addTextResponse(`Roast it`).addTextResponse(`Other`)
 		incoming.reply(message)
 		saveToMongoDb(user.username, incoming.body, "buy_based_on")
 	});
 	resetRemindUserCounter(incoming)
 });
-bot.onTextMessage(/Pan Fry it|Deep Fry it|Bake it|BBQ it|Roast it|Other$/i, (incoming, next) => {
+bot.onTextMessage(/Pan fry it|Deep fry it|Bake it|BBQ it|Roast it|Other$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
 		const message = Bot.Message.text(`What is your preferred side dish to have with chicken?`).addTextResponse(`Potatoes`).addTextResponse(`Salad`).addTextResponse(`Rice`).addTextResponse(`Vegetables`)
 		incoming.reply(message)
