@@ -154,6 +154,7 @@ function startRemindUserCounter(incoming) {
 			incoming.reply(message)
 		}, 60000);
 	});
+  console.log("PROGRESS!!!:  " + progress)
 }
 
 function startGratitudeUserCounter(incoming) {
@@ -568,6 +569,7 @@ function chickenDelivery(incoming){
 }
 
 function checkProgress(incoming){
+  console.log("checked progress output!!!:  " + progress)
 	if (progress === 0) {
 		question001(incoming)
 	} else if (progress === 1) {
