@@ -180,7 +180,7 @@ bot.onTextMessage(/Who’s there\?$/i, (incoming, next) => {
 bot.onTextMessage(/Bach who\?$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
 		const message1 = Bot.Message.text(`Bach, bach I'm a chicken!;)`)
-    const message2 = Bot.Message.text(`Ok now that I’ve made you smile do you have a minute to take a quick survey?`).addTextResponse(`Take a survey`)addTextResponse(`Not now`)
+    const message2 = Bot.Message.text(`Ok now that I’ve made you smile do you have a minute to take a quick survey?`).addTextResponse(`Take a survey`).addTextResponse(`Not now`)
 		incoming.reply([message1, message2])
 	});
 });
