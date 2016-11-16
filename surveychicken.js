@@ -159,22 +159,23 @@ function startRemindUserCounter(incoming) {
 function startGratitudeUserCounter(incoming) {
 	bot.getUserProfile(incoming.from).then((user) => {
 		knockknock = setTimeout(function() {
-			const message2 = Bot.Message.text(`Why did the chicken cross the road?`).addTextResponse(`To get to the other side.`).addTextResponse(`Not now`)
+			const message2 = Bot.Message.text(`Knock Knock`).addTextResponse(`Who’s there?`).addTextResponse(`Not now`)
 			incoming.reply(message2)
 		}, 30000);
 	});
 }
-bot.onTextMessage(/To get to the other side\.$/i, (incoming, next) => {
-	bot.getUserProfile(incoming.from).then((user) => {
-		const message1 = Bot.Message.text(`Nope! It was to get to your house.`)
-		incoming.reply(message1)
-		const message2 = Bot.Message.text(`Knock Knock`).addTextResponse(`Who’s there?`).addTextResponse(`Not now`)
-		incoming.reply(message2)
-	});
-});
+
 bot.onTextMessage(/Who’s there\?$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
-		const message = Bot.Message.text(`THE SURVEY CHICKEN!`)
+		userValidation(user);
+		const message = Bot.Message.text(`Bach`).addTextResponse(`Bach who?`).addTextResponse(`Not now`)
+		incoming.reply(message)
+	});
+});
+bot.onTextMessage(/Bach who\?$/i, (incoming, next) => {
+	bot.getUserProfile(incoming.from).then((user) => {
+		userValidation(user);
+		const message = Bot.Message.text(`Bach, bach I'm a chicken!;)`)
 		incoming.reply(message)
 	});
 });
@@ -183,7 +184,6 @@ bot.onTextMessage(/Not now|No thanks|Maybe later$/i, (incoming, next) => {
 		const message = Bot.Message.text(`Ok. Say "hi" or yell "GET CHICKEN!" if you have a minute later`)
 		incoming.reply(message)
 	});
-	startGratitudeUserCounter(incoming)
 });
 bot.onTextMessage(/GET CHICKEN!|get chicken!|Get Chicken!$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
