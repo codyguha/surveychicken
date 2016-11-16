@@ -281,12 +281,10 @@ bot.onTextMessage((incoming, next) => {
 					incoming.reply(message)
 				} else {
 					if (foundResult.chicken_survey.emoji === undefined) {
-						if (foundResult.chicken_survey.hunger === "NO WAY!") {
-							surveyEndNotHungry(incoming)	
-						}
-						const message = Bot.Message.text(`I'm sorry, I don't understand.`)
-						incoming.reply(message)
+						surveyEnd(incoming)  
 					}
+          const message = Bot.Message.text(`I'm sorry, I don't understand.`)
+          incoming.reply(message)
 				}
 			});
 		});
@@ -531,7 +529,7 @@ function questionLast(incoming){
 	});
 	resetRemindUserCounter(incoming)
 }
-function surveyEndNotHungry(incoming){
+function surveyEnd(incoming){
 	bot.getUserProfile(incoming.from).then((user) => {
 		const message = Bot.Message.text(`ALL DONE! Say "hi" to do the survey agian or yell "GET CHICKEN!" to GET CHICKEN NOW!`)
 		incoming.reply(message)
