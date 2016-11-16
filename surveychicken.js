@@ -282,9 +282,10 @@ bot.onTextMessage((incoming, next) => {
 				} else {
 					if (foundResult.chicken_survey.emoji === undefined) {
 						surveyEnd(incoming)  
-					}
-          const message = Bot.Message.text(`I'm sorry, I don't understand.`)
-          incoming.reply(message)
+					} else {
+            const message = Bot.Message.text(`I'm sorry, I don't understand.`)
+            incoming.reply(message)
+          }
 				}
 			});
 		});
