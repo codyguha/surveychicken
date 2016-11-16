@@ -156,14 +156,14 @@ function startRemindUserCounter(incoming) {
 	});
 }
 
-function startGratitudeUserCounter(incoming) {
-	bot.getUserProfile(incoming.from).then((user) => {
-		knockknock = setTimeout(function() {
-			const message2 = Bot.Message.text(`Knock Knock`).addTextResponse(`Who’s there?`).addTextResponse(`Not now`)
-			incoming.reply(message2)
-		}, 120000);
-	});
-}
+//function startGratitudeUserCounter(incoming) {
+//	bot.getUserProfile(incoming.from).then((user) => {
+//		knockknock = setTimeout(function() {
+//			const message2 = Bot.Message.text(`Knock Knock`).addTextResponse(`Who’s there?`).addTextResponse(`Not now`)
+//			incoming.reply(message2)
+//		}, 120000);
+//	});
+//}
 
 function startJoke(incoming) {
   bot.getUserProfile(incoming.from).then((user) => {
@@ -185,9 +185,9 @@ bot.onTextMessage(/Bach who\?$/i, (incoming, next) => {
 		incoming.reply(message)
 	});
 });
-bot.onTextMessage(/Not now|No thanks|Maybe later$/i, (incoming, next) => {
+bot.onTextMessage(/Not now|Maybe later$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
-		const message = Bot.Message.text(`Ok. Say "hi" or yell "GET CHICKEN!" if you have a minute later`)
+		const message = Bot.Message.text(`Ok. Say "hi" or yell "GET CHICKEN!" when you have time to chat.`)
 		incoming.reply(message)
 	});
 });
@@ -262,8 +262,14 @@ bot.onTextMessage(/Show me$/i, (incoming, next) => {
 bot.onTextMessage(/This looks gross|Not my first choice|I’m on the fence|This looks eatable|Give it to me now!$/i, (incoming, next) => {
 	question012(incoming)
 });
-bot.onTextMessage(/NO WAY!|YES!|GET CHICKEN!$/i, (incoming, next) => {
-	questionLast(incoming)
+bot.onTextMessage(/YES!$/i, (incoming, next) => { 
+	question013(incoming)
+});
+bot.onTextMessage(/Yes please$/i, (incoming, next) => {
+  chickenDelivery(incoming)
+});
+bot.onTextMessage(/NO WAY!$/i, (incoming, next) => {
+  questionLast(incoming)
 });
 bot.onTextMessage(/Finish the survey$/i, (incoming, next) => {
 	checkProgress(incoming)
@@ -299,7 +305,7 @@ bot.onTextMessage((incoming, next) => {
 function welcomeUser(incoming) {
 	bot.getUserProfile(incoming.from).then((user) => {
 		userValidation(user);
-		const message = Bot.Message.text(`Hey ${user.firstName}! Welcome to Survey Chicken! What would you like to do first?`).addTextResponse(`Take a survey`).addTextResponse(`Tell me a joke`).addTextResponse(`No thanks`)
+		const message = Bot.Message.text(`Hey ${user.firstName}! Welcome to Survey Chicken! What would you like to do first?`).addTextResponse(`Take a survey`).addTextResponse(`Tell me a joke`)
 		incoming.reply(message)
 	});
 	endGratitudeCounter()
@@ -515,8 +521,17 @@ function question012(incoming){
 		});
 	});
 }
+function question013(incoming){
+  progress = 9
+  bot.getUserProfile(incoming.from).then((user) => {
+    const message = Bot.Message.text(`Ok would you like me to suggest some local take out options?`).addTextResponse(`Yes please`).addTextResponse(`No thanks`)
+    incoming.reply(message)
+    saveToMongoDb(user.username, incoming.body, "hunger")
+  });
+  resetRemindUserCounter(incoming)
+}
 function questionLast(incoming){
-	progress = 9
+	progress = 15
 	bot.getUserProfile(incoming.from).then((user) => {
 		const message = Bot.Message.text(`Thanks for taking some time to chat with us.  We enjoyed learning more about your chicken preferences. Please let us know what you thought of this survey by selecting an emoji that best represents your experience chatting with Survey Chicken`)
 		incoming.reply(message)
@@ -545,6 +560,15 @@ function surveyEndHungry(incoming){
 	startGratitudeUserCounter(incoming)
 }
 
+function chickenDelivery(incoming){
+  prgoress = 10
+  bot.getUserProfile(incoming.from).then((user) => {
+    const message = Bot.Message.text(`Why not order some chicken delivery right now.  Click on the Just Eat app to get started.`).addTextResponse(`Finish the survey`)
+    const link = Bot.Message.link("https://www.just-eat.ca/delivery/vancouver/chicken/").setPicUrl("http://www.digitalnativescontent.com/wp-content/uploads/2016/01/GHTF-outdoor.jpg").setTitle("").setText("Order Chicken delivery online from Vancouver restaurants.").setAttributionName('GET CHICKEN!').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png')
+    incoming.reply([link, message])
+  });
+}
+
 function checkProgress(incoming){
 	if (progress === 0) {
 		question001(incoming)
@@ -564,7 +588,9 @@ function checkProgress(incoming){
 		question009(incoming)
 	} else if (progress === 8) {
 		restartOneOutOfTenSection(incoming)
-	} else if (progress === 9) {
+	} else if (progress === 10) {
+    questionLast(incoming)
+  } else if (progress === 15) {
 		questionLast(incoming)
 	} 
 }
