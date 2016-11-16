@@ -155,7 +155,6 @@ function startRemindUserCounter(incoming) {
 			incoming.reply(message)
 		}, 20000);
 	});
-	progress++;
 	console.log("after!!!:  "+ progress)
 }
 
@@ -322,12 +321,13 @@ function endSurveyBeforeItStarts(incoming){
 	progress = 0
 }
 function question001(incoming){
+	progress = 1
 	const message = Bot.Message.text(`Awesome, lets get started. First off, how often do you eat chicken?`).addTextResponse(`On a regular basis`).addTextResponse(`Once and a while`).addTextResponse(`Rarely`).addTextResponse(`Never`)
 	incoming.reply(message)
 	startRemindUserCounter(incoming)
 }
 function question002(incoming){
-	progress = 1
+	progress = 2
 	bot.getUserProfile(incoming.from).then((user) => {
 		const message2 = Bot.Message.text(`Great! Next question... When you shop for chicken at the grocery store what is most important to you?`).addTextResponse(`Value`).addTextResponse(`Quality`).addTextResponse(`Fair treatment of animals`).addTextResponse(`Freshness`)
 		incoming.reply(message2)
@@ -336,7 +336,7 @@ function question002(incoming){
 	resetRemindUserCounter(incoming)
 }
 function question003(incoming){
-	progress = 2
+	progress = 3
 	bot.getUserProfile(incoming.from).then((user) => {
 		const message = Bot.Message.text(`What is your favorite way to prepare chicken at home?`).addTextResponse(`Pan fry it`).addTextResponse(`Deep fry it`).addTextResponse(`Bake it`).addTextResponse(`BBQ it`).addTextResponse(`Roast it`).addTextResponse(`Other`)
 		incoming.reply(message)
@@ -345,6 +345,7 @@ function question003(incoming){
 	resetRemindUserCounter(incoming)
 }
 function question004(incoming){
+	progress = 4
 	bot.getUserProfile(incoming.from).then((user) => {
 		const message = Bot.Message.text(`What is your preferred side dish to have with chicken?`).addTextResponse(`Potatoes`).addTextResponse(`Salad`).addTextResponse(`Rice`).addTextResponse(`Vegetables`)
 		incoming.reply(message)
@@ -353,6 +354,7 @@ function question004(incoming){
 	resetRemindUserCounter(incoming)
 }
 function question005a(incoming){
+	progress = 4
 	bot.getUserProfile(incoming.from).then((user) => {
 		const message = Bot.Message.text(`Yes! I love Potatoes too. How do you like your potatoes?`).addTextResponse(`Mashed`).addTextResponse(`Roasted`).addTextResponse(`Fries`).addTextResponse(`Baked`)
 		incoming.reply(message)
@@ -361,6 +363,7 @@ function question005a(incoming){
 	resetRemindUserCounter(incoming)
 }
 function question005b(incoming){
+	progress = 4
 	bot.getUserProfile(incoming.from).then((user) => {
 		const message = Bot.Message.text(`Keeping it healthy with a salad, I like that. What type of salad goes best with chicken?`).addTextResponse(`Greek`).addTextResponse(`Ceaser`).addTextResponse(`Green`).addTextResponse(`Coleslaw`)
 		incoming.reply(message)
@@ -369,6 +372,7 @@ function question005b(incoming){
 	resetRemindUserCounter(incoming)
 }
 function question005c(incoming){
+	progress = 4
 	bot.getUserProfile(incoming.from).then((user) => {
 		const message = Bot.Message.text(`Rice is nice. What type of rice goes best with chicken?`).addTextResponse(`Brown`).addTextResponse(`Basmati`).addTextResponse(`White`).addTextResponse(`Flavoured - Coconut, etc`)
 		incoming.reply(message)
@@ -377,6 +381,7 @@ function question005c(incoming){
 	resetRemindUserCounter(incoming)
 }
 function question005d(incoming){
+	progress = 4
 	bot.getUserProfile(incoming.from).then((user) => {
 		const message = Bot.Message.text(`Gotta get those vegetables in. What vegetable goes best with chicken?`).addTextResponse(`Broccoli`).addTextResponse(`Carrots`).addTextResponse(`Spinach`).addTextResponse(`Green Beans`).addTextResponse(`Asparagus`)
 		incoming.reply(message)
@@ -385,6 +390,7 @@ function question005d(incoming){
 	resetRemindUserCounter(incoming)
 }
 function question006(incoming){
+	progress = 5
 	bot.getUserProfile(incoming.from).then((user) => {
 		const message = Bot.Message.text(`Where do you most typically consume Chicken outside of your home?`).addTextResponse(`At a family style restaurant`).addTextResponse(`At fast food establishment`).addTextResponse(`At a fine dining restaurant`).addTextResponse(`At a grocery or convienience store`)
 		incoming.reply(message)
@@ -393,6 +399,7 @@ function question006(incoming){
 	resetRemindUserCounter(incoming)
 }
 function question007(incoming){
+	progress = 6
 	bot.getUserProfile(incoming.from).then((user) => {
 		const message = Bot.Message.text(`If a preferred chicken option is not available which of the following would you typically choose?`).addTextResponse(`Beef`).addTextResponse(`Seafood`).addTextResponse(`Pork`).addTextResponse(`Vegetarian option`)
 		incoming.reply(message)
@@ -401,6 +408,7 @@ function question007(incoming){
 	resetRemindUserCounter(incoming)
 }
 function question008(incoming){
+	progress = 7
 	bot.getUserProfile(incoming.from).then((user) => {
 		const message = Bot.Message.text(`Thanks for your input so far.  Are you ok to continue and answer a couple more questions?`).addTextResponse(`Continue`).addTextResponse(`No`).addTextResponse(`Maybe later`)
 		incoming.reply(message)
@@ -409,6 +417,7 @@ function question008(incoming){
 	resetRemindUserCounter(incoming)
 }
 function question009(incoming){
+	progress = 7
 	bot.getUserProfile(incoming.from).then((user) => {
 		const message = Bot.Message.text(`You're awesome. Let’s get specific. What is your relationship with fried chicken?`).addTextResponse(`I love it`).addTextResponse(`It's a guilty pleasure`).addTextResponse(`Not really my thing`).addTextResponse(`I’ll die before I eat fried chicken`)
 		incoming.reply(message)
@@ -416,6 +425,7 @@ function question009(incoming){
 	resetRemindUserCounter(incoming)
 }
 function question010a(incoming){
+	progress = 7
 	bot.getUserProfile(incoming.from).then((user) => {
 		const message = Bot.Message.text(`Guilty pleasure you say, tell me more.`).addTextResponse(`After a night of hard partying`).addTextResponse(`A treat if I’ve been eating good for a while`).addTextResponse(`It’s a personal matter`)
 		incoming.reply(message)
@@ -424,6 +434,7 @@ function question010a(incoming){
 	resetRemindUserCounter(incoming)
 }
 function question010a(incoming){
+	progress = 7
 	bot.getUserProfile(incoming.from).then((user) => {
 		const message = Bot.Message.text(`Guilty pleasure you say, tell me more.`).addTextResponse(`After a night of hard partying`).addTextResponse(`A treat if I’ve been eating good for a while`).addTextResponse(`It’s a personal matter`)
 		incoming.reply(message)
@@ -432,6 +443,7 @@ function question010a(incoming){
 	resetRemindUserCounter(incoming)
 }
 function question010b(incoming){
+	progress = 7
 	bot.getUserProfile(incoming.from).then((user) => {
 		const message = Bot.Message.text(`So fried chicken isnt on your menu. Can you tell me more?`).addTextResponse(`I’m trying to eat healthy these days`).addTextResponse(`Its not convienient to make at home`).addTextResponse(`Its not convienient to purchase`).addTextResponse(`I just dont like the taste`).addTextResponse(`I’m not going to get into it`)
 		incoming.reply(message)
@@ -440,6 +452,7 @@ function question010b(incoming){
 	resetRemindUserCounter(incoming)
 }
 function question010c(incoming){
+	progress = 7
 	bot.getUserProfile(incoming.from).then((user) => {
 		if (incoming.body === "I love it") {
 			saveToMongoDb(user.username, incoming.body, "relationship")
@@ -454,7 +467,16 @@ function question010c(incoming){
 	resetRemindUserCounter(incoming)
 }
 
+function restartOneOutOfTenSection(incoming) {
+	bot.getUserProfile(incoming.from).then((user) => {
+		const message = Bot.Message.text(`I'm going to show you 4 fried chicken entrés. Rate how appetizing these fried chicken dishes look(1 being very low and 10 being very high). Tap the image to get closer look.`).addTextResponse(`Show me`).addTextResponse(`NO WAY!`)
+		incoming.reply(message)
+	});
+	resetRemindUserCounter(incoming)
+}
+
 function question011(incoming){
+	progress = 8
 	bot.getUserProfile(incoming.from).then((user) => {
 		const pic1 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_burger.jpg`).setAttributionName('Fried Chicken Burger').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png').addTextResponse('1').addTextResponse('2').addTextResponse('3').addTextResponse('4').addTextResponse('5').addTextResponse('6').addTextResponse('7').addTextResponse('8').addTextResponse('9').addTextResponse('10')
 		incoming.reply(pic1);
@@ -465,6 +487,7 @@ function question011(incoming){
 }
 function question012(incoming){
 	bot.getUserProfile(incoming.from).then((user) => {
+		progress = 8
 		mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
 			var results = db.collection('results');
 			results.find({
@@ -513,6 +536,7 @@ function question012(incoming){
 	});
 }
 function questionLast(incoming){
+	progress = 9
 	bot.getUserProfile(incoming.from).then((user) => {
 		const message = Bot.Message.text(`Thanks for taking some time to chat with us.  We enjoyed learning more about your chicken preferences. Please let us know what you thought of this survey by selecting an emoji that best represents your experience chatting with Survey Chicken`)
 		incoming.reply(message)
@@ -542,7 +566,8 @@ function surveyEndHungry(incoming){
 }
 
 function checkProgress(incoming){
-	if (progress === 0){
+	if (progress === 0) {
+
 	} else if (progress === 1) {
 		question001(incoming)
 	} else if (progress === 2) {
@@ -552,26 +577,14 @@ function checkProgress(incoming){
 	} else if (progress === 4) {
 		question004(incoming)		
 	} else if (progress === 5) {
-		question004(incoming)
-	} else if (progress === 6) {
 		question006(incoming)
+	} else if (progress === 6) {
+		question007(incoming)
 	} else if (progress === 7) {
-		question007(incoming)
+		question009(incoming)
 	} else if (progress === 8) {
-		question007(incoming)
+		restartOneOutOfTenSection(incoming)
 	} else if (progress === 9) {
-		question009(incoming)
-	} else if (progress === 10) {
-		question009(incoming)
-	} else if (progress === 11) {
-		question009(incoming)
-	} else if (progress === 12) {
-		question011(incoming)
-	} else if (progress === 13) {
-		question007(incoming)
-	} else if (progress === 14) {
-		question007(incoming)
-	} else if (progress === 15) {
-		
-	}
+		questionLast(incoming)
+	} 
 }
