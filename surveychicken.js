@@ -161,7 +161,7 @@ function startRemindUserCounter(incoming) {
 function startGratitudeUserCounter(incoming) {
 	bot.getUserProfile(incoming.from).then((user) => {
 		knockknock = setTimeout(function() {
-			const message2 = Bot.Message.text(`Knock Knock`).addTextResponse(`Who is there?`).addTextResponse(`Not now`)
+			const message2 = Bot.Message.text(`Knock Knock`).addTextResponse(`Who’s there`).addTextResponse(`Not now`)
 			incoming.reply(message2)
 		}, 30000);
 	});
@@ -169,26 +169,26 @@ function startGratitudeUserCounter(incoming) {
 	console.log("PRoGRESS!!!:  "+ progress)
 }
 
-bot.onTextMessage(/Who is there$/i, (incoming, next) => {
+bot.onTextMessage(/Who’s there$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
 		userValidation(user);
-		const message = Bot.Message.text(`Bach`).addTextResponse(`Bach who?`).addTextResponse(`Not now`)
+		const message = Bot.Message.text(`Bach`).addTextResponse(`Bach who`).addTextResponse(`Not now`)
 		incoming.reply(message)
 	});
 });
 bot.onTextMessage(/Bach who$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
 		userValidation(user);
-		const message = Bot.Message.text(`Bach, bach I'm a chicken!`).addTextResponse(`Bach who?`).addTextResponse(`Not now`)
+		const message = Bot.Message.text(`Bach, bach I'm a chicken!`)
 		incoming.reply(message)
 	});
 });
-bot.onTextMessage(/Not now$/i, (incoming, next) => {
+bot.onTextMessage(/Not now|No thanks|Maybe later$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
 		const message = Bot.Message.text(`sorry to bother you.`)
 		incoming.reply(message)
 	});
-	// startGratitudeUserCounter(incoming)
+	startGratitudeUserCounter(incoming)
 });
 // function startShareUserCounter(incoming) {
 // 	bot.getUserProfile(incoming.from).then((user) => {
@@ -417,7 +417,7 @@ function question007(incoming){
 function question008(incoming){
 	progress = 7
 	bot.getUserProfile(incoming.from).then((user) => {
-		const message = Bot.Message.text(`Thanks for your input so far.  Are you ok to continue and answer a couple more questions?`).addTextResponse(`Continue`).addTextResponse(`No`).addTextResponse(`Maybe later`)
+		const message = Bot.Message.text(`Thanks for your input so far.  Are you ok to continue and answer a couple more questions?`).addTextResponse(`Continue`).addTextResponse(`Maybe later`)
 		incoming.reply(message)
 		saveToMongoDb(user.username, incoming.body, "backup_option")
 	});
