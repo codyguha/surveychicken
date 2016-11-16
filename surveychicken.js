@@ -161,7 +161,7 @@ function startRemindUserCounter(incoming) {
 function startGratitudeUserCounter(incoming) {
 	bot.getUserProfile(incoming.from).then((user) => {
 		knockknock = setTimeout(function() {
-			const message2 = Bot.Message.text(`Knock Knock`).addTextResponse(`Who’s there`).addTextResponse(`Not now`)
+			const message2 = Bot.Message.text(`Knock Knock`).addTextResponse(`Who’s there?`).addTextResponse(`Not now`)
 			incoming.reply(message2)
 		}, 30000);
 	});
@@ -169,14 +169,14 @@ function startGratitudeUserCounter(incoming) {
 	console.log("PRoGRESS!!!:  "+ progress)
 }
 
-bot.onTextMessage(/Who’s there$/i, (incoming, next) => {
+bot.onTextMessage(/Who’s there\?$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
 		userValidation(user);
-		const message = Bot.Message.text(`Bach`).addTextResponse(`Bach who`).addTextResponse(`Not now`)
+		const message = Bot.Message.text(`Bach`).addTextResponse(`Bach who?`).addTextResponse(`Not now`)
 		incoming.reply(message)
 	});
 });
-bot.onTextMessage(/Bach who$/i, (incoming, next) => {
+bot.onTextMessage(/Bach who\?$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
 		userValidation(user);
 		const message = Bot.Message.text(`Bach, bach I'm a chicken!`)
@@ -196,6 +196,7 @@ bot.onTextMessage(/GET CHICKEN!|get chicken!|Get Chicken!$/i, (incoming, next) =
 		incoming.reply(link)
 	});
 	startGratitudeUserCounter(incoming)
+	endRemindUserCounter();
 });
 // function startShareUserCounter(incoming) {
 // 	bot.getUserProfile(incoming.from).then((user) => {
@@ -283,19 +284,6 @@ bot.onTextMessage(/NO WAY!|YES!|GET CHICKEN!$/i, (incoming, next) => {
 bot.onTextMessage(/Finish the survey$/i, (incoming, next) => {
 	checkProgress(incoming)
 });
-// bot.onTextMessage(/YES!|GET CHICKEN!$/i, (incoming, next) => {
-// 	bot.getUserProfile(incoming.from).then((user) => {
-// 		const message = Bot.Message.text(`I knew it! Why not order some chicken delivery right now.  Click on the Just Eat app to get started.`)
-// 		const link = Bot.Message.link("https://www.just-eat.ca/delivery/vancouver/chicken/").setPicUrl("http://www.digitalnativescontent.com/wp-content/uploads/2016/01/GHTF-outdoor.jpg").setTitle("").setText("Order Chicken delivery online from Vancouver restaurants.").setAttributionName('GET CHICKEN!').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png')
-// 		incoming.reply([link, message])
-// 		saveToMongoDb(user.username, incoming.body, "hunger")
-// 		removeEmoji(user.username)
-// 	});
-// 	startShareUserCounter(incoming)
-// 	endRemindUserCounter();
-// 	endGratitudeCounter()
-// 	startGratitudeUserCounter(incoming)
-// });
 bot.onTextMessage((incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
 		mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
@@ -581,7 +569,7 @@ function surveyEndHungry(incoming){
 
 function checkProgress(incoming){
 	if (progress === 0) {
-
+		question001(incoming)
 	} else if (progress === 1) {
 		question001(incoming)
 	} else if (progress === 2) {
