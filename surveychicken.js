@@ -173,16 +173,15 @@ function startJoke(incoming) {
 }
 bot.onTextMessage(/Who’s there\?$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
-		userValidation(user);
 		const message = Bot.Message.text(`Bach`).addTextResponse(`Bach who?`).addTextResponse(`Not now`)
 		incoming.reply(message)
 	});
 });
 bot.onTextMessage(/Bach who\?$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
-		userValidation(user);
-		const message = Bot.Message.text(`Bach, bach I'm a chicken!;)`)
-		incoming.reply(message)
+		const message1 = Bot.Message.text(`Bach, bach I'm a chicken!;)`)
+    const message2 = Bot.Message.text(`Ok now that I’ve made you smile do you have a minute to take a quick survey?`).addTextResponse(`Take a survey`)addTextResponse(`Not now`)
+		incoming.reply([message1, message2])
 	});
 });
 bot.onTextMessage(/Not now|Maybe later$/i, (incoming, next) => {
