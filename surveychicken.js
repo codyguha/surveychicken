@@ -299,6 +299,7 @@ function welcomeUser(incoming) {
 		incoming.reply(message)
 	});
 	endGratitudeCounter()
+  resetRemindUserCounter(incoming)
 	progress = 0
 }
 
