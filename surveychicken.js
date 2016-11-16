@@ -263,6 +263,9 @@ bot.onTextMessage(/YES!$/i, (incoming, next) => {
 bot.onTextMessage(/Yes please$/i, (incoming, next) => {
   chickenDeliverySurvey(incoming)
 });
+bot.onTextMessage(/No thanks$/i, (incoming, next) => {
+  questionLast(incoming)
+});
 bot.onTextMessage(/NO WAY!$/i, (incoming, next) => {
   questionLast(incoming)
 });
@@ -569,7 +572,7 @@ function chickenDelivery(incoming){
 }
 
 function checkProgress(incoming){
-  console.log("checked progress output!!!:  " + progress)
+  console.log("checked progress outputs!!!:  " + progress)
 	if (progress === 0) {
 		question001(incoming)
 	} else if (progress === 1) {
