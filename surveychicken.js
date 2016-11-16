@@ -310,7 +310,6 @@ function endSurveyBeforeItStarts(incoming){
 		saveToMongoDb(user.username, incoming.body, "frequency")
 	});
 	endRemindUserCounter();
-	endGratitudeUserCounter(incoming)
 	startGratitudeUserCounter(incoming)
 	progress = 0
 }
