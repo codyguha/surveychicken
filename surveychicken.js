@@ -179,7 +179,7 @@ bot.onTextMessage(/Who is there$/i, (incoming, next) => {
 bot.onTextMessage(/Bach who$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
 		userValidation(user);
-		const message = Bot.Message.text(`Bach, bach I'm a chicken!`)
+		const message = Bot.Message.text(`Bach, bach I'm a chicken!`).addTextResponse(`Bach who?`).addTextResponse(`Not now`)
 		incoming.reply(message)
 	});
 });
@@ -302,7 +302,7 @@ bot.onTextMessage((incoming, next) => {
 					incoming.reply(message)
 				} else {
 					if (foundResult.chicken_survey.emoji === undefined) {
-						if (foundResult.chicken_survey.hungry === "NO WAY!") {
+						if (foundResult.chicken_survey.hunger === "NO WAY!") {
 							surveyEndNotHungry(incoming)	
 						} else {
 							surveyEndHungry(incoming)
