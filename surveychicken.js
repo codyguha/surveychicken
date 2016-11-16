@@ -152,7 +152,7 @@ function startRemindUserCounter(incoming) {
 		reminder = setTimeout(function() {
 			const message = Bot.Message.text(`Hey ${user.firstName}!!! Don't be a chicken! COME BACK AND FINISH THE SURVEY.`).addTextResponse(`Finish the survey`).addTextResponse(`Not now`)
 			incoming.reply(message)
-		}, 20000);
+		}, 60000);
 	});
 }
 
@@ -161,10 +161,16 @@ function startGratitudeUserCounter(incoming) {
 		knockknock = setTimeout(function() {
 			const message2 = Bot.Message.text(`Knock Knock`).addTextResponse(`Who’s there?`).addTextResponse(`Not now`)
 			incoming.reply(message2)
-		}, 30000);
+		}, 120000);
 	});
 }
 
+function startJoke(incoming) {
+  bot.getUserProfile(incoming.from).then((user) => {
+    const message2 = Bot.Message.text(`Knock Knock`).addTextResponse(`Who’s there?`).addTextResponse(`Not now`)
+    incoming.reply(message2)
+  });
+}
 bot.onTextMessage(/Who’s there\?$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
 		userValidation(user);
@@ -199,8 +205,11 @@ bot.onStartChattingMessage((incoming, next) => {
 bot.onTextMessage(/^hi|Hi$/i, (incoming, next) => {
 	welcomeUser(incoming)
 });
-bot.onTextMessage(/Yes please$/i, (incoming, next) => {
+bot.onTextMessage(/Take a survey$/i, (incoming, next) => {
 	question001(incoming)
+});
+bot.onTextMessage(/Tell me a joke$/i, (incoming, next) => {
+  startJoke(incoming)
 });
 bot.onTextMessage(/Never$/i, (incoming, next) => {
 	endSurveyBeforeItStarts(incoming)
@@ -250,7 +259,7 @@ bot.onTextMessage(/I love it|I’m not going to get into it|After a night of har
 bot.onTextMessage(/Show me$/i, (incoming, next) => {
 	question011(incoming)
 });
-bot.onTextMessage(/^1|2|3|4|5|6|7|8|9|10$/i, (incoming, next) => {
+bot.onTextMessage(/This looks gross|Not my first choice|I’m on the fence|This looks eatable|Give it to me now!$/i, (incoming, next) => {
 	question012(incoming)
 });
 bot.onTextMessage(/NO WAY!|YES!|GET CHICKEN!$/i, (incoming, next) => {
@@ -290,7 +299,7 @@ bot.onTextMessage((incoming, next) => {
 function welcomeUser(incoming) {
 	bot.getUserProfile(incoming.from).then((user) => {
 		userValidation(user);
-		const message = Bot.Message.text(`Hey ${user.firstName}! I am the Survey Chicken! Would you like to do a quick survey about chicken?`).addTextResponse(`Yes please`).addTextResponse(`No thanks`)
+		const message = Bot.Message.text(`Hey ${user.firstName}! Welcome to Survey Chicken! What would you like to do first?`).addTextResponse(`Take a survey`).addTextResponse(`Tell me a joke`).addTextResponse(`No thanks`)
 		incoming.reply(message)
 	});
 	endGratitudeCounter()
@@ -447,7 +456,7 @@ function question010c(incoming){
 
 function restartOneOutOfTenSection(incoming) {
 	bot.getUserProfile(incoming.from).then((user) => {
-		const message = Bot.Message.text(`I'm going to show you 4 fried chicken entrés. Rate how appetizing these fried chicken dishes look(1 being very low and 10 being very high). Tap the image to get closer look.`).addTextResponse(`Show me`).addTextResponse(`NO WAY!`)
+		const message = Bot.Message.text(`I’m going to show you some pictures of fried chicken entrees.  Use the answers provided to tell me what you think.`).addTextResponse(`Show me`).addTextResponse(`NO WAY!`)
 		incoming.reply(message)
 	});
 	resetRemindUserCounter(incoming)
@@ -456,7 +465,7 @@ function restartOneOutOfTenSection(incoming) {
 function question011(incoming){
 	progress = 8
 	bot.getUserProfile(incoming.from).then((user) => {
-		const pic1 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_burger.jpg`).setAttributionName('Fried Chicken Burger').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png').addTextResponse('1').addTextResponse('2').addTextResponse('3').addTextResponse('4').addTextResponse('5').addTextResponse('6').addTextResponse('7').addTextResponse('8').addTextResponse('9').addTextResponse('10')
+		const pic1 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_burger.jpg`).setAttributionName('Fried Chicken Burger').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png').addTextResponse('This looks gross').addTextResponse('Not my first choice').addTextResponse('I’m on the fence').addTextResponse('This looks eatable').addTextResponse('Give it to me now!')
 		incoming.reply(pic1);
 		burgerValidation(user.username)
 		console.log("PRoGRESS!!!:  "+ progress)
@@ -478,17 +487,17 @@ function question012(incoming){
 					incoming.reply(message)
 				} else {
 					if (foundResult.chicken_survey.chk_burger === undefined) {
-						const pic2 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_cake.jpg`).setAttributionName('Fried Chicken Cake').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png').addTextResponse('1').addTextResponse('2').addTextResponse('3').addTextResponse('4').addTextResponse('5').addTextResponse('6').addTextResponse('7').addTextResponse('8').addTextResponse('9').addTextResponse('10')
+						const pic2 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_cake.jpg`).setAttributionName('Fried Chicken Cake').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png').addTextResponse('This looks gross').addTextResponse('Not my first choice').addTextResponse('I’m on the fence').addTextResponse('This looks eatable').addTextResponse('Give it to me now!')
 						incoming.reply(pic2);
 						cakeValidation(user.username)
 						saveToMongoDb(user.username, incoming.body, "chk_burger")
 					} else if (foundResult.chicken_survey.chk_cake === undefined) {
-						const pic3 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_cone.jpg`).setAttributionName('Fried Chicken Cone').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png').addTextResponse('1').addTextResponse('2').addTextResponse('3').addTextResponse('4').addTextResponse('5').addTextResponse('6').addTextResponse('7').addTextResponse('8').addTextResponse('9').addTextResponse('10')
+						const pic3 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_cone.jpg`).setAttributionName('Fried Chicken Cone').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png').addTextResponse('This looks gross').addTextResponse('Not my first choice').addTextResponse('I’m on the fence').addTextResponse('This looks eatable').addTextResponse('Give it to me now!')
 						incoming.reply(pic3);
 						coneValidation(user.username)
 						saveToMongoDb(user.username, incoming.body, "chk_cake")
 					} else if (foundResult.chicken_survey.chk_cone === undefined) {
-						const pic4 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_dog.jpg`).setAttributionName('Fried Chicken Dog').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png').addTextResponse('1').addTextResponse('2').addTextResponse('3').addTextResponse('4').addTextResponse('5').addTextResponse('6').addTextResponse('7').addTextResponse('8').addTextResponse('9').addTextResponse('10')
+						const pic4 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_dog.jpg`).setAttributionName('Fried Chicken Dog').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png').addTextResponse('This looks gross').addTextResponse('Not my first choice').addTextResponse('I’m on the fence').addTextResponse('This looks eatable').addTextResponse('Give it to me now!')
 						incoming.reply(pic4);
 						dogValidation(user.username)
 						saveToMongoDb(user.username, incoming.body, "chk_cone")
