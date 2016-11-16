@@ -221,7 +221,7 @@ bot.onTextMessage(/Never$/i, (incoming, next) => {
 });
 bot.onTextMessage(/On a regular basis|Once and a while|Rarely$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
-		const message2 = Bot.Message.text(`Great ! Next question... When you shop for chicken at the grocery store what is most important to you?`).addTextResponse(`Value`).addTextResponse(`Quality`).addTextResponse(`Fair treatment of Animals`).addTextResponse(`Freshness`)
+		const message2 = Bot.Message.text(`Great! Next question... When you shop for chicken at the grocery store what is most important to you?`).addTextResponse(`Value`).addTextResponse(`Quality`).addTextResponse(`Fair treatment of Animals`).addTextResponse(`Freshness`)
 		incoming.reply(message2)
 		saveToMongoDb(user.username, incoming.body, "frequency")
 	});
