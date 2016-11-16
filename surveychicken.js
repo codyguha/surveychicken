@@ -161,7 +161,7 @@ function startRemindUserCounter(incoming) {
 function startGratitudeUserCounter(incoming) {
 	bot.getUserProfile(incoming.from).then((user) => {
 		knockknock = setTimeout(function() {
-			const message2 = Bot.Message.text(`Knock Knock`).addTextResponse(`Who is there`).addTextResponse(`Not now`)
+			const message2 = Bot.Message.text(`Knock Knock`).addTextResponse(`Who is there?`).addTextResponse(`Not now`)
 			incoming.reply(message2)
 		}, 30000);
 	});
@@ -172,7 +172,14 @@ function startGratitudeUserCounter(incoming) {
 bot.onTextMessage(/Who is there$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
 		userValidation(user);
-		const message = Bot.Message.text(`THE SURVEY CHICKEN!`)
+		const message = Bot.Message.text(`Bach`).addTextResponse(`Bach who?`).addTextResponse(`Not now`)
+		incoming.reply(message)
+	});
+});
+bot.onTextMessage(/Bach who$/i, (incoming, next) => {
+	bot.getUserProfile(incoming.from).then((user) => {
+		userValidation(user);
+		const message = Bot.Message.text(`Bach, bach I'm a chicken!`)
 		incoming.reply(message)
 	});
 });
