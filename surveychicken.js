@@ -149,7 +149,7 @@ function endGratitudeCounter() {
 function startRemindUserCounter(incoming) {
 	bot.getUserProfile(incoming.from).then((user) => {
 		reminder = setTimeout(function() {
-			const message = Bot.Message.text(`Hey ${user.firstName}!!! Don't be a chicken! COME BACK AND FINISH THE SURVEY.`)
+			const message = Bot.Message.text(`Hey ${user.firstName}!!! Don't be a chicken! COME BACK AND FINISH THE SURVEY.`).addTextResponse(`Finish the survey`).addTextResponse(`Not now`)
 			incoming.reply(message)
 		}, 20000);
 	});
@@ -206,10 +206,9 @@ bot.onTextMessage(/^hi|Hi$/i, (incoming, next) => {
 	});
 });
 bot.onTextMessage(/Yes please$/i, (incoming, next) => {
-	bot.getUserProfile(incoming.from).then((user) => {
-		const message = Bot.Message.text(`Awesome, lets get started. First off, how often do you eat chicken?`).addTextResponse(`On a regular basis`).addTextResponse(`Once and a while`).addTextResponse(`Rarely`).addTextResponse(`Never`)
-		incoming.reply(message)
-	});
+		// const message = Bot.Message.text(`Awesome, lets get started. First off, how often do you eat chicken?`).addTextResponse(`On a regular basis`).addTextResponse(`Once and a while`).addTextResponse(`Rarely`).addTextResponse(`Never`)
+		// incoming.reply(message)
+	question001(incoming)
 	startRemindUserCounter(incoming)
 });
 bot.onTextMessage(/Never$/i, (incoming, next) => {
@@ -269,7 +268,7 @@ bot.onTextMessage(/Rice$/i, (incoming, next) => {
 });
 bot.onTextMessage(/Vegetables$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
-		const message = Bot.Message.text(`Gotta get those Vegetables in. What vegetable goes best with chicken?`).addTextResponse(`Broccoli`).addTextResponse(`Carrots`).addTextResponse(`Spinach`).addTextResponse(`Green Beans`).addTextResponse(`Asparagus`)
+		const message = Bot.Message.text(`Gotta get those vegetables in. What vegetable goes best with chicken?`).addTextResponse(`Broccoli`).addTextResponse(`Carrots`).addTextResponse(`Spinach`).addTextResponse(`Green Beans`).addTextResponse(`Asparagus`)
 		incoming.reply(message)
 		saveToMongoDb(user.username, incoming.body, "side_dish")
 	});
@@ -283,9 +282,9 @@ bot.onTextMessage(/Mashed|Roasted|Fries|Baked|Greek|Ceaser|Green|Coleslaw|Brown|
 	});
 	resetRemindUserCounter(incoming)
 });
-bot.onTextMessage(/At a family style restaurant|At Fast Food establishment|At a fine dining restaurant|At a Grocery or Convienience Store$/i, (incoming, next) => {
+bot.onTextMessage(/At a family style restaurant|At fast food establishment|At a fine dining restaurant|At a grocery or convienience store$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
-		const message = Bot.Message.text(`If a preferred Chicken option is not available which of the following would you typically choose?`).addTextResponse(`Beef`).addTextResponse(`Seafood`).addTextResponse(`Pork`).addTextResponse(`Vegetarian option`)
+		const message = Bot.Message.text(`If a preferred chicken option is not available which of the following would you typically choose?`).addTextResponse(`Beef`).addTextResponse(`Seafood`).addTextResponse(`Pork`).addTextResponse(`Vegetarian option`)
 		incoming.reply(message)
 		saveToMongoDb(user.username, incoming.body, "location_preference")
 	});
@@ -301,7 +300,7 @@ bot.onTextMessage(/Beef|Seafood|Pork|Vegetarian option$/i, (incoming, next) => {
 });
 bot.onTextMessage(/Continue$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
-		const message = Bot.Message.text(`You're awesome. Let’s get specific. What is your relationship with Fried Chicken?`).addTextResponse(`I love it`).addTextResponse(`It's a guilty pleasure`).addTextResponse(`Not really my thing`).addTextResponse(`I’ll die before I eat fried chicken`)
+		const message = Bot.Message.text(`You're awesome. Let’s get specific. What is your relationship with fried chicken?`).addTextResponse(`I love it`).addTextResponse(`It's a guilty pleasure`).addTextResponse(`Not really my thing`).addTextResponse(`I’ll die before I eat fried chicken`)
 		incoming.reply(message)
 	});
 	resetRemindUserCounter(incoming)
@@ -444,3 +443,8 @@ bot.onTextMessage((incoming, next) => {
 		});
 	});
 });
+
+function Question001(incoming){
+	const message = Bot.Message.text(`Awesome, lets get started. First off, how often do you eat chicken?`).addTextResponse(`On a regular basis`).addTextResponse(`Once and a while`).addTextResponse(`Rarely`).addTextResponse(`Never`)
+	incoming.reply(message)
+}
