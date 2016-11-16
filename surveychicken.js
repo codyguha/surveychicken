@@ -194,20 +194,20 @@ bot.onTextMessage(/Not now$/i, (incoming, next) => {
 bot.onStartChattingMessage((incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
 		userValidation(user);
-		const message = Bot.Message.text(`Hey ${user.firstName}! I am the surveychicken ! Would you like to do a quick survey about chicken ?`).addTextResponse(`Yes please`).addTextResponse(`No thanks`)
+		const message = Bot.Message.text(`Hey ${user.firstName}! I am the Survey Chicken! Would you like to do a quick survey about chicken?`).addTextResponse(`Yes please`).addTextResponse(`No thanks`)
 		incoming.reply(message)
 	});
 });
 bot.onTextMessage(/^hi|Hi$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
 		userValidation(user);
-		const message = Bot.Message.text(`Hey ${user.firstName}! I am the surveychicken ! Would you like to do a quick survey about chicken ?`).addTextResponse(`Yes please`).addTextResponse(`No thanks`)
+		const message = Bot.Message.text(`Hey ${user.firstName}! I am the Survey Chicken! Would you like to do a quick survey about chicken?`).addTextResponse(`Yes please`).addTextResponse(`No thanks`)
 		incoming.reply(message)
 	});
 });
 bot.onTextMessage(/Yes please$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
-		const message = Bot.Message.text(`Awesome lets get started. First off, how often do you eat Chicken?`).addTextResponse(`On a regular basis`).addTextResponse(`Once and a while`).addTextResponse(`Rarely`).addTextResponse(`Never`)
+		const message = Bot.Message.text(`Awesome, lets get started. First off, how often do you eat chicken?`).addTextResponse(`On a regular basis`).addTextResponse(`Once and a while`).addTextResponse(`Rarely`).addTextResponse(`Never`)
 		incoming.reply(message)
 	});
 	startRemindUserCounter(incoming)
@@ -221,7 +221,7 @@ bot.onTextMessage(/Never$/i, (incoming, next) => {
 });
 bot.onTextMessage(/On a regular basis|Once and a while|Rarely$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
-		const message2 = Bot.Message.text(`Great ! Next question... When you shop for chicken at the grocery story what is most important to you?`).addTextResponse(`Value`).addTextResponse(`Quality`).addTextResponse(`Fair treatment of Animals`).addTextResponse(`Freshness`)
+		const message2 = Bot.Message.text(`Great ! Next question... When you shop for chicken at the grocery store what is most important to you?`).addTextResponse(`Value`).addTextResponse(`Quality`).addTextResponse(`Fair treatment of Animals`).addTextResponse(`Freshness`)
 		incoming.reply(message2)
 		saveToMongoDb(user.username, incoming.body, "frequency")
 	});
