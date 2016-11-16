@@ -148,14 +148,15 @@ function endGratitudeCounter() {
 }
 
 function startRemindUserCounter(incoming) {
-	progress++
-	console.log(progress)
+	console.log("before!!!:  "+ progress)
 	bot.getUserProfile(incoming.from).then((user) => {
 		reminder = setTimeout(function() {
 			const message = Bot.Message.text(`Hey ${user.firstName}!!! Don't be a chicken! COME BACK AND FINISH THE SURVEY.`).addTextResponse(`Finish the survey`).addTextResponse(`Not now`)
 			incoming.reply(message)
 		}, 20000);
 	});
+	progress++;
+	console.log("after!!!:  "+ progress)
 }
 
 function startGratitudeUserCounter(incoming) {
