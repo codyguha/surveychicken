@@ -561,7 +561,7 @@ function surveyEndHungry(incoming){
 }
 
 function chickenDelivery(incoming){
-  prgoress = 10
+  progress = 10
   bot.getUserProfile(incoming.from).then((user) => {
     const message = Bot.Message.text(`Why not order some chicken delivery right now.  Click on the Just Eat app to get started.`).addTextResponse(`Finish the survey`)
     const link = Bot.Message.link("https://www.just-eat.ca/delivery/vancouver/chicken/").setPicUrl("http://www.digitalnativescontent.com/wp-content/uploads/2016/01/GHTF-outdoor.jpg").setTitle("").setText("Order Chicken delivery online from Vancouver restaurants.").setAttributionName('GET CHICKEN!').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png')
