@@ -190,6 +190,13 @@ bot.onTextMessage(/Not now|No thanks|Maybe later$/i, (incoming, next) => {
 	});
 	startGratitudeUserCounter(incoming)
 });
+bot.onTextMessage(/GET CHICKEN!|get chicken!|Get Chicken!$/i, (incoming, next) => {
+	bot.getUserProfile(incoming.from).then((user) => {
+		const link = Bot.Message.link("https://www.just-eat.ca/delivery/vancouver/chicken/").setPicUrl("http://www.digitalnativescontent.com/wp-content/uploads/2016/01/GHTF-outdoor.jpg").setTitle("").setText("Order Chicken delivery online from Vancouver restaurants.").setAttributionName('GET CHICKEN!').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png')
+		incoming.reply(link)
+	});
+	startGratitudeUserCounter(incoming)
+});
 // function startShareUserCounter(incoming) {
 // 	bot.getUserProfile(incoming.from).then((user) => {
 // 		robindance = setTimeout(function() {
