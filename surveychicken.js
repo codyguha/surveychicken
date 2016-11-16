@@ -253,7 +253,7 @@ bot.onTextMessage(/I love it|I’m not going to get into it|After a night of har
 bot.onTextMessage(/Show me$/i, (incoming, next) => {
 	question011(incoming)
 });
-bot.onTextMessage(/1) This looks gross|2) Not my first choice|3) I’m on the fence|4) This looks eatable|5) Give it to me now!$/i, (incoming, next) => {
+bot.onTextMessage(/1\) This looks gross|2\) Not my first choice|3\) I’m on the fence|4\) This looks eatable|5\) Give it to me now!$/i, (incoming, next) => {
 	question012(incoming)
 });
 bot.onTextMessage(/YES!$/i, (incoming, next) => { 
