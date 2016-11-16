@@ -322,6 +322,7 @@ function endSurveyBeforeItStarts(incoming){
 	startGratitudeUserCounter(incoming)
 }
 function question001(incoming){
+	progress = 0
 	const message = Bot.Message.text(`Awesome, lets get started. First off, how often do you eat chicken?`).addTextResponse(`On a regular basis`).addTextResponse(`Once and a while`).addTextResponse(`Rarely`).addTextResponse(`Never`)
 	incoming.reply(message)
 	startRemindUserCounter(incoming)
