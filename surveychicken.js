@@ -8,8 +8,12 @@ let bot = new Bot({
 	apiKey: process.env.API_KEY,
 	baseUrl: process.env.BASE_URL
 });
+
 bot.updateBotConfiguration();
+
 let server = http.createServer(bot.incoming()).listen(process.env.PORT || 8080);
+
+var user;
 
 function saveUserToMongoDb(username, first_name, last_name) {
 	mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
@@ -162,7 +166,6 @@ function startGratitudeUserCounter(incoming) {
 			incoming.reply(message2)
 		}, 30000);
 	});
-	progress = 0
 }
 
 bot.onTextMessage(/Who’s there\?$/i, (incoming, next) => {
@@ -195,28 +198,21 @@ bot.onTextMessage(/GET CHICKEN!|get chicken!|Get Chicken!$/i, (incoming, next) =
 	endRemindUserCounter();
 });
 bot.onStartChattingMessage((incoming, next) => {
-	bot.getUserProfile(incoming.from).then((user) => {
-		userValidation(user);
-		const message = Bot.Message.text(`Hey ${user.firstName}! I am the Survey Chicken! Would you like to do a quick survey about chicken?`).addTextResponse(`Yes please`).addTextResponse(`No thanks`)
-		incoming.reply(message)
-	});
+	welcomeUser(incoming)
 });
 bot.onTextMessage(/^hi|Hi$/i, (incoming, next) => {
-	bot.getUserProfile(incoming.from).then((user) => {
-		userValidation(user);
-		const message = Bot.Message.text(`Hey ${user.firstName}! I am the Survey Chicken! Would you like to do a quick survey about chicken?`).addTextResponse(`Yes please`).addTextResponse(`No thanks`)
-		incoming.reply(message)
-	});
-	endGratitudeCounter()
+	welcomeUser(incoming)
 });
 bot.onTextMessage(/Yes please$/i, (incoming, next) => {
 	question001(incoming)
 });
 bot.onTextMessage(/Never$/i, (incoming, next) => {
 	endSurveyBeforeItStarts(incoming)
+	saveToMongoDb(user.username, incoming.body, "frequency")
 });
 bot.onTextMessage(/On a regular basis|Once and a while|Rarely$/i, (incoming, next) => {
 	question002(incoming)
+	saveToMongoDb(user.username, incoming.body, "frequency")
 });
 bot.onTextMessage(/Value|Quality|Fair treatment of animals|Freshness$/i, (incoming, next) => {
 	question003(incoming)
@@ -297,6 +293,17 @@ bot.onTextMessage((incoming, next) => {
 	});
 });
 
+function welcomeUser(incoming) {
+	bot.getUserProfile(incoming.from).then((user) => {
+		userValidation(user);
+		const message = Bot.Message.text(`Hey ${user.firstName}! I am the Survey Chicken! Would you like to do a quick survey about chicken?`).addTextResponse(`Yes please`).addTextResponse(`No thanks`)
+		incoming.reply(message);
+		user = user
+	});
+	endGratitudeCounter()
+	progress = 0
+}
+
 function endSurveyBeforeItStarts(incoming){
 	bot.getUserProfile(incoming.from).then((user) => {
 		incoming.reply(Bot.Message.text(`Ok I’m glad we got that out the way.  I suppose there is no point in bugging you with more questions about your chicken preferences.`))
@@ -318,7 +325,7 @@ function question002(incoming){
 	bot.getUserProfile(incoming.from).then((user) => {
 		const message2 = Bot.Message.text(`Great! Next question... When you shop for chicken at the grocery store what is most important to you?`).addTextResponse(`Value`).addTextResponse(`Quality`).addTextResponse(`Fair treatment of animals`).addTextResponse(`Freshness`)
 		incoming.reply(message2)
-		saveToMongoDb(user.username, incoming.body, "frequency")
+		// saveToMongoDb(user.username, incoming.body, "frequency")
 	});
 	resetRemindUserCounter(incoming)
 }
@@ -408,15 +415,6 @@ function question009(incoming){
 	bot.getUserProfile(incoming.from).then((user) => {
 		const message = Bot.Message.text(`You're awesome. Let’s get specific. What is your relationship with fried chicken?`).addTextResponse(`I love it`).addTextResponse(`It's a guilty pleasure`).addTextResponse(`Not really my thing`).addTextResponse(`I’ll die before I eat fried chicken`)
 		incoming.reply(message)
-	});
-	resetRemindUserCounter(incoming)
-}
-function question010a(incoming){
-	progress = 7
-	bot.getUserProfile(incoming.from).then((user) => {
-		const message = Bot.Message.text(`Guilty pleasure you say, tell me more.`).addTextResponse(`After a night of hard partying`).addTextResponse(`A treat if I’ve been eating good for a while`).addTextResponse(`It’s a personal matter`)
-		incoming.reply(message)
-		saveToMongoDb(user.username, incoming.body, "relationship")
 	});
 	resetRemindUserCounter(incoming)
 }
