@@ -454,7 +454,7 @@ function question010c(incoming){
 		} else {
 			saveToMongoDb(user.username, incoming.body, "relationship_detail")
 		}
-		const message = Bot.Message.text(`I’m going to show you some pictures of fried chicken entrees.  Use the answers provided to tell me what you think.`).addTextResponse(`Show me`).addTextResponse(`NO WAY!`)
+		const message = Bot.Message.text(`Ok cool. In the next set of questions I’m going to show you some pictures of fried chicken entrees.  Use the answers provided to tell me what you think.`).addTextResponse(`Show me`).addTextResponse(`NO WAY!`)
 		incoming.reply(message)
 	});
 	resetRemindUserCounter(incoming)
@@ -462,7 +462,7 @@ function question010c(incoming){
 
 function restartOneOutOfTenSection(incoming) {
 	bot.getUserProfile(incoming.from).then((user) => {
-		const message = Bot.Message.text(`I’m going to show you some pictures of fried chicken entrees.  Use the answers provided to tell me what you think.`).addTextResponse(`Show me`).addTextResponse(`NO WAY!`)
+		const message = Bot.Message.text(`Ok cool. In the next set of questions I’m going to show you some pictures of fried chicken entrees.  Use the answers provided to tell me what you think.`).addTextResponse(`Show me`).addTextResponse(`NO WAY!`)
 		incoming.reply(message)
 	});
 	resetRemindUserCounter(incoming)
