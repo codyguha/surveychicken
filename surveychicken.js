@@ -394,7 +394,7 @@ function question005d(incoming){
 function question006(incoming){
 	progress = 5
 	bot.getUserProfile(incoming.from).then((user) => {
-		const message = Bot.Message.text(`Where do you most typically consume Chicken outside of your home?`).addTextResponse(`At a family style restaurant`).addTextResponse(`At fast food establishment`).addTextResponse(`At a fine dining restaurant`).addTextResponse(`At a grocery or convienience store`)
+		const message = Bot.Message.text(`Where do you most typically consume chicken outside of your home?`).addTextResponse(`At a family style restaurant`).addTextResponse(`At fast food establishment`).addTextResponse(`At a fine dining restaurant`).addTextResponse(`At a grocery or convienience store`)
 		incoming.reply(message)
 		saveToMongoDb(user.username, incoming.body, "side_dish_detail")
 	});
