@@ -134,7 +134,6 @@ var knockknock;
 var progress = 0
 
 function resetRemindUserCounter(incoming) {
-	progress++
 	clearTimeout(reminder);
 	startRemindUserCounter(incoming)
 	endGratitudeCounter()
@@ -167,6 +166,7 @@ function startGratitudeUserCounter(incoming) {
 		}, 30000);
 	});
 	progress = 0
+	console.log("PRoGRESS!!!:  "+ progress)
 }
 
 bot.onTextMessage(/Who is there$/i, (incoming, next) => {
