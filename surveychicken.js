@@ -253,7 +253,7 @@ bot.onTextMessage(/I love it|I’m not going to get into it|After a night of har
 bot.onTextMessage(/Show me$/i, (incoming, next) => {
 	question011(incoming)
 });
-bot.onTextMessage(/This looks gross|Not my first choice|I’m on the fence|This looks eatable|Give it to me now!$/i, (incoming, next) => {
+bot.onTextMessage(/1) This looks gross|2) Not my first choice|3) I’m on the fence|4) This looks eatable|5) Give it to me now!$/i, (incoming, next) => {
 	question012(incoming)
 });
 bot.onTextMessage(/YES!$/i, (incoming, next) => { 
@@ -461,7 +461,7 @@ function restartOneOutOfTenSection(incoming) {
 function question011(incoming){
 	progress = 8
 	bot.getUserProfile(incoming.from).then((user) => {
-		const pic1 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_burger.jpg`).setAttributionName('Fried Chicken Burger').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png').addTextResponse('This looks gross').addTextResponse('Not my first choice').addTextResponse('I’m on the fence').addTextResponse('This looks eatable').addTextResponse('Give it to me now!')
+		const pic1 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_burger.jpg`).setAttributionName('Fried Chicken Burger').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png').addTextResponse('1) This looks gross').addTextResponse('2) Not my first choice').addTextResponse('3) I’m on the fence').addTextResponse('4) This looks eatable').addTextResponse('5) Give it to me now!')
 		incoming.reply(pic1);
 		burgerValidation(user.username)
 		console.log("PRoGRESS!!!:  "+ progress)
