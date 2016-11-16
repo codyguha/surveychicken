@@ -179,11 +179,10 @@ bot.onTextMessage(/Who is there$/i, (incoming, next) => {
 });
 bot.onTextMessage(/Not now$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
-		userValidation(user);
 		const message = Bot.Message.text(`sorry to bother you.`)
 		incoming.reply(message)
 	});
-	startGratitudeUserCounter(incoming)
+	// startGratitudeUserCounter(incoming)
 });
 // function startShareUserCounter(incoming) {
 // 	bot.getUserProfile(incoming.from).then((user) => {
@@ -220,7 +219,7 @@ bot.onTextMessage(/Never$/i, (incoming, next) => {
 bot.onTextMessage(/On a regular basis|Once and a while|Rarely$/i, (incoming, next) => {
 	question002(incoming)
 });
-bot.onTextMessage(/Value|Quality|Fair treatment of Animals|Freshness$/i, (incoming, next) => {
+bot.onTextMessage(/Value|Quality|Fair treatment of animals|Freshness$/i, (incoming, next) => {
 	question003(incoming)
 });
 bot.onTextMessage(/Pan fry it|Deep fry it|Bake it|BBQ it|Roast it|Other$/i, (incoming, next) => {
@@ -320,22 +319,24 @@ function endSurveyBeforeItStarts(incoming){
 	endRemindUserCounter();
 	endGratitudeUserCounter(incoming)
 	startGratitudeUserCounter(incoming)
+	progress = 0
 }
 function question001(incoming){
-	progress = 0
 	const message = Bot.Message.text(`Awesome, lets get started. First off, how often do you eat chicken?`).addTextResponse(`On a regular basis`).addTextResponse(`Once and a while`).addTextResponse(`Rarely`).addTextResponse(`Never`)
 	incoming.reply(message)
 	startRemindUserCounter(incoming)
 }
 function question002(incoming){
+	progress = 1
 	bot.getUserProfile(incoming.from).then((user) => {
-		const message2 = Bot.Message.text(`Great! Next question... When you shop for chicken at the grocery store what is most important to you?`).addTextResponse(`Value`).addTextResponse(`Quality`).addTextResponse(`Fair treatment of Animals`).addTextResponse(`Freshness`)
+		const message2 = Bot.Message.text(`Great! Next question... When you shop for chicken at the grocery store what is most important to you?`).addTextResponse(`Value`).addTextResponse(`Quality`).addTextResponse(`Fair treatment of animals`).addTextResponse(`Freshness`)
 		incoming.reply(message2)
 		saveToMongoDb(user.username, incoming.body, "frequency")
 	});
 	resetRemindUserCounter(incoming)
 }
 function question003(incoming){
+	progress = 2
 	bot.getUserProfile(incoming.from).then((user) => {
 		const message = Bot.Message.text(`What is your favorite way to prepare chicken at home?`).addTextResponse(`Pan fry it`).addTextResponse(`Deep fry it`).addTextResponse(`Bake it`).addTextResponse(`BBQ it`).addTextResponse(`Roast it`).addTextResponse(`Other`)
 		incoming.reply(message)
