@@ -132,7 +132,7 @@ function userValidation(user) {
 }
 var reminder;
 var knockknock;
-var progress = 0
+var progress;
 
 function resetRemindUserCounter(incoming) {
 	clearTimeout(reminder);
