@@ -192,6 +192,7 @@ function anotherJoke(incoming){
     .addTextResponse(`What goes peck, peck, peck, Boom?`)
     .addTextResponse(`What Is chicken teriyaki?`)
     .addTextResponse(`Why did the chicken cross the road halfway?`)
+    .addTextResponse(`What do you get when a chicken lays an egg on top of a barn?`)
     .addTextResponse(`Who tells chicken jokes?`)
     incoming.reply(message)
   });
@@ -200,6 +201,7 @@ bot.onTextMessage(/What goes peck, peck, peck, Boom\?$/i, (incoming, next) => {
       const message = Bot.Message.text(`A chicken in a mine field.`)
         .addTextResponse(`What Is chicken teriyaki?`)
         .addTextResponse(`Why did the chicken cross the road halfway?`)
+        .addTextResponse(`What do you get when a chicken lays an egg on top of a barn?`)
         .addTextResponse(`Who tells chicken jokes?`)
         .addTextResponse(`Enough already`)
     incoming.reply(message)
@@ -208,6 +210,7 @@ bot.onTextMessage(/What Is chicken teriyaki\?$/i, (incoming, next) => {
       const message = Bot.Message.text(`The name of the oldest living kamikaze pilot.`)
         .addTextResponse(`What goes peck, peck, peck, Boom?`)
         .addTextResponse(`Why did the chicken cross the road halfway?`)
+        .addTextResponse(`What do you get when a chicken lays an egg on top of a barn?`)
         .addTextResponse(`Who tells chicken jokes?`)
         .addTextResponse(`Enough already`)
     incoming.reply(message)
@@ -216,6 +219,7 @@ bot.onTextMessage(/Why did the chicken cross the road halfway\?$/i, (incoming, n
       const message = Bot.Message.text(`She wanted to lay it on the line.`)
         .addTextResponse(`What goes peck, peck, peck, Boom?`)
         .addTextResponse(`What Is chicken teriyaki?`)
+        .addTextResponse(`What do you get when a chicken lays an egg on top of a barn?`)
         .addTextResponse(`Who tells chicken jokes?`)
         .addTextResponse(`Enough already`)
     incoming.reply(message)
@@ -225,6 +229,16 @@ bot.onTextMessage(/Who tells chicken jokes\?$/i, (incoming, next) => {
         .addTextResponse(`What goes peck, peck, peck, Boom?`)
         .addTextResponse(`What Is chicken teriyaki?`)
         .addTextResponse(`Why did the chicken cross the road halfway?`)
+        .addTextResponse(`What do you get when a chicken lays an egg on top of a barn?`)
+        .addTextResponse(`Enough already`)
+    incoming.reply(message)
+});
+bot.onTextMessage(/What do you get when a chicken lays an egg on top of a barn\?$/i, (incoming, next) => {
+      const message = Bot.Message.text(`Comedihens!`)
+        .addTextResponse(`What goes peck, peck, peck, Boom?`)
+        .addTextResponse(`What Is chicken teriyaki?`)
+        .addTextResponse(`Why did the chicken cross the road halfway?`)
+        .addTextResponse(`Who tells chicken jokes?`)
         .addTextResponse(`Enough already`)
     incoming.reply(message)
 });
