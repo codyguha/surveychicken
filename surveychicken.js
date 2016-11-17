@@ -161,6 +161,7 @@ function startGratitudeUserCounter(incoming) {
 }
 
 function startJoke(incoming) {
+  endRemindUserCounter();
   bot.getUserProfile(incoming.from).then((user) => {
     const message2 = Bot.Message.text(`Knock Knock`).addTextResponse(`Who’s there?`).addTextResponse(`Not now`)
     incoming.reply(message2)
@@ -185,6 +186,7 @@ bot.onTextMessage(/Not now|Maybe later$/i, (incoming, next) => {
 	});
 });
 function anotherJoke(incoming){
+  endRemindUserCounter();
   bot.getUserProfile(incoming.from).then((user) => {
     const message = Bot.Message.text(`Joke jeopordy time!`)
     .addTextResponse(`What goes peck, peck, peck, Boom?`)
@@ -246,7 +248,7 @@ bot.onTextMessage(/Tell me another joke$/i, (incoming, next) => {
   anotherJoke(incoming)
 });
 bot.onTextMessage(/Enough already$/i, (incoming, next) => {
-  donotUnderstand(incoming)
+  enoughJokes(incoming)
 });
 bot.onTextMessage(/Never$/i, (incoming, next) => {
 	endSurveyBeforeItStarts(incoming)
@@ -349,6 +351,15 @@ function donotUnderstand(incoming) {
   bot.getUserProfile(incoming.from).then((user) => {
     userValidation(user);
     const message = Bot.Message.text(`What would you like to do?`).addTextResponse(`Take a survey`).addTextResponse(`Tell me a joke`)
+    incoming.reply(message)
+  });
+  progress = 0
+  endRemindUserCounter();
+}
+function enoughJokes(incoming) {
+  bot.getUserProfile(incoming.from).then((user) => {
+    userValidation(user);
+    const message = Bot.Message.text(`That was fun. What would you like to do next?`).addTextResponse(`Take a survey`).addTextResponse(`Not now`)
     incoming.reply(message)
   });
   progress = 0
