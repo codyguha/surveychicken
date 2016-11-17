@@ -135,8 +135,8 @@ var knockknock;
 var progress;
 
 function resetRemindUserCounter(incoming) {
-	clearTimeout(reminder);
-	startRemindUserCounter(incoming)
+	endRemindUserCounter();
+	startRemindUserCounter(incoming);
 }
 
 function endRemindUserCounter() {
