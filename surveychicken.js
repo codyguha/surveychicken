@@ -175,7 +175,7 @@ bot.onTextMessage(/Who’s there\?$/i, (incoming, next) => {
 bot.onTextMessage(/Bach who\?$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
 		const message1 = Bot.Message.text(`Bach, bach I'm a chicken!;)`)
-    const message2 = Bot.Message.text(`Jokes aside, do you have a minute to take a quick survey?`).addTextResponse(`Take a survey`).addTextResponse(`Not now`)
+    const message2 = Bot.Message.text(`Jokes aside, do you have a minute to take a quick survey?`).addTextResponse(`Take a survey`).addTextResponse(`Tell me another joke`).addTextResponse(`Not now`)
 		incoming.reply([message1, message2])
 	});
 });
@@ -185,6 +185,49 @@ bot.onTextMessage(/Not now|Maybe later$/i, (incoming, next) => {
 		incoming.reply(message)
 	});
 });
+function anotherJoke(incoming){
+  bot.getUserProfile(incoming.from).then((user) => {
+    const message = Bot.Message.text(`Joke jeopordy time!`)
+    .addTextResponse(`What goes peck, peck, peck, Boom?`)
+    .addTextResponse(`What Is chicken teriyaki?`)
+    .addTextResponse(`Which came first, the chicken or the egg?`)
+    .addTextResponse(`Who tells chicken jokes?`)
+    incoming.reply(message)
+  });
+}
+bot.onTextMessage(/What goes peck, peck, peck, Boom\?$/i, (incoming, next) => {
+      const message = Bot.Message.text(`A chicken in a mine field.`)
+        .addTextResponse(`What Is chicken teriyaki?`)
+        .addTextResponse(`Which came first, the chicken or the egg?`)
+        .addTextResponse(`Who tells chicken jokes?`)
+        .addTextResponse(`Enough already`)
+    incoming.reply(message)
+});
+bot.onTextMessage(/What Is chicken teriyaki\?$/i, (incoming, next) => {
+      const message = Bot.Message.text(`The name of the oldest living kamikaze pilot.`)
+        .addTextResponse(`What goes peck, peck, peck, Boom?`)
+        .addTextResponse(`Which came first, the chicken or the egg?`)
+        .addTextResponse(`Who tells chicken jokes?`)
+        .addTextResponse(`Enough already`)
+    incoming.reply(message)
+});
+bot.onTextMessage(/Which came first, the chicken or the egg\?$/i, (incoming, next) => {
+      const message = Bot.Message.text(`Neither, the rooster.`)
+        .addTextResponse(`What goes peck, peck, peck, Boom?`)
+        .addTextResponse(`What Is chicken teriyaki?`)
+        .addTextResponse(`Who tells chicken jokes?`)
+        .addTextResponse(`Enough already`)
+    incoming.reply(message)
+});
+bot.onTextMessage(/Who tells chicken jokes\?$/i, (incoming, next) => {
+      const message = Bot.Message.text(`Comedihens!`)
+        .addTextResponse(`What goes peck, peck, peck, Boom?`)
+        .addTextResponse(`What Is chicken teriyaki?`)
+        .addTextResponse(`Which came first, the chicken or the egg?`)
+        .addTextResponse(`Enough already`)
+    incoming.reply(message)
+});
+
 bot.onTextMessage(/GET CHICKEN!|get chicken!|Get Chicken!$/i, (incoming, next) => {
 	chickenDelivery(incoming)
 });
@@ -199,6 +242,12 @@ bot.onTextMessage(/Take a survey$/i, (incoming, next) => {
 });
 bot.onTextMessage(/Tell me a joke$/i, (incoming, next) => {
   startJoke(incoming)
+});
+bot.onTextMessage(/Tell me another joke$/i, (incoming, next) => {
+  anotherJoke(incoming)
+});
+bot.onTextMessage(/Enough already$/i, (incoming, next) => {
+  donotUnderstand(incoming)
 });
 bot.onTextMessage(/Never$/i, (incoming, next) => {
 	endSurveyBeforeItStarts(incoming)
