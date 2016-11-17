@@ -175,7 +175,7 @@ bot.onTextMessage(/Who’s there\?$/i, (incoming, next) => {
 });
 bot.onTextMessage(/Bach who\?$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
-    const message2 = Bot.Message.text(`Bach, bach I'm a chicken!;) LOL - see I knew I could make your smile. What would you like to do next?`).addTextResponse(`Take a survey`).addTextResponse(`Tell me another joke`).addTextResponse(`Not now`)
+    const message2 = Bot.Message.text(`Bach, bach I'm a chicken!;) LOL - see I knew I could make you smile. What would you like to do next?`).addTextResponse(`Take a survey`).addTextResponse(`Tell me another joke`).addTextResponse(`Not now`)
 		incoming.reply(message2)
 	});
 });
