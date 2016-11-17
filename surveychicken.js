@@ -234,7 +234,7 @@ bot.onTextMessage(/Who tells chicken jokes\?$/i, (incoming, next) => {
     incoming.reply(message)
 });
 bot.onTextMessage(/What do you get when a chicken lays an egg on top of a barn\?$/i, (incoming, next) => {
-      const message = Bot.Message.text(`Comedihens!`)
+      const message = Bot.Message.text(`An eggroll!`)
         .addTextResponse(`What goes peck, peck, peck, Boom?`)
         .addTextResponse(`What Is chicken teriyaki?`)
         .addTextResponse(`Why did the chicken cross the road halfway?`)
