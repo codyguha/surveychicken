@@ -140,23 +140,22 @@ function resetRemindUserCounter(incoming) {
 }
 
 function endRemindUserCounter() {
-  var reminder = reminder
 	clearTimeout(reminder);
 }
 
 function endGratitudeCounter() {
-  var knockknock = knockknock
 	clearTimeout(knockknock);
 }
 
 function startRemindUserCounter(incoming) {
-	bot.getUserProfile(incoming.from).then((user) => {
-		reminder = setTimeout(function() {
-			const message = Bot.Message.text(`Hey ${user.firstName}!!! Don't be a chicken! Come back and finish the survey.`).addTextResponse(`Continue the survey`).addTextResponse(`Not now`)
-			incoming.reply(message)
-		}, 60000);
-	});
-  console.log("PROGRESS!!!:  " + progress)
+	reminder = setTimeout(reminderMessage(incoming), 60000);
+}
+
+function reminderMessage(incoming){
+  bot.getUserProfile(incoming.from).then((user) => { 
+    const message = Bot.Message.text(`Hey ${user.firstName}!!! Don't be a chicken! Come back and finish the survey.`).addTextResponse(`Continue the survey`).addTextResponse(`Not now`)
+    incoming.reply(message)
+  });
 }
 
 function startGratitudeUserCounter(incoming) {
