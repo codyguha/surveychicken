@@ -136,7 +136,6 @@ var progress;
 
 function endRemindUserCounter() {
 	clearTimeout(reminder);
-  console.log(reminder)
 }
 
 function endGratitudeCounter() {
@@ -148,9 +147,8 @@ function startRemindUserCounter(incoming) {
 		reminder = setTimeout(function() {
 			const message = Bot.Message.text(`Hey ${user.firstName}!!! Don't be a chicken! Come back and finish the survey.`).addTextResponse(`Continue the survey`).addTextResponse(`Not now`)
 			incoming.reply(message)
-		}, 60000);
+		}, 5000);
 	});
-  console.log(reminder)
 }
 
 function startGratitudeUserCounter(incoming) {
@@ -323,7 +321,7 @@ function question002(incoming){
 		incoming.reply(message2)
 		saveToMongoDb(user.username, incoming.body, "frequency")
 	});
-	endRemindUserCounter(timer)
+	endRemindUserCounter()
 }
 function question003(incoming){
 	progress = 3
@@ -332,7 +330,7 @@ function question003(incoming){
 		incoming.reply(message)
 		saveToMongoDb(user.username, incoming.body, "buy_based_on")
 	});
-	resetRemindUserCounter(incoming)
+	endRemindUserCounter()
 }
 function question004(incoming){
 	progress = 4
@@ -341,7 +339,6 @@ function question004(incoming){
 		incoming.reply(message)
 		saveToMongoDb(user.username, incoming.body, "favorite_preparation")
 	});
-	resetRemindUserCounter(incoming)
 }
 function question005a(incoming){
 	progress = 4
