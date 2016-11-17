@@ -145,7 +145,7 @@ function endGratitudeCounter() {
 function startRemindUserCounter(incoming) {
 	bot.getUserProfile(incoming.from).then((user) => {
 		reminder = setTimeout(function() {
-			const message = Bot.Message.text(`Hey ${user.firstName}!!! Don't be a chicken! Come back and finish the survey.`).addTextResponse(`Continue the survey`).addTextResponse(`Not now`)
+			const message = Bot.Message.text(`Hey ${user.firstName}!!! Don't be a chicken! Come back and finish the survey.`).addTextResponse(`Continue`).addTextResponse(`Not now`)
 			incoming.reply(message)
 		}, 120000);
 	});
