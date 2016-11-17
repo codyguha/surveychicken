@@ -449,7 +449,6 @@ function question010c(incoming){
 		if (incoming.body === "I love it") {
 			saveToMongoDb(user.username, incoming.body, "relationship")
 			saveToMongoDb(user.username, incoming.body, "relationship_detail")
-			resetRemindUserCounter(incoming)
 		} else {
 			saveToMongoDb(user.username, incoming.body, "relationship_detail")
 		}
@@ -507,18 +506,15 @@ function question012(incoming){
 						incoming.reply(pic3);
 						coneValidation(user.username)
 						saveToMongoDb(user.username, incoming.body, "chk_cake")
-             resetRemindUserCounter(incoming)
 					} else if (foundResult.chicken_survey.chk_cone === undefined) {
 						const pic4 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_dog.jpg`).setAttributionName('Fried Chicken Dog').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png').addTextResponse('1) This looks gross').addTextResponse('2) Not my first choice').addTextResponse('3) I’m on the fence').addTextResponse('4) This looks eatable').addTextResponse('5) That looks delicious')
 						incoming.reply(pic4);
 						dogValidation(user.username)
 						saveToMongoDb(user.username, incoming.body, "chk_cone")
-              resetRemindUserCounter(incoming)
 					} else if (foundResult.chicken_survey.chk_dog === undefined) {
 						const message = Bot.Message.text(`Has this survey made you hungry?`).addTextResponse(`YES!`).addTextResponse(`NO WAY!`)
 						incoming.reply(message)
 						saveToMongoDb(user.username, incoming.body, "chk_dog")
-              resetRemindUserCounter(incoming)
 					} else {
 						const message = Bot.Message.text(`I'm sorry, I don't understand.`)
 						incoming.reply(message)
