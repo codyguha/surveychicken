@@ -245,7 +245,7 @@ bot.onTextMessage(/Not really my thing|I’ll die before I eat fried chicken$/i,
 bot.onTextMessage(/I love it|I’m not going to get into it|After a night of hard partying|A treat if I’ve been eating good for a while|It’s a personal matter|I’m trying to eat healthy these days|Its not convienient to make at home|Its not convienient to purchase|I just dont like the taste$/i, (incoming, next) => {
 	question010c(incoming)
 });
-bot.onTextMessage(/Show me$/i, (incoming, next) => {
+bot.onTextMessage(/Ok, lets do it$/i, (incoming, next) => {
 	question011(incoming)
 });
 bot.onTextMessage(/1\) This looks gross|2\) Not my first choice|3\) I’m on the fence|4\) This looks eatable|5\) This looks delicious$/i, (incoming, next) => {
@@ -459,7 +459,7 @@ function question010c(incoming){
 		} else {
 			saveToMongoDb(user.username, incoming.body, "relationship_detail")
 		}
-		const message = Bot.Message.text(`Ok cool. In the next set of questions I’m going to show you some pictures of fried chicken entrees.  Use the answers provided to tell me what you think.`).addTextResponse(`Show me`).addTextResponse(`NO WAY!`)
+		const message = Bot.Message.text(`Ok cool. In the next set of questions I’m going to show you some pictures of fried chicken entrees.  Use the answers provided to tell me what you think.`).addTextResponse(`Ok, lets do it`).addTextResponse(`NO WAY!`)
 		incoming.reply(message)
 	});
 	endRemindUserCounter()
@@ -468,7 +468,7 @@ function question010c(incoming){
 
 function restartOneOutOfTenSection(incoming) {
 	bot.getUserProfile(incoming.from).then((user) => {
-		const message = Bot.Message.text(`Ok cool. In the next set of questions I’m going to show you some pictures of fried chicken entrees.  Use the answers provided to tell me what you think.`).addTextResponse(`Show me`).addTextResponse(`NO WAY!`)
+		const message = Bot.Message.text(`Ok cool. In the next set of questions I’m going to show you some pictures of fried chicken entrees.  Use the answers provided to tell me what you think.`).addTextResponse(`Ok, lets do it`).addTextResponse(`NO WAY!`)
 		incoming.reply(message)
 	});
 	endRemindUserCounter()
@@ -495,8 +495,7 @@ function question012(incoming){
 			}).toArray(function(err, found) {
 				var foundResult = found[0]
 				if (foundResult === undefined) {
-					const message = Bot.Message.text(`I'm sorry, I don't understand.`)
-					incoming.reply(message)
+					donotUnderstand(incoming)
           endRemindUserCounter()
           startRemindUserCounter(incoming)
 				} else {
@@ -522,8 +521,7 @@ function question012(incoming){
 						incoming.reply(message)
 						saveToMongoDb(user.username, incoming.body, "chk_dog")
 					} else {
-						const message = Bot.Message.text(`I'm sorry, I don't understand.`)
-						incoming.reply(message)
+						donotUnderstand(incoming)
 					}
 				}
 			});
