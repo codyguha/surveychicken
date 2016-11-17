@@ -332,6 +332,7 @@ function question003(incoming){
 		saveToMongoDb(user.username, incoming.body, "buy_based_on")
 	});
 	endRemindUserCounter()
+  startRemindUserCounter(incoming)
 }
 function question004(incoming){
 	progress = 4
@@ -340,6 +341,8 @@ function question004(incoming){
 		incoming.reply(message)
 		saveToMongoDb(user.username, incoming.body, "favorite_preparation")
 	});
+  endRemindUserCounter()
+  startRemindUserCounter(incoming)
 }
 function question005a(incoming){
 	progress = 4
@@ -348,7 +351,8 @@ function question005a(incoming){
 		incoming.reply(message)
 		saveToMongoDb(user.username, incoming.body, "side_dish")
 	});
-	resetRemindUserCounter(incoming)
+  endRemindUserCounter()
+  startRemindUserCounter(incoming)
 }
 function question005b(incoming){
 	progress = 4
@@ -357,7 +361,8 @@ function question005b(incoming){
 		incoming.reply(message)
 		saveToMongoDb(user.username, incoming.body, "side_dish")
 	});
-	resetRemindUserCounter(incoming)
+	endRemindUserCounter()
+  startRemindUserCounter(incoming)
 }
 function question005c(incoming){
 	progress = 4
@@ -366,7 +371,8 @@ function question005c(incoming){
 		incoming.reply(message)
 		saveToMongoDb(user.username, incoming.body, "side_dish")
 	});
-	resetRemindUserCounter(incoming)
+	endRemindUserCounter()
+  startRemindUserCounter(incoming)
 }
 function question005d(incoming){
 	progress = 4
@@ -375,7 +381,8 @@ function question005d(incoming){
 		incoming.reply(message)
 		saveToMongoDb(user.username, incoming.body, "side_dish")
 	});
-	resetRemindUserCounter(incoming)
+	endRemindUserCounter()
+  startRemindUserCounter(incoming)
 }
 function question006(incoming){
 	progress = 5
@@ -384,7 +391,8 @@ function question006(incoming){
 		incoming.reply(message)
 		saveToMongoDb(user.username, incoming.body, "side_dish_detail")
 	});
-	resetRemindUserCounter(incoming)
+	endRemindUserCounter()
+  startRemindUserCounter(incoming)
 }
 function question007(incoming){
 	progress = 6
@@ -393,7 +401,8 @@ function question007(incoming){
 		incoming.reply(message)
 		saveToMongoDb(user.username, incoming.body, "location_preference")
 	});
-	resetRemindUserCounter(incoming)
+	endRemindUserCounter()
+  startRemindUserCounter(incoming)
 }
 function question008(incoming){
 	progress = 7
@@ -402,7 +411,8 @@ function question008(incoming){
 		incoming.reply(message)
 		saveToMongoDb(user.username, incoming.body, "backup_option")
 	});
-	resetRemindUserCounter(incoming)
+	endRemindUserCounter()
+  startRemindUserCounter(incoming)
 }
 function question009(incoming){
 	progress = 7
@@ -410,7 +420,8 @@ function question009(incoming){
 		const message = Bot.Message.text(`You're awesome. Let’s get specific. What is your relationship with fried chicken?`).addTextResponse(`I love it`).addTextResponse(`It's a guilty pleasure`).addTextResponse(`Not really my thing`).addTextResponse(`I’ll die before I eat fried chicken`)
 		incoming.reply(message)
 	});
-	resetRemindUserCounter(incoming)
+	endRemindUserCounter()
+  startRemindUserCounter(incoming)
 }
 function question010a(incoming){
 	progress = 7
@@ -419,7 +430,8 @@ function question010a(incoming){
 		incoming.reply(message)
 		saveToMongoDb(user.username, incoming.body, "relationship")
 	});
-	resetRemindUserCounter(incoming)
+	endRemindUserCounter()
+  startRemindUserCounter(incoming)
 }
 function question010b(incoming){
 	progress = 7
@@ -428,7 +440,8 @@ function question010b(incoming){
 		incoming.reply(message)
 		saveToMongoDb(user.username, incoming.body, "relationship")
 	});
-	resetRemindUserCounter(incoming)
+	endRemindUserCounter()
+  startRemindUserCounter(incoming)
 }
 function question010c(incoming){
 	progress = 7
@@ -443,7 +456,8 @@ function question010c(incoming){
 		const message = Bot.Message.text(`Ok cool. In the next set of questions I’m going to show you some pictures of fried chicken entrees.  Use the answers provided to tell me what you think.`).addTextResponse(`Show me`).addTextResponse(`NO WAY!`)
 		incoming.reply(message)
 	});
-	resetRemindUserCounter(incoming)
+	endRemindUserCounter()
+  startRemindUserCounter(incoming)
 }
 
 function restartOneOutOfTenSection(incoming) {
@@ -451,7 +465,8 @@ function restartOneOutOfTenSection(incoming) {
 		const message = Bot.Message.text(`Ok cool. In the next set of questions I’m going to show you some pictures of fried chicken entrees.  Use the answers provided to tell me what you think.`).addTextResponse(`Show me`).addTextResponse(`NO WAY!`)
 		incoming.reply(message)
 	});
-	resetRemindUserCounter(incoming)
+	endRemindUserCounter()
+  startRemindUserCounter(incoming)
 }
 
 function question011(incoming){
@@ -462,7 +477,8 @@ function question011(incoming){
 		burgerValidation(user.username)
 		console.log("PRoGRESS!!!:  "+ progress)
 	});
-	resetRemindUserCounter(incoming)
+	endRemindUserCounter()
+  startRemindUserCounter(incoming)
 }
 function question012(incoming){
 	bot.getUserProfile(incoming.from).then((user) => {
@@ -476,13 +492,16 @@ function question012(incoming){
 				if (foundResult === undefined) {
 					const message = Bot.Message.text(`I'm sorry, I don't understand.`)
 					incoming.reply(message)
+          endRemindUserCounter()
+          startRemindUserCounter(incoming)
 				} else {
+          endRemindUserCounter()
+          startRemindUserCounter(incoming)
 					if (foundResult.chicken_survey.chk_burger === undefined) {
 						const pic2 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_cake.jpg`).setAttributionName('Fried Chicken Cake').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png').addTextResponse('1) This looks gross').addTextResponse('2) Not my first choice').addTextResponse('3) I’m on the fence').addTextResponse('4) This looks eatable').addTextResponse('5) That looks delicious')
 						incoming.reply(pic2);
 						cakeValidation(user.username)
 						saveToMongoDb(user.username, incoming.body, "chk_burger")
-            resetRemindUserCounter(incoming)
 					} else if (foundResult.chicken_survey.chk_cake === undefined) {
 						const pic3 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_cone.jpg`).setAttributionName('Fried Chicken Cone').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png').addTextResponse('1) This looks gross').addTextResponse('2) Not my first choice').addTextResponse('3) I’m on the fence').addTextResponse('4) This looks eatable').addTextResponse('5) That looks delicious')
 						incoming.reply(pic3);
@@ -516,7 +535,8 @@ function question013(incoming){
     incoming.reply(message)
     saveToMongoDb(user.username, incoming.body, "hunger")
   });
-  resetRemindUserCounter(incoming)
+  endRemindUserCounter()
+  startRemindUserCounter(incoming)
 }
 function questionLast(incoming){
 	progress = 15
@@ -526,7 +546,8 @@ function questionLast(incoming){
 		saveToMongoDb(user.username, incoming.body, "hunger")
 		removeEmoji(user.username)
 	});
-	resetRemindUserCounter(incoming)
+	endRemindUserCounter()
+  startRemindUserCounter(incoming
 }
 function surveyEnd(incoming){
 	bot.getUserProfile(incoming.from).then((user) => {
