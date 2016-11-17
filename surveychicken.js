@@ -181,7 +181,7 @@ bot.onTextMessage(/Bach who\?$/i, (incoming, next) => {
 });
 bot.onTextMessage(/Not now|Maybe later$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
-		const message = Bot.Message.text(`Ok. Say "hi" or yell "GET CHICKEN!" when you have time to chat.`)
+		const message = Bot.Message.text(`Ok. Text "hi" or "GET CHICKEN!" when you have time to chat.`)
 		incoming.reply(message)
 	});
 });
@@ -275,14 +275,12 @@ bot.onTextMessage((incoming, next) => {
 			}).toArray(function(err, found) {
 				var foundResult = found[0]
 				if (foundResult === undefined) {
-					const message = Bot.Message.text(`I'm sorry, I don't understand.`)
-					incoming.reply(message)
+          donotUnderstand(incoming)
 				} else {
 					if (foundResult.chicken_survey.emoji === undefined) {
 						surveyEnd(incoming)  
 					} else {
-            const message = Bot.Message.text(`I'm sorry, I don't understand.`)
-            incoming.reply(message)
+            donotUnderstand(incoming)
           }
 				}
 			});
@@ -297,6 +295,15 @@ function welcomeUser(incoming) {
 		incoming.reply(message)
 	});
 	progress = 0
+}
+
+function donotUnderstand(incoming) {
+  bot.getUserProfile(incoming.from).then((user) => {
+    userValidation(user);
+    const message = Bot.Message.text(`What would you like to do?`).addTextResponse(`Take a survey`).addTextResponse(`Tell me a joke`)
+    incoming.reply(message)
+  });
+  progress = 0
 }
 
 function endSurveyBeforeItStarts(incoming){
@@ -474,7 +481,6 @@ function question011(incoming){
 		const pic1 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_burger.jpg`).setAttributionName('Fried Chicken Burger').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png').addTextResponse('1) This looks gross').addTextResponse('2) Not my first choice').addTextResponse('3) I’m on the fence').addTextResponse('4) This looks eatable').addTextResponse('5) This looks delicious')
 		incoming.reply(pic1);
 		burgerValidation(user.username)
-		console.log("PRoGRESS!!!:  "+ progress)
 	});
 	endRemindUserCounter()
   startRemindUserCounter(incoming)
@@ -547,7 +553,7 @@ function questionLast(incoming){
 }
 function surveyEnd(incoming){
 	bot.getUserProfile(incoming.from).then((user) => {
-		const message = Bot.Message.text(`That is all I wanted know! Say "hi" to do the survey agian or yell "GET CHICKEN!" to get chicken delivered right now!`)
+		const message = Bot.Message.text(`That is all I wanted know! Text "hi" to do the survey agian or text "GET CHICKEN!" to get chicken delivered right now!`)
 		incoming.reply(message)
 		saveToMongoDb(user.username, incoming.body, "emoji")
 	});
