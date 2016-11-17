@@ -251,7 +251,7 @@ bot.onTextMessage(/Show me$/i, (incoming, next) => {
 bot.onTextMessage(/1\) This looks gross|2\) Not my first choice|3\) I’m on the fence|4\) This looks eatable|5\) This looks delicious$/i, (incoming, next) => {
 	question012(incoming)
 });
-bot.onTextMessage(/YES!$/i, (incoming, next) => { 
+bot.onTextMessage(/Yes$/i, (incoming, next) => { 
 	question013(incoming)
 });
 bot.onTextMessage(/Yes please$/i, (incoming, next) => {
@@ -260,7 +260,7 @@ bot.onTextMessage(/Yes please$/i, (incoming, next) => {
 bot.onTextMessage(/No thanks$/i, (incoming, next) => {
   questionLast(incoming)
 });
-bot.onTextMessage(/NO WAY!$/i, (incoming, next) => {
+bot.onTextMessage(/NO WAY!|Not really$/i, (incoming, next) => {
   questionLast(incoming)
 });
 bot.onTextMessage(/Continue$/i, (incoming, next) => {
@@ -512,7 +512,7 @@ function question012(incoming){
 						dogValidation(user.username)
 						saveToMongoDb(user.username, incoming.body, "chk_cone")
 					} else if (foundResult.chicken_survey.chk_dog === undefined) {
-						const message = Bot.Message.text(`Has this survey made you hungry?`).addTextResponse(`YES!`).addTextResponse(`NO WAY!`)
+						const message = Bot.Message.text(`Has this survey made you hungry?`).addTextResponse(`Yes`).addTextResponse(`Not really`)
 						incoming.reply(message)
 						saveToMongoDb(user.username, incoming.body, "chk_dog")
 					} else {
