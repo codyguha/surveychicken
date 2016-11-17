@@ -140,10 +140,12 @@ function resetRemindUserCounter(incoming) {
 }
 
 function endRemindUserCounter() {
+  var reminder = reminder
 	clearTimeout(reminder);
 }
 
 function endGratitudeCounter() {
+  var knockknock = knockknock
 	clearTimeout(knockknock);
 }
 
@@ -473,7 +475,6 @@ function question011(incoming){
 	resetRemindUserCounter(incoming)
 }
 function question012(incoming){
-	resetRemindUserCounter(incoming)
 	bot.getUserProfile(incoming.from).then((user) => {
 		progress = 8
 		mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
@@ -491,11 +492,13 @@ function question012(incoming){
 						incoming.reply(pic2);
 						cakeValidation(user.username)
 						saveToMongoDb(user.username, incoming.body, "chk_burger")
+            resetRemindUserCounter(incoming)
 					} else if (foundResult.chicken_survey.chk_cake === undefined) {
 						const pic3 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_cone.jpg`).setAttributionName('Fried Chicken Cone').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png').addTextResponse('1) This looks gross').addTextResponse('2) Not my first choice').addTextResponse('3) I’m on the fence').addTextResponse('4) This looks eatable').addTextResponse('5) That looks delicious')
 						incoming.reply(pic3);
 						coneValidation(user.username)
 						saveToMongoDb(user.username, incoming.body, "chk_cake")
+             resetRemindUserCounter(incoming)
 					} else if (foundResult.chicken_survey.chk_cone === undefined) {
 						const pic4 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_dog.jpg`).setAttributionName('Fried Chicken Dog').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png').addTextResponse('1) This looks gross').addTextResponse('2) Not my first choice').addTextResponse('3) I’m on the fence').addTextResponse('4) This looks eatable').addTextResponse('5) That looks delicious')
 						incoming.reply(pic4);
