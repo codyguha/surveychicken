@@ -296,7 +296,7 @@ bot.onTextMessage((incoming, next) => {
 function welcomeUser(incoming) {
 	bot.getUserProfile(incoming.from).then((user) => {
 		userValidation(user);
-		const message = Bot.Message.text(`Hey ${user.firstName}! Welcome to Survey Chicken! What would you like to do first?`).addTextResponse(`Take a survey`).addTextResponse(`Tell me a joke`)
+		const message = Bot.Message.text(`Hey ${user.firstName}! I’m the host here at Survey Chicken.  If you get lost, or if you want a fresh start just text “Hi” and I’ll take you back to the beginning. What would you like to do first?`).addTextResponse(`Take a survey`).addTextResponse(`Tell me a joke`)
 		incoming.reply(message)
 	});
 	progress = 0
