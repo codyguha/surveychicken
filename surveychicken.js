@@ -150,7 +150,7 @@ function endGratitudeCounter() {
 function startRemindUserCounter(incoming) {
 	bot.getUserProfile(incoming.from).then((user) => {
 		reminder = setTimeout(function() {
-			const message = Bot.Message.text(`Hey ${user.firstName}!!! Don't be a chicken! COME BACK AND FINISH THE SURVEY.`).addTextResponse(`Finish the survey`).addTextResponse(`Not now`)
+			const message = Bot.Message.text(`Hey ${user.firstName}!!! Don't be a chicken! Come back and finish the survey.`).addTextResponse(`Continue the survey`).addTextResponse(`Not now`)
 			incoming.reply(message)
 		}, 60000);
 	});
@@ -181,7 +181,7 @@ bot.onTextMessage(/Who’s there\?$/i, (incoming, next) => {
 bot.onTextMessage(/Bach who\?$/i, (incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
 		const message1 = Bot.Message.text(`Bach, bach I'm a chicken!;)`)
-    const message2 = Bot.Message.text(`Ok now that I’ve made you smile do you have a minute to take a quick survey?`).addTextResponse(`Take a survey`).addTextResponse(`Not now`)
+    const message2 = Bot.Message.text(`Jokes aside, do you have a minute to take a quick survey?`).addTextResponse(`Take a survey`).addTextResponse(`Not now`)
 		incoming.reply([message1, message2])
 	});
 });
@@ -254,7 +254,7 @@ bot.onTextMessage(/I love it|I’m not going to get into it|After a night of har
 bot.onTextMessage(/Show me$/i, (incoming, next) => {
 	question011(incoming)
 });
-bot.onTextMessage(/1\) This looks gross|2\) Not my first choice|3\) I’m on the fence|4\) This looks eatable|5\) Give it to me now!$/i, (incoming, next) => {
+bot.onTextMessage(/1\) This looks gross|2\) Not my first choice|3\) I’m on the fence|4\) This looks eatable|5\) Looks delicious… give it to me now$/i, (incoming, next) => {
 	question012(incoming)
 });
 bot.onTextMessage(/YES!$/i, (incoming, next) => { 
@@ -269,7 +269,7 @@ bot.onTextMessage(/No thanks$/i, (incoming, next) => {
 bot.onTextMessage(/NO WAY!$/i, (incoming, next) => {
   questionLast(incoming)
 });
-bot.onTextMessage(/Finish the survey$/i, (incoming, next) => {
+bot.onTextMessage(/Continue the survey$/i, (incoming, next) => {
 	checkProgress(incoming)
 });
 bot.onTextMessage((incoming, next) => {
@@ -466,7 +466,7 @@ function restartOneOutOfTenSection(incoming) {
 function question011(incoming){
 	progress = 8
 	bot.getUserProfile(incoming.from).then((user) => {
-		const pic1 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_burger.jpg`).setAttributionName('Fried Chicken Burger').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png').addTextResponse('1) This looks gross').addTextResponse('2) Not my first choice').addTextResponse('3) I’m on the fence').addTextResponse('4) This looks eatable').addTextResponse('5) Give it to me now!')
+		const pic1 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_burger.jpg`).setAttributionName('Fried Chicken Burger').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png').addTextResponse('1) This looks gross').addTextResponse('2) Not my first choice').addTextResponse('3) I’m on the fence').addTextResponse('4) This looks eatable').addTextResponse('5) Looks delicious… give it to me now')
 		incoming.reply(pic1);
 		burgerValidation(user.username)
 		console.log("PRoGRESS!!!:  "+ progress)
@@ -488,25 +488,26 @@ function question012(incoming){
 					incoming.reply(message)
 				} else {
 					if (foundResult.chicken_survey.chk_burger === undefined) {
-						const pic2 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_cake.jpg`).setAttributionName('Fried Chicken Cake').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png').addTextResponse('1) This looks gross').addTextResponse('2) Not my first choice').addTextResponse('3) I’m on the fence').addTextResponse('4) This looks eatable').addTextResponse('5) Give it to me now!')
+						const pic2 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_cake.jpg`).setAttributionName('Fried Chicken Cake').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png').addTextResponse('1) This looks gross').addTextResponse('2) Not my first choice').addTextResponse('3) I’m on the fence').addTextResponse('4) This looks eatable').addTextResponse('5) Looks delicious… give it to me now')
 						incoming.reply(pic2);
 						cakeValidation(user.username)
 						saveToMongoDb(user.username, incoming.body, "chk_burger")
 					} else if (foundResult.chicken_survey.chk_cake === undefined) {
-						const pic3 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_cone.jpg`).setAttributionName('Fried Chicken Cone').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png').addTextResponse('1) This looks gross').addTextResponse('2) Not my first choice').addTextResponse('3) I’m on the fence').addTextResponse('4) This looks eatable').addTextResponse('5) Give it to me now!')
+						const pic3 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_cone.jpg`).setAttributionName('Fried Chicken Cone').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png').addTextResponse('1) This looks gross').addTextResponse('2) Not my first choice').addTextResponse('3) I’m on the fence').addTextResponse('4) This looks eatable').addTextResponse('5) Looks delicious… give it to me now')
 						incoming.reply(pic3);
 						coneValidation(user.username)
 						saveToMongoDb(user.username, incoming.body, "chk_cake")
 					} else if (foundResult.chicken_survey.chk_cone === undefined) {
-						const pic4 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_dog.jpg`).setAttributionName('Fried Chicken Dog').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png').addTextResponse('1) This looks gross').addTextResponse('2) Not my first choice').addTextResponse('3) I’m on the fence').addTextResponse('4) This looks eatable').addTextResponse('5) Give it to me now!')
+						const pic4 = Bot.Message.picture(`https://raw.githubusercontent.com/codyguha/survey-images/master/kikfriedchicken/FriedCH_dog.jpg`).setAttributionName('Fried Chicken Dog').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png').addTextResponse('1) This looks gross').addTextResponse('2) Not my first choice').addTextResponse('3) I’m on the fence').addTextResponse('4) This looks eatable').addTextResponse('5) Looks delicious… give it to me now')
 						incoming.reply(pic4);
 						dogValidation(user.username)
 						saveToMongoDb(user.username, incoming.body, "chk_cone")
-
+              resetRemindUserCounter(incoming)
 					} else if (foundResult.chicken_survey.chk_dog === undefined) {
 						const message = Bot.Message.text(`Has this survey made you hungry?`).addTextResponse(`YES!`).addTextResponse(`NO WAY!`)
 						incoming.reply(message)
 						saveToMongoDb(user.username, incoming.body, "chk_dog")
+              resetRemindUserCounter(incoming)
 					} else {
 						const message = Bot.Message.text(`I'm sorry, I don't understand.`)
 						incoming.reply(message)
@@ -558,7 +559,7 @@ function surveyEndHungry(incoming){
 function chickenDeliverySurvey(incoming){
   progress = 10
   bot.getUserProfile(incoming.from).then((user) => {
-    const message = Bot.Message.text(`Why not order some chicken delivery right now.  Click on the Just Eat app to get started.`).addTextResponse(`Finish the survey`)
+    const message = Bot.Message.text(`Why not order some chicken delivery right now.  Click on the Just Eat app to get started.`).addTextResponse(`Continue the survey`)
     const link = Bot.Message.link("https://www.just-eat.ca/delivery/vancouver/chicken/").setPicUrl("http://www.digitalnativescontent.com/wp-content/uploads/2016/01/GHTF-outdoor.jpg").setTitle("").setText("Order Chicken delivery online from Vancouver restaurants.").setAttributionName('GET CHICKEN!').setAttributionIcon('http://icons.iconarchive.com/icons/icons8/ios7/128/Animals-Chicken-icon.png')
     incoming.reply([link, message])
   });
