@@ -547,7 +547,7 @@ function questionLast(incoming){
 }
 function surveyEnd(incoming){
 	bot.getUserProfile(incoming.from).then((user) => {
-		const message = Bot.Message.text(`ALL DONE! Say "hi" to do the survey agian or yell "GET CHICKEN!" to GET CHICKEN NOW!`)
+		const message = Bot.Message.text(`That is all I wanted know! Say "hi" to do the survey agian or yell "GET CHICKEN!" to get chicken delivered right now!`)
 		incoming.reply(message)
 		saveToMongoDb(user.username, incoming.body, "emoji")
 	});
