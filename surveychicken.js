@@ -236,9 +236,6 @@ bot.onTextMessage(/At a family style restaurant|At fast food establishment|At a 
 bot.onTextMessage(/Beef|Seafood|Pork|Vegetarian option$/i, (incoming, next) => {
 	question008(incoming)
 });
-bot.onTextMessage(/Continue$/i, (incoming, next) => {
-	question009(incoming)
-});
 bot.onTextMessage(/It's a guilty pleasure$/i, (incoming, next) => {
 	question010a(incoming)
 });
@@ -266,7 +263,7 @@ bot.onTextMessage(/No thanks$/i, (incoming, next) => {
 bot.onTextMessage(/NO WAY!$/i, (incoming, next) => {
   questionLast(incoming)
 });
-bot.onTextMessage(/Continue the survey$/i, (incoming, next) => {
+bot.onTextMessage(/Continue$/i, (incoming, next) => {
 	checkProgress(incoming)
 });
 bot.onTextMessage((incoming, next) => {
@@ -540,7 +537,7 @@ function question013(incoming){
 function questionLast(incoming){
 	progress = 15
 	bot.getUserProfile(incoming.from).then((user) => {
-		const message = Bot.Message.text(`Thanks for taking some time to chat with us.  We enjoyed learning more about your chicken preferences. Please let us know what you thought of this survey by selecting an emoji that best represents your experience chatting with Survey Chicken`)
+		const message = Bot.Message.text(`…and we are done! Thanks for the chat. Let us know what you thought by selecting an emoji.`)
 		incoming.reply(message)
 		saveToMongoDb(user.username, incoming.body, "hunger")
 		removeEmoji(user.username)
