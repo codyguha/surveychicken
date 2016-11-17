@@ -322,6 +322,7 @@ function question002(incoming){
 		saveToMongoDb(user.username, incoming.body, "frequency")
 	});
 	endRemindUserCounter()
+  startRemindUserCounter(incoming)
 }
 function question003(incoming){
 	progress = 3
