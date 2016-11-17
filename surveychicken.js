@@ -185,6 +185,7 @@ bot.onTextMessage(/Not now|Maybe later$/i, (incoming, next) => {
 		incoming.reply(message)
 	});
 });
+
 function anotherJoke(incoming){
   endRemindUserCounter();
   bot.getUserProfile(incoming.from).then((user) => {
