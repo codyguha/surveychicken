@@ -551,7 +551,7 @@ function surveyEnd(incoming){
 		incoming.reply(message)
 		saveToMongoDb(user.username, incoming.body, "emoji")
 	});
-	endRemindUserCounter();
+	endRemindUserCounter()
 	startGratitudeUserCounter(incoming)
 }
 function surveyEndHungry(incoming){
@@ -561,7 +561,7 @@ function surveyEndHungry(incoming){
 		incoming.reply([link, message])
 		saveToMongoDb(user.username, incoming.body, "emoji")
 	});
-	endRemindUserCounter();
+	endRemindUserCounter()
 	startGratitudeUserCounter(incoming)
 }
 
