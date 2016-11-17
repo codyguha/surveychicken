@@ -547,7 +547,7 @@ function questionLast(incoming){
 		removeEmoji(user.username)
 	});
 	endRemindUserCounter()
-  startRemindUserCounter(incoming
+  startRemindUserCounter(incoming)
 }
 function surveyEnd(incoming){
 	bot.getUserProfile(incoming.from).then((user) => {
