@@ -147,7 +147,7 @@ function startRemindUserCounter(incoming) {
 		reminder = setTimeout(function() {
 			const message = Bot.Message.text(`Hey ${user.firstName}!!! Don't be a chicken! Come back and finish the survey.`).addTextResponse(`Continue the survey`).addTextResponse(`Not now`)
 			incoming.reply(message)
-		}, 5000);
+		}, 120000);
 	});
 }
 
@@ -194,7 +194,7 @@ bot.onStartChattingMessage((incoming, next) => {
 bot.onTextMessage(/^hi|Hi$/i, (incoming, next) => {
 	welcomeUser(incoming)
 });
-bot.onTextMessage(/Take a survey$/i, (incoming, next) => {
+bot.onTextMessage(/Take a survey|Take the chicken survey$/i, (incoming, next) => {
 	question001(incoming)
 });
 bot.onTextMessage(/Tell me a joke$/i, (incoming, next) => {
@@ -301,7 +301,7 @@ function welcomeUser(incoming) {
 
 function endSurveyBeforeItStarts(incoming){
 	bot.getUserProfile(incoming.from).then((user) => {
-		incoming.reply(Bot.Message.text(`Ok I’m glad we got that out the way.  I suppose there is no point in bugging you with more questions about your chicken preferences.`))
+		incoming.reply(Bot.Message.text(`Ok I’m glad we got that out the way.  I suppose there is no point in bugging you with more questions about your chicken preferences.  Do you want to take the survey anyways?`).addTextResponse(`Take the chicken survey`).addTextResponse(`Not now`))
 		saveToMongoDb(user.username, incoming.body, "frequency")
 	});
 	endRemindUserCounter();
