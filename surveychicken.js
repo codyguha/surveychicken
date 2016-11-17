@@ -194,7 +194,7 @@ bot.onStartChattingMessage((incoming, next) => {
 bot.onTextMessage(/^hi|Hi$/i, (incoming, next) => {
 	welcomeUser(incoming)
 });
-bot.onTextMessage(/Take a survey|Take the chicken survey$/i, (incoming, next) => {
+bot.onTextMessage(/Take a survey$/i, (incoming, next) => {
 	question001(incoming)
 });
 bot.onTextMessage(/Tell me a joke$/i, (incoming, next) => {
@@ -202,6 +202,9 @@ bot.onTextMessage(/Tell me a joke$/i, (incoming, next) => {
 });
 bot.onTextMessage(/Never$/i, (incoming, next) => {
 	endSurveyBeforeItStarts(incoming)
+});
+bot.onTextMessage(/Continue the chicken survey$/i, (incoming, next) => {
+  question002(incoming)
 });
 bot.onTextMessage(/On a regular basis|Once and a while|Rarely$/i, (incoming, next) => {
 	question002(incoming)
@@ -301,7 +304,7 @@ function welcomeUser(incoming) {
 
 function endSurveyBeforeItStarts(incoming){
 	bot.getUserProfile(incoming.from).then((user) => {
-		incoming.reply(Bot.Message.text(`Ok I’m glad we got that out the way.  I suppose there is no point in bugging you with more questions about your chicken preferences.  Do you want to take the survey anyways?`).addTextResponse(`Take the chicken survey`).addTextResponse(`Not now`))
+		incoming.reply(Bot.Message.text(`Ok I’m glad we got that out the way.  I suppose there is no point in bugging you with more questions about your chicken preferences.  Do you want to continue the survey anyways?`).addTextResponse(`Continue the chicken survey`).addTextResponse(`Not now`))
 		saveToMongoDb(user.username, incoming.body, "frequency")
 	});
 	endRemindUserCounter();
