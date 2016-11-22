@@ -203,7 +203,7 @@ bot.onTextMessage(/Not now|Maybe later$/i, (incoming, next) => {
 function anotherJoke(incoming){
   endRemindUserCounter();
   bot.getUserProfile(incoming.from).then((user) => {
-    const message = Bot.Message.text(`Joke jeopordy time!`)
+    const message = Bot.Message.text(`Jeopardy time!`)
     .addTextResponse(`What goes peck, peck, peck, Boom?`)
     .addTextResponse(`What Is chicken teriyaki?`)
     .addTextResponse(`Why did the chicken cross the road halfway?`)
@@ -379,7 +379,7 @@ bot.onTextMessage((incoming, next) => {
 				} else {
 					if (foundResult.chicken_survey.emoji === undefined) {
             saveToMongoDb(user.username, incoming.body, "emoji")
-						getContact(incoming)  
+						getContact(incoming)
 					} else if (foundResult.chicken_survey.contact === undefined) {
             saveToMongoDb(user.username, incoming.body, "contact")
             surveyEnd(incoming)
@@ -665,7 +665,7 @@ function questionLast(incoming){
 function getContact(incoming){
   progress = 16
 	bot.getUserProfile(incoming.from).then((user) => {
-		const message = Bot.Message.text(`Sweet. I can contact you if I recieve any updates. How should I contact you?`)
+		const message = Bot.Message.text(`Sweet. If you would like to stay in the “coop", I mean loop, on Survey Chicken updates just leave me your contact info and I’ll keep you posted.`)
     .addTextResponse(`Do not contact me`)
     .addTextResponse(`Email`)
     .addTextResponse(`Twitter`)
@@ -710,7 +710,7 @@ function getFacebook(incoming){
 }
 function surveyEnd(incoming){
   bot.getUserProfile(incoming.from).then((user) => {
-    const message = Bot.Message.text(`That is all I wanted know! Text "hi" to do the survey agian or text "GET CHICKEN!" to get chicken delivered right now!`)
+    const message = Bot.Message.text(`Thank you that is all I wanted to know. I will be in touch if recieve any updates. Text "hi" to do the survey agian or text "GET CHICKEN!" to get chicken delivered right now!`)
     incoming.reply(message)
   });
   endRemindUserCounter()
