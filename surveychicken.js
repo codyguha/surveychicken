@@ -354,8 +354,8 @@ bot.onTextMessage(/Do not contact me$/i, (incoming, next) => {
 bot.onTextMessage(/Email|Twitter|Facebook|Linkedin$/i, (incoming, next) => {
   bot.getUserProfile(incoming.from).then((user) => {
     saveToMongoDb(user.username, incoming.body, "contact_me_using")
+     removeContact(user.username)
   });
-  removeContact(user.username)
   if (incoming.body === "Email"){
       getEmail(incoming)
   } else if (incoming.body === "Twitter") {
