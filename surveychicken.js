@@ -27,7 +27,8 @@ function saveUserToMongoDb(username, first_name, last_name) {
 				chk_cake: "1",
 				chk_cone: "1",
 				chk_dog: "1",
-				emoji: "<3"
+				emoji: "<3",
+        contact: "user@user.com"
 			}
 		})
 	})
@@ -60,6 +61,19 @@ function removeEmoji(u) {
 			}
 		});
 	});
+}
+function removeContact(u) {
+  mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
+    if (err) throw err;
+    var results = db.collection('results');
+    results.update({
+      "user.username": `${u}`
+    }, {
+      $unset: {
+        "chicken_survey.contact": ""
+      }
+    });
+  });
 }
 
 function burgerValidation(u) {
@@ -331,6 +345,27 @@ bot.onTextMessage(/NO WAY!|Not really$/i, (incoming, next) => {
 bot.onTextMessage(/Continue$/i, (incoming, next) => {
 	checkProgress(incoming)
 });
+bot.onTextMessage(/Do not contact me$/i, (incoming, next) => {
+  bot.getUserProfile(incoming.from).then((user) => {
+    saveToMongoDb(user.username, incoming.body, "contact_me_using")
+  });
+  surveyEnd(incoming)
+});
+bot.onTextMessage(/Email|Twitter|Facebook|Linkedin$/i, (incoming, next) => {
+  bot.getUserProfile(incoming.from).then((user) => {
+    saveToMongoDb(user.username, incoming.body, "contact_me_using")
+  });
+  removeContact(user.username)
+  if (incoming.body === "Email"){
+      getEmail(incoming)
+  } else if (incoming.body === "Twitter") {
+      getTwitter(incoming)
+  } else if (incoming.body === "Facebook") {
+      getFacebook(incoming)
+  } else if (incoming.body === "Linkedin") {
+      getLinkedin(incoming)
+  }
+});
 bot.onTextMessage((incoming, next) => {
 	bot.getUserProfile(incoming.from).then((user) => {
 		mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
@@ -343,8 +378,12 @@ bot.onTextMessage((incoming, next) => {
           donotUnderstand(incoming)
 				} else {
 					if (foundResult.chicken_survey.emoji === undefined) {
-						surveyEnd(incoming)  
-					} else {
+            saveToMongoDb(user.username, incoming.body, "emoji")
+						getContact(incoming)  
+					} else if (foundResult.chicken_survey.contact === undefined) {
+            saveToMongoDb(user.username, incoming.body, "contact")
+            surveyEnd(incoming)
+          } else {
             donotUnderstand(incoming)
           }
 				}
@@ -623,16 +662,60 @@ function questionLast(incoming){
 	endRemindUserCounter()
   startRemindUserCounter(incoming)
 }
-function surveyEnd(incoming){
+function getContact(incoming){
+  progress = 16
 	bot.getUserProfile(incoming.from).then((user) => {
-		const message = Bot.Message.text(`That is all I wanted know! Text "hi" to do the survey agian or text "GET CHICKEN!" to get chicken delivered right now!`)
+		const message = Bot.Message.text(`Sweet. I can contact you if I recieve any updates. How should I contact you?`)
+    .addTextResponse(`Do not contact me`)
+    .addTextResponse(`Email`)
+    .addTextResponse(`Twitter`)
+    .addTextResponse(`Facebook`)
+    .addTextResponse(`Linkedin`)
 		incoming.reply(message)
-		saveToMongoDb(user.username, incoming.body, "emoji")
 	});
 	endRemindUserCounter()
-	startGratitudeUserCounter(incoming)
+	startRemindUserCounter(incoming)
 }
-
+function getEmail(incoming){
+  bot.getUserProfile(incoming.from).then((user) => {
+    const message = Bot.Message.text(`Awesome, and what is your email?`)
+    incoming.reply(message)
+  });
+  endRemindUserCounter()
+  startRemindUserCounter(incoming)
+}
+function getTwitter(incoming){
+  bot.getUserProfile(incoming.from).then((user) => {
+    const message = Bot.Message.text(`Awesome, and what is your Twitter handle?`)
+    incoming.reply(message)
+  });
+  endRemindUserCounter()
+  startRemindUserCounter(incoming)
+}
+function getLinkedin(incoming){
+  bot.getUserProfile(incoming.from).then((user) => {
+    const message = Bot.Message.text(`Awesome, and what is your Linkden profile address?`)
+    incoming.reply(message)
+  });
+  endRemindUserCounter()
+  startRemindUserCounter(incoming)
+}
+function getFacebook(incoming){
+  bot.getUserProfile(incoming.from).then((user) => {
+    const message = Bot.Message.text(`Awesome, and what is your Facebook profile address?`)
+    incoming.reply(message)
+  });
+  endRemindUserCounter()
+  startRemindUserCounter(incoming)
+}
+function surveyEnd(incoming){
+  bot.getUserProfile(incoming.from).then((user) => {
+    const message = Bot.Message.text(`That is all I wanted know! Text "hi" to do the survey agian or text "GET CHICKEN!" to get chicken delivered right now!`)
+    incoming.reply(message)
+  });
+  endRemindUserCounter()
+  startGratitudeUserCounter(incoming)
+}
 function chickenDeliverySurvey(incoming){
   progress = 10
   bot.getUserProfile(incoming.from).then((user) => {
@@ -673,5 +756,7 @@ function checkProgress(incoming){
     questionLast(incoming)
   } else if (progress === 15) {
 		questionLast(incoming)
-	} 
+	} else if (progress === 16) {
+    getContact(incoming)
+  } 
 }
