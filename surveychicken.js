@@ -678,7 +678,7 @@ function getContact(incoming){
 }
 function getEmail(incoming){
   bot.getUserProfile(incoming.from).then((user) => {
-    const message = Bot.Message.text(`Awesome, and what is your email?`)
+    const message = Bot.Message.text(`Awesome, and what is your email adress?`)
     incoming.reply(message)
   });
   endRemindUserCounter()
@@ -710,7 +710,7 @@ function getFacebook(incoming){
 }
 function surveyEnd(incoming){
   bot.getUserProfile(incoming.from).then((user) => {
-    const message = Bot.Message.text(`Thank you that is all I wanted to know. I will be in touch if recieve any updates. Text "hi" to do the survey agian or text "GET CHICKEN!" to get chicken delivered right now!`)
+    const message = Bot.Message.text(`Thank you that is all I wanted to know. I will be in touch if I recieve any updates. Text "hi" to do the survey agian or text "GET CHICKEN!" to get chicken delivered right now!`)
     incoming.reply(message)
   });
   endRemindUserCounter()
