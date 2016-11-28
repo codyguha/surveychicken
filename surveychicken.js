@@ -21,6 +21,7 @@ function saveUserToMongoDb(username, first_name, last_name) {
 				username: username,
 				first_name: first_name,
 				last_name: last_name,
+				platform: kik
 			},
 			chicken_survey: {
 				chk_burger: "1",
@@ -330,7 +331,7 @@ bot.onTextMessage(/Ok, lets do it$/i, (incoming, next) => {
 bot.onTextMessage(/1\) This looks gross|2\) Not my first choice|3\) I’m on the fence|4\) This looks eatable|5\) This looks delicious$/i, (incoming, next) => {
 	question012(incoming)
 });
-bot.onTextMessage(/Yes$/i, (incoming, next) => { 
+bot.onTextMessage(/Yes$/i, (incoming, next) => {
 	question013(incoming)
 });
 bot.onTextMessage(/Yes please$/i, (incoming, next) => {
@@ -654,7 +655,7 @@ function question013(incoming){
 function questionLast(incoming){
 	progress = 15
 	bot.getUserProfile(incoming.from).then((user) => {
-		const message = Bot.Message.text(`…and we are done! Thanks for the chat. Let us know what you thought by selecting an emoji.`)
+		const message = Bot.Message.text(`…and we are done! Thanks for the chat. Let me know what you thought by selecting an emoji.`)
 		incoming.reply(message)
 		saveToMongoDb(user.username, incoming.body, "hunger")
 		removeEmoji(user.username)
@@ -739,11 +740,11 @@ function checkProgress(incoming){
 	} else if (progress === 1) {
 		question001(incoming)
 	} else if (progress === 2) {
-		question002(incoming)		
+		question002(incoming)
 	} else if (progress === 3) {
-		question003(incoming)		
+		question003(incoming)
 	} else if (progress === 4) {
-		question004(incoming)		
+		question004(incoming)
 	} else if (progress === 5) {
 		question006(incoming)
 	} else if (progress === 6) {
@@ -758,5 +759,5 @@ function checkProgress(incoming){
 		questionLast(incoming)
 	} else if (progress === 16) {
     getContact(incoming)
-  } 
+  }
 }
