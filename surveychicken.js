@@ -21,7 +21,7 @@ function saveUserToMongoDb(username, first_name, last_name) {
 				username: username,
 				first_name: first_name,
 				last_name: last_name,
-				platform: kik
+				platform: "kik"
 			},
 			chicken_survey: {
 				chk_burger: "1",
