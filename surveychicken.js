@@ -20,10 +20,10 @@ function saveUserToMongoDb(username, first_name, last_name) {
 			user: {
 				username: username,
 				first_name: first_name,
-				last_name: last_name,
-				platform: "kik"
+				last_name: last_name
 			},
 			chicken_survey: {
+				platform: "kik",
 				chk_burger: "1",
 				chk_cake: "1",
 				chk_cone: "1",
